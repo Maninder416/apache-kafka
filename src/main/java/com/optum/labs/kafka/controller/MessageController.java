@@ -16,7 +16,7 @@ public class MessageController {
     @GetMapping("/publish/{message}")
     public ResponseEntity<String> publish(@PathVariable("message") String message){
         kafkaProducer.sendMessage(message);
-        return ResponseEntity.ok("message sent to the topic");
+        return ResponseEntity.ok("Message sent to the topic");
     }
 
 }
