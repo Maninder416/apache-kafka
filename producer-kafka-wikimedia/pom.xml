@@ -25,11 +25,6 @@
             <artifactId>okhttp</artifactId>
             <version>4.9.3</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.launchdarkly</groupId>-->
-<!--            <artifactId>okhttp-eventsource</artifactId>-->
-<!--            <version>4.1.0</version>-->
-<!--        </dependency>-->
         <!--As we are receiving data in json so we need these 2 dependencies -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
