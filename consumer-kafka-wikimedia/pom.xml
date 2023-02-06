@@ -9,5 +9,11 @@
     <artifactId>consumer-kafka-wikimedia</artifactId>
     <name>Archetype - consumer-kafka-wikimedia</name>
     <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
     <packaging>jar</packaging>
 </project>
