@@ -2,6 +2,18 @@ server:
   port: 9002
 
 spring:
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      use_sql_comments: true
+      ddl-auto: update
+      format_sql: true
+      show_sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/wikimedia
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
   kafka:
     topic: wikimedia_recentchange
     consumer:
