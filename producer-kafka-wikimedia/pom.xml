@@ -7,6 +7,39 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!--To read the real data from wikimedia we need this dependency -->
+        <dependency>
+            <groupId>com.launchdarkly</groupId>
+            <artifactId>okhttp-eventsource</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.3</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.launchdarkly</groupId>-->
+<!--            <artifactId>okhttp-eventsource</artifactId>-->
+<!--            <version>4.1.0</version>-->
+<!--        </dependency>-->
+        <!--As we are receiving data in json so we need these 2 dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+    </dependencies>
     <artifactId>producer-kafka-wikimedia</artifactId>
     <name>Archetype - producer-kafka-wikimedia</name>
     <url>http://maven.apache.org</url>
