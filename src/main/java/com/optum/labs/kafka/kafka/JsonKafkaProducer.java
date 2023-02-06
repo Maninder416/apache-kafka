@@ -2,6 +2,7 @@ package com.optum.labs.kafka.kafka;
 
 import com.optum.labs.kafka.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class JsonKafkaProducer {
 
-    @Value("${spring.kafka.topic}")
+    @Value("${spring.kafka.jsonTopic}")
     private String topicName;
 
     /**
@@ -23,10 +24,12 @@ public class JsonKafkaProducer {
      * defined these properties in application.yml properties for kafka
      * json producer.
      */
+    @Qualifier("userKafkaTemplate")
     private KafkaTemplate<String, User> kafkaTemplate;
 
     public JsonKafkaProducer(KafkaTemplate<String, User> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
+
+         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void sendMessage(User data){
@@ -35,6 +38,6 @@ public class JsonKafkaProducer {
                 .setHeader(KafkaHeaders.TOPIC,topicName)
                 .build();
         kafkaTemplate.send(message);
-      log.info("***** Message sent ***** :{}",data);
+      log.info("***** Json Message sent ***** :{}",data);
     }
 }
