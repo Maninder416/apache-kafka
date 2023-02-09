@@ -13,8 +13,8 @@ public class Loan {
     private Integer accountNumber;
     @Column(name = "ACCTNBR_CREDIT_LINE")
     private Integer accountNumberCreditLine;
-    @Column(name = "APPLID")
+    @Column(name = "APPLID",length = 2)
     private String applId;
-    @Column(name = "FACEAMTOFNOTEORGNLBAL_TCY")
+    @Column(name = "FACEAMTOFNOTEORGNLBAL_TCY",precision = 19,scale = 4)
     private double faceAmtoFnoteOrgnlbal_tcy;
 }

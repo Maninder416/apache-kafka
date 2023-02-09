@@ -10,15 +10,15 @@ public class Instrument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ACCTNBR")
+    @Column(name = "ACCTNBR",length = 35)
     private String accountNumber;
 
-    @Column(name = "APPLID")
+    @Column(name = "APPLID",length = 2)
     private String applId;
 
-    @Column(name = "CIF")
+    @Column(name = "CIF",length = 18)
     private String cif;
 
-    @Column(name = "TRANS_CURRENCY_CODE")
+    @Column(name = "TRANS_CURRENCY_CODE",length = 3)
     private String currencyCode;
 }
