@@ -2,12 +2,12 @@ server:
   port: 9000
 
 spring:
-  jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create
+#  jpa:
+#    generate-ddl: true
+#    hibernate:
+#      ddl-auto: create
   datasource:
     url: jdbc:mysql://localhost:3307/silicon
     username: root
-    password:
+    password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
