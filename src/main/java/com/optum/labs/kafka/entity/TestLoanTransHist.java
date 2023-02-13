@@ -1,10 +1,13 @@
 package com.optum.labs.kafka.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "TEST_LOAN_TRANS_HIST")
+@Data
 public class TestLoanTransHist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

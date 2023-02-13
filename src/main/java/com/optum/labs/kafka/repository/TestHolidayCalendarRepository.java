@@ -1,0 +1,9 @@
+package com.optum.labs.kafka.repository;
+
+import com.optum.labs.kafka.entity.TestHolidayCalendar;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TestHolidayCalendarRepository extends JpaRepository<TestHolidayCalendar,Long> {
+}

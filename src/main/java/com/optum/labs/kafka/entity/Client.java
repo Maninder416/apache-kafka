@@ -1,10 +1,13 @@
 package com.optum.labs.kafka.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "CLIENTS")
+@Data
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +19,9 @@ public class Client {
     private String branchNbr;
     @Column(name = "CBS_AOTEAMCD",length = 30)
     private String cba_aoteamcd;
+
+    @Column(name ="NAMEADDRLN1",length = 35)
+    private String nameAddRln1;
     @Column(name ="NAMEADDRLN2",length = 35)
     private String nameAddRln2;
     @Column(name = "NAMEADDRLN3",length = 35)

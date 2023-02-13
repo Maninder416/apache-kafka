@@ -1,10 +1,13 @@
 package com.optum.labs.kafka.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
 @Table(name = "LOANS_FACT_VW")
+@Data
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,11 +1,14 @@
 package com.optum.labs.kafka.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.NavigableMap;
 
 @Entity
 @Table(name = "PS_RT_RATE_TBL")
+@Data
 public class PsRtRate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

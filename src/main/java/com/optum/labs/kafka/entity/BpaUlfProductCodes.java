@@ -1,8 +1,11 @@
 package com.optum.labs.kafka.entity;
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "BPA_ULF_PRODUCT_CODES")
+@Data
 public class BpaUlfProductCodes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

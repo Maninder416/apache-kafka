@@ -1,9 +1,12 @@
 package com.optum.labs.kafka.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "INSTRUMENT")
+@Data
 public class Instrument {
 
     @Id

@@ -5,8 +5,15 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create
+      jdbc:
+        batch_size: 1000
+#  datasource:
+#    url: jdbc:mysql://mysqldb:3307/silicon
+#    username: maninder
+#    password: maninder
+#    driver-class-name: com.mysql.cj.jdbc.Driver
   datasource:
-    url: jdbc:mysql://mysqldb:3307/silicon
-    username: maninder
-    password: maninder
+    url: jdbc:mysql://localhost:3306/silicon
+    username: root
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver

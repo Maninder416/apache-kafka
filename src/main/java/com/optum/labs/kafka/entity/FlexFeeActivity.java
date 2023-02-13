@@ -1,11 +1,14 @@
 package com.optum.labs.kafka.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
 @Table(name = "FLEX_FEE_ACTIVITY")
+@Data
 public class FlexFeeActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +43,7 @@ public class FlexFeeActivity {
     @Column(name = "POSTDT")
     private Date postDt;
     @Column(name = "DW_CREATE_TS")
-    private Timestamp dw_create_ts;
+    private Date dw_create_ts;
     @Column(name = "CREATED_BY",length = 30)
     private String created_by;
 }
