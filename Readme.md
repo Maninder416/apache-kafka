@@ -19,4 +19,5 @@ commands to run:
    
     docker logs springboot-kafka-server-1
 
+By default, our docker MySQL always run on 3306 port but if you want to change to another port then you have to add one property called 'MYSQL_TCP_PORT'. Now our docker MySQL will run on port 3307.
    

@@ -13,12 +13,13 @@ services:
     image: "mysql:5.7"
     restart: always
     ports:
-      - 3307:3306
+      - 3307:3307
     environment:
       MYSQL_DATABASE: silicon
       MYSQL_USER: maninder
       MYSQL_PASSWORD: maninder
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_TCP_PORT: 3307
 
 
 

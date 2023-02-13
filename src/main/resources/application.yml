@@ -6,7 +6,7 @@ spring:
     hibernate:
       ddl-auto: create
   datasource:
-    url: jdbc:mysql://mysqldb:3306/silicon
+    url: jdbc:mysql://mysqldb:3307/silicon
     username: maninder
     password: maninder
     driver-class-name: com.mysql.cj.jdbc.Driver
