@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoanService {
-
     @Autowired
     private LoanRepository loanRepository;
-
 
 }

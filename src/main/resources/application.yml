@@ -7,6 +7,6 @@ spring:
       ddl-auto: create
   datasource:
     url: jdbc:mysql://mysqldb:3306/silicon
-    username: root
-    password: password
+    username: maninder
+    password: maninder
     driver-class-name: com.mysql.cj.jdbc.Driver
