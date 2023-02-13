@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @SpringBootApplication
 public class SpringbootKafkaApplication implements CommandLineRunner {
@@ -19,6 +20,6 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("faker bean: "+faker);
+        System.out.println("faker bean: " + faker);
     }
 }

@@ -1,5 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
-
-COPY target/springboot-kafka.jar app.jar
-
-ENTRYPOINT["java","-jar","/app.jar"]
+FROM openjdk:11
+COPY target/spring-kafka.jar spring-kafka.jar
+EXPOSE 9001
+ENTRYPOINT ["java","-jar","spring-kafka.jar"]
