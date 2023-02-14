@@ -1,2 +1,17 @@
 server:
   port: 9000
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        order-input-channel:
+          destination: user
+        order-home-delivery-output-channel:
+          destination: home-service
+        order-takeaway-output-channel:
+          destination: takeaway-service
+      kafka:
+        streams:
+          binder:
+            brokers: localhost:9092
