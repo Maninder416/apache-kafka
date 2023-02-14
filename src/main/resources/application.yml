@@ -1,6 +1,8 @@
 server:
   port: 9001
 spring:
+  profiles:
+    include: docker-compose
   jpa:
     generate-ddl: true
     hibernate:

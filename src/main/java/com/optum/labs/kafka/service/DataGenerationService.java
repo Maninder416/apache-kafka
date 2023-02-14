@@ -1,9 +1,11 @@
 package com.optum.labs.kafka.service;
 
 import com.github.javafaker.Faker;
+import com.optum.labs.kafka.config.KafkaProducerConfig;
 import com.optum.labs.kafka.entity.*;
 import com.optum.labs.kafka.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -34,6 +36,10 @@ public class DataGenerationService {
     private ClientRepository clientRepository;
     @Autowired
     private FlexFeeRepository flexFeeRepository;
+    @Autowired
+    private KafkaProducerConfig kafkaProducerConfig;
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     /**
      * Inserting data for Loan entity
@@ -48,6 +54,7 @@ public class DataGenerationService {
             loan.setApplId(faker.regexify(pattern));
             loan.setAccountNumberCreditLine(Integer.valueOf(faker.number().digits(8)));
             loan.setFaceAmtoFnoteOrgnlbal_tcy(faker.number().randomDouble(0, 1000, 10000));
+            kafkaTemplate.send("testing-1",loan.toString());
             loanRepository.save(loan);
         }
         return "Data generated for loan fact table";
@@ -217,6 +224,7 @@ public class DataGenerationService {
             flexFeeActivity.setTrans_crrncy_cd(faker.regexify(currencyCode));
             flexFeeRepository.save(flexFeeActivity);
         }
+        System.out.println("Kafka template bean: " + kafkaTemplate.toString());
         return "Data generated for FlexFeeActivity table";
     }
 
