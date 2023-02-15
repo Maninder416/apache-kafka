@@ -49,12 +49,12 @@ public class DataGenerationService {
     public String generateDataForLoan() {
         for (int i = 0; i <= 100; i++) {
             Loan loan = new Loan();
-            loan.setAccountNumber(Integer.valueOf(faker.number().digits(8)));
+            loan.setAccountNumber(Integer.valueOf(faker.number().digits(2)));
             String pattern = "[L-O]{2}";
             loan.setApplId(faker.regexify(pattern));
-            loan.setAccountNumberCreditLine(Integer.valueOf(faker.number().digits(8)));
+            loan.setAccountNumberCreditLine(Integer.valueOf(faker.number().digits(2)));
             loan.setFaceAmtoFnoteOrgnlbal_tcy(faker.number().randomDouble(0, 1000, 10000));
-            kafkaTemplate.send("testing-1",loan.toString());
+          //  kafkaTemplate.send("testing-1",loan.toString());
             loanRepository.save(loan);
         }
         return "Data generated for loan fact table";
@@ -72,7 +72,7 @@ public class DataGenerationService {
             String pattern2 = "[L-O]{2}";
             creditLines.setApplId_loan(faker.regexify(pattern));
             creditLines.setLine_stat(faker.regexify(pattern2));
-            creditLines.setCustLineNbr((faker.number().digits(8)));
+            creditLines.setCustLineNbr((faker.number().digits(2)));
             creditLineRepository.save(creditLines);
         }
         return "Data generated for credit line table";
@@ -84,14 +84,15 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForInstrument() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 500; i++) {
             Instrument instrument = new Instrument();
             String pattern = "[L-O]{2}";
             String currencyCode = "[A-D]{3}";
-            instrument.setAccountNumber(faker.number().digits(8));
+            instrument.setAccountNumber(faker.number().digits(2));
             instrument.setApplId(faker.regexify(pattern));
-            instrument.setCif(faker.number().digits(10));
+            instrument.setCif(faker.number().digits(2));
             instrument.setCurrencyCode(faker.regexify(currencyCode));
+            instrument.setProdCd(faker.number().digits(3));
             instrumentRepository.save(instrument);
         }
         return "Data generated for instrument table";
@@ -103,7 +104,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForbpaUlfProductCodes() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 500; i++) {
             BpaUlfProductCodes bpaUlfProductCodes = new BpaUlfProductCodes();
             String pattern = "[A-D]{3}";
             String category_cd = "[A-D]{2}";
@@ -120,10 +121,10 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForpsRate() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 500; i++) {
             PsRtRate rate = new PsRtRate();
-            rate.setTo_cur(faker.number().digits(8));
-            rate.setFrom_cur(faker.number().digits(8));
+            rate.setTo_cur(faker.number().digits(2));
+            rate.setFrom_cur(faker.number().digits(2));
             rate.setSvb_rate(faker.number().randomDouble(0, 1000, 10000));
             rate.setEffdt(faker.date().birthday());
             psRateRepository.save(rate);
@@ -137,7 +138,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataFortestHolidayCalendar() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 500; i++) {
             TestHolidayCalendar calendar = new TestHolidayCalendar();
             calendar.setBranchHolidayDt(faker.date().birthday());
             testHolidayCalendarRepository.save(calendar);
@@ -151,12 +152,13 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForTestLoanTransHist() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 500; i++) {
             TestLoanTransHist hist = new TestLoanTransHist();
-            hist.setAcctNbr(faker.number().digits(8));
+            hist.setAcctNbr(faker.number().digits(2));
             hist.setEffectiveDt(faker.date().birthday());
             hist.setPostDt(faker.date().birthday());
             hist.setNotePrncplBalgross(faker.number().randomDouble(0, 1000, 10000));
+            hist.setTranId(faker.number().digits(2));
             testLoanTransHistRepository.save(hist);
         }
         return "Data generated for TestLoanTransHist table";
@@ -168,7 +170,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForClient() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 500; i++) {
             Client client = new Client();
             String regex = "\\d{2}[A-H]";
             String nameAddLn1 = "CUSTOMER \\d{10}";
@@ -178,7 +180,7 @@ public class DataGenerationService {
             String statusCode = "[A-C]";
             client.setBranchNbr(faker.number().digits(5));
             client.setCba_aoteamcd(faker.regexify(regex));
-            client.setCif(faker.number().digits(8));
+            client.setCif(faker.number().digits(2));
             client.setFullName(faker.name().fullName());
             client.setExpiryDate(faker.date().birthday());
             client.setNameAddRln1(faker.regexify(nameAddLn1));
@@ -202,23 +204,23 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForFlexFeeActivity() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 500; i++) {
             FlexFeeActivity flexFeeActivity = new FlexFeeActivity();
             String pattern = "[L-O]{3}";
             String currencyCode = "[A-D]{3}";
             flexFeeActivity.setApplId(faker.regexify(pattern));
-            flexFeeActivity.setCif(faker.number().digits(9));
-            flexFeeActivity.setCreated_by(faker.number().digits(10));
-            flexFeeActivity.setCustLnNbr(faker.number().digits(10));
+            flexFeeActivity.setCif(faker.number().digits(2));
+            flexFeeActivity.setCreated_by(faker.number().digits(2));
+            flexFeeActivity.setCustLnNbr(faker.number().digits(2));
             flexFeeActivity.setDw_create_ts(faker.date().birthday());
             flexFeeActivity.setEffdt(faker.date().birthday());
             flexFeeActivity.setEntity(faker.regexify(pattern));
             flexFeeActivity.setFlex_cmtmnt_amt_lcy(faker.number().randomDouble(0, 100, 10000));
-            flexFeeActivity.setFlex_cmtmnt_amt_tcy(faker.number().digits(10));
-            flexFeeActivity.setFlex_fee_accr_bas(faker.number().digits(5));
+            flexFeeActivity.setFlex_cmtmnt_amt_tcy(faker.number().digits(2));
+            flexFeeActivity.setFlex_fee_accr_bas(faker.number().digits(2));
             flexFeeActivity.setFlex_fee_pct(faker.number().randomDouble(0, 1000, 10000));
-            flexFeeActivity.setFlex_unCmtMnt_amt_lcy(faker.number().digits(10));
-            flexFeeActivity.setFlex_unCmtMnt_amt_tcy(faker.number().digits(10));
+            flexFeeActivity.setFlex_unCmtMnt_amt_lcy(faker.number().digits(2));
+            flexFeeActivity.setFlex_unCmtMnt_amt_tcy(faker.number().digits(2));
             flexFeeActivity.setPostDt(faker.date().birthday());
             flexFeeActivity.setSrc_updt_dt(faker.date().birthday());
             flexFeeActivity.setTrans_crrncy_cd(faker.regexify(currencyCode));

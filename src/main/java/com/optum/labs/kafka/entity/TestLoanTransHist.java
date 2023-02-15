@@ -14,6 +14,9 @@ public class TestLoanTransHist {
     private Long id;
     @Column(name = "ACCTNBR", length = 35)
     private String acctNbr;
+
+    @Column(name = "TRANID", length = 30)
+    private String tranId;
     @Column(name = "POSTDT")
     private Date postDt;
     @Column(name = "EFFECTIVEDT")

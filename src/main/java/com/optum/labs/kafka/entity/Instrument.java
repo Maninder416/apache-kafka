@@ -22,6 +22,9 @@ public class Instrument {
     @Column(name = "CIF",length = 18)
     private String cif;
 
+    @Column(name = "PRODCD",length = 3)
+    private String prodCd;
+
     @Column(name = "TRANS_CURRENCY_CODE",length = 3)
     private String currencyCode;
 }
