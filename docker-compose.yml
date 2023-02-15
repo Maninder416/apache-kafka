@@ -21,6 +21,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_TCP_PORT: 3307
 
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
     hostname: zookeeper
@@ -91,3 +92,21 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java"
     volumes:
       - ./connectors:/connectors
+
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:5.3.1
+    hostname: control-center
+    container_name: control-center
+    platform: linux/x86_64
+    depends_on:
+      - kafka
+      - zookeeper
+      - schema-registry
+    restart: always
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: kafka:29092
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: zookeeper:2181
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
