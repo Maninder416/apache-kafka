@@ -127,4 +127,11 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
+    @Bean
+    public NewTopic testingTopic() {
+        return TopicBuilder.name("testing")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 }

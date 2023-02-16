@@ -31,4 +31,6 @@ public class KafkaProducerConfig {
     public KafkaTemplate<String, String> userKafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+
+
 }

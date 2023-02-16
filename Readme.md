@@ -34,3 +34,8 @@ Create:
 Delete:
    
    kafka-topics --bootstrap-server localhost:9092 --delete --topic first_topic_demo
+   
+producer:
+
+kafka-console-producer --topic testing --bootstrap-server localhost:9092
+
