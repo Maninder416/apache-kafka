@@ -1,6 +1,25 @@
 ---
 version: '2'
 services:
+  server:
+    build: .
+    restart: always
+    ports:
+      - 9001:9001
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: "mysql:5.7"
+    restart: always
+    ports:
+      - 3307:3307
+    environment:
+      MYSQL_DATABASE: silicon
+      MYSQL_USER: maninder
+      MYSQL_PASSWORD: maninder
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_TCP_PORT: 3307
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
     hostname: zookeeper
@@ -90,6 +109,7 @@ services:
     depends_on:
       - broker
       - schema-registry
+      - mysqldb
     ports:
       - "8083:8083"
 
@@ -104,7 +124,7 @@ services:
       CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components
+      CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components,/etc/kafka-connect/jars
       CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.5.0.jar
       # JDBC source connector configuration
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
