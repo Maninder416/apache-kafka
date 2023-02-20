@@ -1,0 +1,9 @@
+CREATE TABLE `loans_fact_vw` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `acctnbr` int DEFAULT NULL,
+  `acctnbr_credit_line` int DEFAULT NULL,
+  `applid` varchar(2) DEFAULT NULL,
+  `faceamtofnoteorgnlbal_tcy` double DEFAULT NULL,
+  PRIMARY KEY (`id`));
+
+insert into loans_fact_vw values (500,72,22,'NM',12233);
