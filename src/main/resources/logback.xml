@@ -5,9 +5,9 @@
         </encoder>
     </appender>
 
-    <logger name="com.reactivestax" level="DEBUG" />
+    <logger name="com.optum.labs.kafka" level="DEBUG" />
 
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
