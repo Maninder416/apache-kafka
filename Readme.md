@@ -8,7 +8,7 @@ Create Topics and Avro Schema
 kafka-avro-console-producer --broker-list localhost:9092 --topic customer-details --property value.schema='{"namespace":"com.ibm.gbs.schema","type": "record","name": "Customer","fields": [{"name": "customerId","type": "string"},{"name": "name","type" :"string"},{"name": "phoneNumber","type": "string"},{"name": "accountId","type": "string"}]}'
 
 Payload:
-{"customerId”:”six”,”name":"Sukhjinder","phoneNumber":"123456","accountId":"one"}
+{"customerId”:”six”,”name":"Maninder","phoneNumber":"123456","accountId":"one"}
 
 kafka-avro-console-producer --broker-list localhost:9092 --topic transaction-details --property value.schema='{"namespace":"com.ibm.gbs.schema","type": "record","name": "Transaction","fields":[{"name": "balanceId","type": {"avro.java.string": "String","type": "string"}},{"name": "accountId","type":{"avro.java.string": "String","type": "string"}},{"name": "balance","type": "float"}]}'
 
