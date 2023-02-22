@@ -6,10 +6,9 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "BPA_ULF_PRODUCT_CODES")
+@Table(name = "PRODUCT_CATEGORY")
 @Data
 @AllArgsConstructor
-
 public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

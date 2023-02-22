@@ -1,5 +1,6 @@
 package com.optum.labs.kafka;
 
+import com.optum.labs.kafka.entity.BpaUlfProductCodes;
 import com.optum.labs.kafka.entity.Instrument;
 import com.optum.labs.kafka.service.DataGenerationService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
 
 
     public static final String PRODUCT_DETAILS_TOPIC = "credit.creditlines-product-code.in";
-    public static final String CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category.in";
+    public static final String CATEGORY_DETAILS_TOPIC = "product-category2.in";
     public static final String PRODUCT_CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category-product-code.out";
     public static final String SCHEMA_REGISTRY_URL = "http://localhost:8081";
     public static final String KAFKA_BOOTSTRAP_SERVER = "localhost:9092";
@@ -60,37 +61,41 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, new JsonSerde<>(Instrument.class).getClass());
+//        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, new JsonSerde<>(BpaUlfProductCodes.class).getClass());
 
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
         props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
         props.put(JsonDeserializer.KEY_DEFAULT_TYPE, String.class);
-        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, Instrument.class);
+//        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, Instrument.class);
+//        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, BpaUlfProductCodes.class);
         return props;
     }
 
     public void test() {
         StreamsBuilder builder = new StreamsBuilder();
-        KStream<String, Instrument> productInfo = builder.stream(PRODUCT_DETAILS_TOPIC);
-        System.out.println("******** here bpaUlfProductCode data is ********");
-
-        productInfo.foreach((key,value)->{
-            System.out.println("Received record: Key=  value: "+value);
-        });
-        productInfo.print(Printed.toSysOut());
-
-//        KStream<String, BpaUlfProductCodes> productInfoKeyStream = productInfo.selectKey((key, value) ->
-//                value.getId().toString());
-
-//        productInfoKeyStream.print(Printed.toSysOut());
-
-        KStream<String, Instrument> instrumentInfo = builder.stream(CATEGORY_DETAILS_TOPIC);
+        KStream<String, Instrument> productCodeInfo = builder.stream(PRODUCT_DETAILS_TOPIC,Consumed.with(Serdes.String(),new JsonSerde<>(Instrument.class)));
         System.out.println("******** here instrument data is ********");
-        instrumentInfo.print(Printed.toSysOut());
+        productCodeInfo.print(Printed.toSysOut());
+        productCodeInfo.foreach((key,value)->
+                        System.out.println("product topic key value: "+key+" :value: "+value)
+                );
 
-        KStream<String, Instrument> instrumentInfoKeyStream = instrumentInfo.selectKey((key, value) ->
+        KStream<String, Instrument> productCodeInfoKeyStream = productCodeInfo.selectKey((key, value) ->
                 value.getId().toString());
-        instrumentInfoKeyStream.print(Printed.toSysOut());
+
+        productCodeInfoKeyStream.print(Printed.toSysOut());
+
+        KStream<String, BpaUlfProductCodes> instrumentInfo = builder.stream(CATEGORY_DETAILS_TOPIC,Consumed.with(Serdes.String(),new JsonSerde<>(BpaUlfProductCodes.class)));
+        System.out.println("******** here BpaUlfProductCodes data is ********");
+        instrumentInfo.print(Printed.toSysOut());
+        instrumentInfo.foreach((key,value)->
+                        System.out.println("category topic key value: "+key.toString()+ "value: "+value.toString())
+                );
+//
+//        KStream<String, Instrument> instrumentInfoKeyStream = instrumentInfo.selectKey((key, value) ->
+//                value.getId().toString());
+//        instrumentInfoKeyStream.print(Printed.toSysOut());
 //        ValueJoiner<Instrument,BpaUlfProductCodes, ProductCategory> joiner=
 //                (instrument, bpaUldProductCodes)->
 //                        new ProductCategory.Builder()
