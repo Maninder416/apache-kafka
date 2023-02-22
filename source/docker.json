@@ -3,8 +3,8 @@
   "config": {
     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
     "task.max": "1",
-    "key.converter": "io.confluent.connect.avro.AvroConverter",
-    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "key.converter.schema.registry.url": "http://schema-registry:8081",
     "value.converter.schema.registry.url": "http://schema-registry:8081",
     "transforms": "createKey,setSchema",
@@ -12,9 +12,9 @@
     "transforms.createKey.fields": "ID",
     "transforms.setSchema.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Value",
     "transforms.setSchema.schema.name": "silicon_Data",
-    "connection.url": "jdbc:mysql://mysqldb:3307/silicon",
-    "connection.user": "maninder",
-    "connection.password": "maninder",
+    "connection.url": "jdbc:mysql://localhost:3306/silicon",
+    "connection.user": "root",
+    "connection.password": "",
     "dialect.name": "MySqlDatabaseDialect",
     "mode": "incrementing",
     "incrementing.column.name": "ID",
@@ -24,7 +24,7 @@
     "table.type": "TABLE",
     "poll.interval.ms": "5000",
     "batch.max.rows": "5",
-    "topic.prefix": "testing",
+    "topic.prefix": "credit.creditlines-product-code.in",
     "db.timezone": "America/Toronto"
   }
 }

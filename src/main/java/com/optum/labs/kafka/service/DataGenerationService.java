@@ -92,7 +92,7 @@ public class DataGenerationService {
             instrument.setApplId(faker.regexify(pattern));
             instrument.setCif(faker.number().digits(2));
             instrument.setCurrencyCode(faker.regexify(currencyCode));
-            instrument.setProdCd(faker.number().digits(3));
+            instrument.setProdCd(faker.regexify(currencyCode));
             instrumentRepository.save(instrument);
         }
         return "Data generated for instrument table";
