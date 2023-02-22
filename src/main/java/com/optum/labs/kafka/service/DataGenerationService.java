@@ -84,7 +84,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForInstrument() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 5; i++) {
             Instrument instrument = new Instrument();
             String pattern = "[L-O]{2}";
             String currencyCode = "[A-D]{3}";

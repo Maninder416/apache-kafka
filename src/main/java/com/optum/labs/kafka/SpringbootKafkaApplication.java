@@ -1,17 +1,10 @@
 package com.optum.labs.kafka;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.optum.labs.kafka.entity.BpaUlfProductCodes;
 import com.optum.labs.kafka.entity.Instrument;
-import com.optum.labs.kafka.entity.ProductCategory;
 import com.optum.labs.kafka.service.DataGenerationService;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.Deserializer;
-import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
@@ -23,10 +16,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerde;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import javax.servlet.http.PushBuilder;
-import java.time.Duration;
 import java.util.Properties;
 
 @SpringBootApplication
@@ -69,7 +59,6 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, PRODUCT_CATEGORY_APP_ID);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
-//        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, new JsonSerde<>(Instrument.class).getClass());
 
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
@@ -83,10 +72,10 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
     public void test() {
         StreamsBuilder builder = new StreamsBuilder();
         KStream<String, Instrument> productInfo = builder.stream(PRODUCT_DETAILS_TOPIC);
-//        KStream<String, Instrument> productInfo = builder.stream(PRODUCT_DETAILS_TOPIC,Consumed.with(Serdes.String(),new JsonSerde<>(Instrument.class)));
         System.out.println("******** here bpaUlfProductCode data is ********");
+
         productInfo.foreach((key,value)->{
-            System.out.println("Received record: Key= "+key.toString()+ ", value: "+value.toString());
+            System.out.println("Received record: Key=  value: "+value);
         });
         productInfo.print(Printed.toSysOut());
 

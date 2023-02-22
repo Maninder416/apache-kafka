@@ -50,7 +50,7 @@ public class KafkaTopicConfiguration {
 
     @Bean
     public NewTopic productCodeTopic() {
-        return TopicBuilder.name("credit.creditlines.product-code.in")
+        return TopicBuilder.name("credit.creditlines-product-code.in")
                 .partitions(1)
                 .replicas(1)
                 .build();
