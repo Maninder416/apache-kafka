@@ -75,10 +75,10 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
     public void test() {
         StreamsBuilder builder = new StreamsBuilder();
         KStream<String, Instrument> productCodeInfo = builder.stream(PRODUCT_DETAILS_TOPIC,Consumed.with(Serdes.String(),new JsonSerde<>(Instrument.class)));
-        System.out.println("******** here instrument data is ********");
+        log.info("******** here instrument data is ********");
         productCodeInfo.print(Printed.toSysOut());
         productCodeInfo.foreach((key,value)->
-                        System.out.println("product topic key value: "+key+" :value: "+value)
+                        log.info("product topic key value: "+key+" :value: "+value)
                 );
 
         KStream<String, Instrument> productCodeInfoKeyStream = productCodeInfo.selectKey((key, value) ->
@@ -87,10 +87,10 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         productCodeInfoKeyStream.print(Printed.toSysOut());
 
         KStream<String, BpaUlfProductCodes> instrumentInfo = builder.stream(CATEGORY_DETAILS_TOPIC,Consumed.with(Serdes.String(),new JsonSerde<>(BpaUlfProductCodes.class)));
-        System.out.println("******** here BpaUlfProductCodes data is ********");
+        log.info("******** here BpaUlfProductCodes data is ********");
         instrumentInfo.print(Printed.toSysOut());
         instrumentInfo.foreach((key,value)->
-                        System.out.println("category topic key value: "+key.toString()+ "value: "+value.toString())
+                        log.info("category topic key value: "+key.toString()+ "value: "+value.toString())
                 );
 //
 //        KStream<String, Instrument> instrumentInfoKeyStream = instrumentInfo.selectKey((key, value) ->
@@ -113,10 +113,9 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
 //
 //        productCategoryInfoStream.to(PRODUCT_CATEGORY_APP_ID);
         final Topology topology= builder.build();
-        System.out.println("properties are: "+properties());
         KafkaStreams kafkaStreams= new KafkaStreams(topology,properties());
         kafkaStreams.cleanUp();
-        System.out.println("streaming started here ");
+        log.info("streaming started here ");
         kafkaStreams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
     }
