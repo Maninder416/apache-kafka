@@ -68,13 +68,15 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, PRODUCT_CATEGORY_APP_ID);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
-        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 //        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, new JsonSerde<>(Instrument.class).getClass());
 
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
         props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
+        props.put(JsonDeserializer.KEY_DEFAULT_TYPE, String.class);
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, Instrument.class);
         return props;
     }
 
@@ -120,6 +122,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         System.out.println("properties are: "+properties());
         KafkaStreams kafkaStreams= new KafkaStreams(topology,properties());
         kafkaStreams.cleanUp();
+        System.out.println("streaming started here ");
         kafkaStreams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
     }
