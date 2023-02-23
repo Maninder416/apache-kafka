@@ -1,12 +1,13 @@
 {
-  "name": "product-code-connector",
+  "name": "product-category-connector",
   "config": {
     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
     "task.max": "1",
-    "key.converter": "io.confluent.connect.avro.AvroConverter",
-    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "key.converter.schema.registry.url": "http://localhost:8081",
     "value.converter.schema.registry.url": "http://localhost:8081",
+    "value.converter.schemas.enable": false,
     "transforms": "createKey,setSchema",
     "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
     "transforms.createKey.fields": "ID",
@@ -14,17 +15,17 @@
     "transforms.setSchema.schema.name": "silicon_Data",
     "connection.url": "jdbc:mysql://localhost:3306/silicon",
     "connection.user": "root",
-    "connection.password": "",
+    "connection.password": "root",
     "dialect.name": "MySqlDatabaseDialect",
     "mode": "incrementing",
     "incrementing.column.name": "ID",
     "numeric.precision.mapping": true,
     "numeric.mapping": "best_fit",
-    "query": "select ID from loans_fact_vw",
+    "query": "SELECT ID,PRODUCT_CD,PRODUCT_CATEGORY_CD FROM bpa_ulf_product_codes",
     "table.type": "TABLE",
     "poll.interval.ms": "5000",
     "batch.max.rows": "5",
-    "topic.prefix": "credit.creditlines-product-code.in",
+    "topic.prefix": "credit.creditlines.product-category.in",
     "db.timezone": "America/Toronto"
   }
 }
