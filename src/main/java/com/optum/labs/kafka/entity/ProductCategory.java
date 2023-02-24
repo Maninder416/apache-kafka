@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "PRODUCT_CATEGORY")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
