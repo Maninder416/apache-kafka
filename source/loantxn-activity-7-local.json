@@ -1,0 +1,31 @@
+{
+  "name": "loan-txn-7-connector",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "task.max": "1",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schema.registry.url": "http://localhost:8081",
+    "value.converter.schema.registry.url": "http://localhost:8081",
+    "value.converter.schemas.enable": false,
+    "transforms": "createKey,setSchema",
+    "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.createKey.fields": "ID",
+    "transforms.setSchema.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Value",
+    "transforms.setSchema.schema.name": "silicon_Data",
+    "connection.url": "jdbc:mysql://localhost:3306/silicon",
+    "connection.user": "root",
+    "connection.password": "root",
+    "dialect.name": "MySqlDatabaseDialect",
+    "mode": "incrementing",
+    "incrementing.column.name": "ID",
+    "numeric.precision.mapping": true,
+    "numeric.mapping": "best_fit",
+    "query": "SELECT ID,PSGL_DEPARTMENT, BRANCHNBR, CBS_AOTEAMCD, NAMEADDRLN2, NAMEADDRLN3, \nNAMEADDRLN4,NAMEADDRLN5,NAMEADDRLN6, ZIPPOSTALCD,FULL_NAME FROM clients ",
+    "table.type": "TABLE",
+    "poll.interval.ms": "5000",
+    "batch.max.rows": "5",
+    "topic.prefix": "credit.creditlines.loantxn.activity.in",
+    "db.timezone": "America/Toronto"
+  }
+}

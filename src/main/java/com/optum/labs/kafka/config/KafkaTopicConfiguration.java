@@ -32,21 +32,21 @@ public class KafkaTopicConfiguration {
 //                .build();
 //    }
 //
-//    @Bean
-//    public NewTopic currencyCodeTopic() {
-//        return TopicBuilder.name("credit.creditlines.currency-code.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic loanTxtTopic() {
-//        return TopicBuilder.name("credit.creditlines.loantxn.activity.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
+    @Bean
+    public NewTopic currencyCodeTopic() {
+        return TopicBuilder.name("credit.creditlines.currency-code.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic loanTxtTopic() {
+        return TopicBuilder.name("credit.creditlines.loantxn.activity.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 
     @Bean
     public NewTopic productCodeTopic() {

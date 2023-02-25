@@ -20,4 +20,7 @@ public class CreditLines {
 
     @Column(name = "LINE_STAT",length = 2)
     private String line_stat;
+
+    @Column(name ="APPLID",length = 3)
+    private String applId;
 }

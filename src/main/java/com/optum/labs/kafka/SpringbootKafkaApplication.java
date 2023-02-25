@@ -1,11 +1,10 @@
 package com.optum.labs.kafka;
 
-import com.optum.labs.kafka.entity.BpaUlfProductCodes;
-import com.optum.labs.kafka.entity.Instrument;
-import com.optum.labs.kafka.entity.ProductCategory;
+import com.optum.labs.kafka.entity.*;
 import com.optum.labs.kafka.service.DataGenerationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.protocol.types.Field;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -32,6 +31,8 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
     public static final String PRODUCT_DETAILS_TOPIC = "credit.creditlines-product-code.in";
     public static final String CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category.in";
     public static final String PRODUCT_CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category-product-code.out";
+    public static final String CURRENCY_CODE_TOPIC= "credit.creditlines.currency-code.in";
+    public static final String LOAN_TXN_TOPIC= "credit.creditlines.loantxn.activity.in";
     public static final String SCHEMA_REGISTRY_URL = "http://localhost:8081";
     public static final String KAFKA_BOOTSTRAP_SERVER = "localhost:9092";
     public static final String PRODUCT_CATEGORY_APP_ID = "customer-transaction-enrichment-app";
@@ -54,9 +55,11 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         dataCreationService.generateDataForpsRate();
         dataCreationService.generateDataFortestHolidayCalendar();
         dataCreationService.generateDataForTestLoanTransHist();
+        dataCreationService.generateDataForFlexActivity();
         log.info("******** Data is inserted into tables ********");
         log.info("******* Trying to send streaming data *******");
-        productCategoryCodeStream();
+       // productCategoryCodeStream();
+        currencyCodeLoanTxnActivityStream();
     }
 
     public Properties properties() {
@@ -129,5 +132,40 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         log.info("streaming started here ");
         kafkaStreams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
+    }
+
+    public void currencyCodeLoanTxnActivityStream(){
+        StreamsBuilder builder= new StreamsBuilder();
+//        final Serde<FlexActivity> flexActivitySerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(FlexActivity.class));
+//        KStream<String,FlexActivity> flexActivityKStream= builder.stream(CURRENCY_CODE_TOPIC,Consumed.with(Serdes.String(),flexActivitySerde));
+//        flexActivityKStream.print(Printed.toSysOut());
+//        flexActivityKStream.foreach((key,value)->
+//                log.info("***** key :{} value :{} for flex activity stream is: ",key,value)
+//                );
+//
+//        KStream<String,FlexActivity> flexActivityInfoKeyStream= flexActivityKStream.selectKey((key,value)->
+//                value.getId().toString()
+//                );
+
+        final Serde<Client> clientSerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(Client.class));
+        KStream<String,Client> clientKStream= builder.stream(LOAN_TXN_TOPIC,Consumed.with(Serdes.String(),clientSerde));
+        clientKStream.foreach((key,value)->
+                log.info("Key :{} value :{} for client stream: ",key,value)
+                );
+
+        KStream<String,Client> clientKStreamInfo = clientKStream.selectKey((key,value)->
+                value.getId().toString()
+                );
+
+
+
+        final Topology topology= builder.build();
+        KafkaStreams kafkaStreams= new KafkaStreams(topology,properties());
+        kafkaStreams.cleanUp();
+        log.info("***** Starting kafka stream *****");
+        kafkaStreams.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
+
+
     }
 }

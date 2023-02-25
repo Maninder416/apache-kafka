@@ -41,13 +41,16 @@ public class DataGenerationService {
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
+    @Autowired
+    private FlexActivityRepository flexActivityRepository;
+
     /**
      * Inserting data for Loan entity
      *
      * @return
      */
     public String generateDataForLoan() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 5; i++) {
             Loan loan = new Loan();
             loan.setAccountNumber(Integer.valueOf(faker.number().digits(2)));
             String pattern = "[L-O]{2}";
@@ -66,13 +69,15 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForCreditLine() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 500; i++) {
             CreditLines creditLines = new CreditLines();
-            String pattern = "[L-O]{3}";
-            String pattern2 = "[L-O]{2}";
+            String pattern = "[L-O]{2}";
+            String pattern2 = "[L-O]{1}";
+            String currencyCode = "[A-D]{3}";
             creditLines.setApplId_loan(faker.regexify(pattern));
             creditLines.setLine_stat(faker.regexify(pattern2));
             creditLines.setCustLineNbr((faker.number().digits(2)));
+            creditLines.setApplId(faker.regexify(currencyCode));
             creditLineRepository.save(creditLines);
         }
         return "Data generated for credit line table";
@@ -121,7 +126,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForpsRate() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 5; i++) {
             PsRtRate rate = new PsRtRate();
             rate.setTo_cur(faker.number().digits(2));
             rate.setFrom_cur(faker.number().digits(2));
@@ -138,7 +143,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataFortestHolidayCalendar() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 5; i++) {
             TestHolidayCalendar calendar = new TestHolidayCalendar();
             calendar.setBranchHolidayDt(faker.date().birthday());
             testHolidayCalendarRepository.save(calendar);
@@ -152,7 +157,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForTestLoanTransHist() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 5; i++) {
             TestLoanTransHist hist = new TestLoanTransHist();
             hist.setAcctNbr(faker.number().digits(2));
             hist.setEffectiveDt(faker.date().birthday());
@@ -204,7 +209,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForFlexFeeActivity() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 5; i++) {
             FlexFeeActivity flexFeeActivity = new FlexFeeActivity();
             String pattern = "[L-O]{3}";
             String currencyCode = "[A-D]{3}";
@@ -228,6 +233,16 @@ public class DataGenerationService {
         }
         System.out.println("Kafka template bean: " + kafkaTemplate.toString());
         return "Data generated for FlexFeeActivity table";
+    }
+
+    public String generateDataForFlexActivity(){
+        for(int i=0;i<100;i++){
+            FlexActivity activity= new FlexActivity();
+            activity.setCustomerLineNumber((faker.number().digits(2)));
+            activity.setPostDt(faker.date().birthday());
+            flexActivityRepository.save(activity);
+        }
+        return "Data generated for flex activity table";
     }
 
 }
