@@ -56,7 +56,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         dataCreationService.generateDataForTestLoanTransHist();
         log.info("******** Data is inserted into tables ********");
         log.info("******* Trying to send streaming data *******");
-        test();
+        productCategoryCodeStream();
     }
 
     public Properties properties() {
@@ -71,12 +71,10 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         return props;
     }
 
-    public void test() {
+    public void productCategoryCodeStream() {
         final Serde<Instrument> instrumentSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(Instrument.class));
         StreamsBuilder builder = new StreamsBuilder();
-//        KStream<String, Instrument> productCodeInfo = builder.stream(PRODUCT_DETAILS_TOPIC, Consumed.with(Serdes.String(), new JsonSerde<>(Instrument.class)));
         KStream<String, Instrument> productCodeInfo = builder.stream(PRODUCT_DETAILS_TOPIC, Consumed.with(Serdes.String(), instrumentSerde));
-        log.info("******** here instrument data is ********");
         productCodeInfo.print(Printed.toSysOut());
         productCodeInfo.foreach((key, value) ->
                 log.info("product topic key value: " + key + " :value: " + value)
@@ -90,7 +88,6 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
                 log.info("product code info key and value :{} :{}", key, value)
         );
         final Serde<BpaUlfProductCodes> bpaUlfProductCodesSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(BpaUlfProductCodes.class));
-//        KStream<String, BpaUlfProductCodes> instrumentInfo = builder.stream(CATEGORY_DETAILS_TOPIC, Consumed.with(Serdes.String(), new JsonSerde<>(BpaUlfProductCodes.class)));
         KStream<String, BpaUlfProductCodes> instrumentInfo = builder.stream(CATEGORY_DETAILS_TOPIC, Consumed.with(Serdes.String(), bpaUlfProductCodesSerde));
         log.info("******** here BpaUlfProductCodes data is ********");
         instrumentInfo.print(Printed.toSysOut());
