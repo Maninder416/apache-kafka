@@ -21,7 +21,7 @@
     "incrementing.column.name": "ID",
     "numeric.precision.mapping": true,
     "numeric.mapping": "best_fit",
-    "query": "SELECT ID,ACCTNBR, TRANS_CURRENCY_CODE NOTE_CURRENCY_CODE FROM instrument",
+    "query": "SELECT ID,ACCTNBR, TRANS_CURRENCY_CODE FROM instrument",
     "table.type": "TABLE",
     "poll.interval.ms": "5000",
     "batch.max.rows": "5",

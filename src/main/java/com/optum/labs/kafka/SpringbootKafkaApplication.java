@@ -59,8 +59,8 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         dataCreationService.generateDataForFlexActivity();
         log.info("******** Data is inserted into tables ********");
         log.info("******* Trying to send streaming data *******");
-       // productCategoryCodeStream();
-        currencyCodeLoanTxnActivityStream();
+        productCategoryCodeStream();
+      //  currencyCodeLoanTxnActivityStream();
     }
 
     public Properties properties() {
@@ -111,9 +111,10 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
                         new ProductCategory.Builder()
                                 .id(instrument.getId())
                                 .accountNumber(instrument.getAccountNumber())
-                                .applId(instrument.getApplId())
-                                .cif(instrument.getCif())
+//                                .applId(instrument.getApplId())
+//                                .cif(instrument.getCif())
                                 .product_category_cd(bpaUldProductCodes.getProduct_category_cd())
+                                .product_cd(bpaUldProductCodes.getProduct_cd())
                                 .build();
 
         KStream<String, ProductCategory> productCategoryInfoStream = productCodeInfoKeyStream
