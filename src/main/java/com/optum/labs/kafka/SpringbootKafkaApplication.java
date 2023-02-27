@@ -137,55 +137,49 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
 
     public void currencyCodeLoanTxnActivityStream(){
         StreamsBuilder builder= new StreamsBuilder();
-        final Serde<FlexActivity> flexActivitySerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(FlexActivity.class));
-        KStream<String,FlexActivity> flexActivityKStream= builder.stream(CURRENCY_CODE_TOPIC,Consumed.with(Serdes.String(),flexActivitySerde));
-        flexActivityKStream.print(Printed.toSysOut());
-        flexActivityKStream.foreach((key,value)->
-                log.info("***** key value for flex activity stream is :{} :{} : ",key,value)
+        final Serde<Instrument> instrumentSerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(Instrument.class));
+        KStream<String,Instrument> instrumentKStream= builder.stream(CURRENCY_CODE_TOPIC,Consumed.with(Serdes.String(),instrumentSerde));
+        instrumentKStream.print(Printed.toSysOut());
+        instrumentKStream.foreach((key,value)->
+                log.info("***** key value for instrument stream is :{} :{} : ",key,value)
                 );
 
-        KStream<String,FlexActivity> flexActivityInfoKeyStream= flexActivityKStream.selectKey((key,value)->
+        KStream<String,Instrument> instrumentInfoKeyStream= instrumentKStream.selectKey((key,value)->
                 value.getId().toString()
                 );
 
-        final Serde<Client> clientSerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(Client.class));
-        KStream<String,Client> clientKStream= builder.stream(LOAN_TXN_TOPIC,Consumed.with(Serdes.String(),clientSerde));
-        clientKStream.foreach((key,value)->
-                log.info("Key value for client stream: :{} :{} ",key,value)
+        final Serde<TestLoanTransHist> testLoanTransHistSerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(TestLoanTransHist.class));
+        KStream<String,TestLoanTransHist> testLoanTransHistKStream= builder.stream(LOAN_TXN_TOPIC,Consumed.with(Serdes.String(),testLoanTransHistSerde));
+        testLoanTransHistKStream.foreach((key,value)->
+                log.info("Key value for TestLoanTransHist stream: :{} :{} ",key,value)
                 );
 
-        KStream<String,Client> clientKStreamInfoKeyStream = clientKStream.selectKey((key,value)->
+        KStream<String,TestLoanTransHist> testLoanTransHistInfoKeyStream = testLoanTransHistKStream.selectKey((key,value)->
                 value.getId().toString()
                 );
 
-        ValueJoiner<FlexActivity,Client,ClientFlexActivityOutput> joiner=
-                (flexActivity, client)->
-                        new ClientFlexActivityOutput.Builder()
-                                .setId(flexActivity.getId())
-                                .setCustomerLineNumber(flexActivity.getCustomerLineNumber())
-                                .setPostDt(flexActivity.getPostDt())
-                                .setPsgl_department(client.getPsgl_department())
-                                .setBranchNbr(client.getBranchNbr())
-                                .setCba_aoteamcd(client.getCba_aoteamcd())
-                                .setNameAddRln2(client.getNameAddRln2())
-                                .setNameAddRln3(client.getNameAddRln3())
-                                .setNameAddRln4(client.getNameAddRln4())
-                                .setNameAddRln5(client.getNameAddRln5())
-                                .setNameAddRln6(client.getNameAddRln6())
-                                .setZipPostalCd(client.getZipPostalCd())
-                                .setFullName(client.getFullName())
+        ValueJoiner<Instrument,TestLoanTransHist,CurrencyCodeLoanTxnActivityOutput> joiner=
+                (instrument, testLoanTransHist)->
+                        new CurrencyCodeLoanTxnActivityOutput.Builder()
+                                .setCurrencyCode(instrument.getCurrencyCode())
+                                .setAcctNbr(testLoanTransHist.getAcctNbr())
+                                .setEffectiveDt(testLoanTransHist.getEffectiveDt())
+                                .setPostDt(testLoanTransHist.getPostDt())
+                                .setId(testLoanTransHist.getId())
+                                .setTranId(testLoanTransHist.getTranId())
+                                .setNotePrncplBalgross(testLoanTransHist.getNotePrncplBalgross())
                                 .build();
 
-        KStream<String,ClientFlexActivityOutput> clientFlexActivityOutputKStream= flexActivityInfoKeyStream.
-                join(clientKStreamInfoKeyStream,joiner,JoinWindows.of(Duration.ofSeconds(3000)),
-                        StreamJoined.with(Serdes.String(),flexActivitySerde,clientSerde));
+        KStream<String,CurrencyCodeLoanTxnActivityOutput> insturmentTestLoanTransOutputKStream= instrumentInfoKeyStream.
+                join(testLoanTransHistInfoKeyStream,joiner,JoinWindows.of(Duration.ofSeconds(3000)),
+                        StreamJoined.with(Serdes.String(),instrumentSerde,testLoanTransHistSerde));
 
-        clientFlexActivityOutputKStream.print(Printed.toSysOut());
-        clientFlexActivityOutputKStream.foreach(((key, value) ->
-                log.info("***** Flex Activity and client join data is ****** :{} :{}",key,value.toString())
+        insturmentTestLoanTransOutputKStream.print(Printed.toSysOut());
+        insturmentTestLoanTransOutputKStream.foreach(((key, value) ->
+                log.info("***** Instrument and test loan transHist join data is ****** :{} :{}",key,value.toString())
                 ));
 
-        clientFlexActivityOutputKStream.to(CURRENCY_LOAN_TOPIC,Produced.with(Serdes.String(), new JsonSerde<>(ClientFlexActivityOutput.class)));
+        insturmentTestLoanTransOutputKStream.to(CURRENCY_LOAN_TOPIC,Produced.with(Serdes.String(), new JsonSerde<>(CurrencyCodeLoanTxnActivityOutput.class)));
         final Topology topology= builder.build();
         KafkaStreams kafkaStreams= new KafkaStreams(topology,properties());
         kafkaStreams.cleanUp();

@@ -21,7 +21,7 @@
     "incrementing.column.name": "ID",
     "numeric.precision.mapping": true,
     "numeric.mapping": "best_fit",
-    "query": "SELECT ID,PSGL_DEPARTMENT, BRANCHNBR, CBS_AOTEAMCD, NAMEADDRLN2, NAMEADDRLN3, \nNAMEADDRLN4,NAMEADDRLN5,NAMEADDRLN6, ZIPPOSTALCD,FULL_NAME FROM clients ",
+    "query": "SELECT ID,ACCTNBR, POSTDT, EFFECTIVEDT, NOTEPRNCPLBALGROSS FROM test_loan_trans_hist",
     "table.type": "TABLE",
     "poll.interval.ms": "5000",
     "batch.max.rows": "5",
