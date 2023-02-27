@@ -33,6 +33,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
     public static final String PRODUCT_CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category-product-code.out";
     public static final String CURRENCY_CODE_TOPIC= "credit.creditlines.currency-code.in";
     public static final String LOAN_TXN_TOPIC= "credit.creditlines.loantxn.activity.in";
+    public static final String CURRENCY_LOAN_TOPIC= "credit.creditlines.currency-code-loantxn.activity.out";
     public static final String SCHEMA_REGISTRY_URL = "http://localhost:8081";
     public static final String KAFKA_BOOTSTRAP_SERVER = "localhost:9092";
     public static final String PRODUCT_CATEGORY_APP_ID = "customer-transaction-enrichment-app";
@@ -68,7 +69,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
         props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
         props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
         return props;
@@ -136,29 +137,55 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
 
     public void currencyCodeLoanTxnActivityStream(){
         StreamsBuilder builder= new StreamsBuilder();
-//        final Serde<FlexActivity> flexActivitySerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(FlexActivity.class));
-//        KStream<String,FlexActivity> flexActivityKStream= builder.stream(CURRENCY_CODE_TOPIC,Consumed.with(Serdes.String(),flexActivitySerde));
-//        flexActivityKStream.print(Printed.toSysOut());
-//        flexActivityKStream.foreach((key,value)->
-//                log.info("***** key :{} value :{} for flex activity stream is: ",key,value)
-//                );
-//
-//        KStream<String,FlexActivity> flexActivityInfoKeyStream= flexActivityKStream.selectKey((key,value)->
-//                value.getId().toString()
-//                );
+        final Serde<FlexActivity> flexActivitySerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(FlexActivity.class));
+        KStream<String,FlexActivity> flexActivityKStream= builder.stream(CURRENCY_CODE_TOPIC,Consumed.with(Serdes.String(),flexActivitySerde));
+        flexActivityKStream.print(Printed.toSysOut());
+        flexActivityKStream.foreach((key,value)->
+                log.info("***** key value for flex activity stream is :{} :{} : ",key,value)
+                );
+
+        KStream<String,FlexActivity> flexActivityInfoKeyStream= flexActivityKStream.selectKey((key,value)->
+                value.getId().toString()
+                );
 
         final Serde<Client> clientSerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(Client.class));
         KStream<String,Client> clientKStream= builder.stream(LOAN_TXN_TOPIC,Consumed.with(Serdes.String(),clientSerde));
         clientKStream.foreach((key,value)->
-                log.info("Key :{} value :{} for client stream: ",key,value)
+                log.info("Key value for client stream: :{} :{} ",key,value)
                 );
 
-        KStream<String,Client> clientKStreamInfo = clientKStream.selectKey((key,value)->
+        KStream<String,Client> clientKStreamInfoKeyStream = clientKStream.selectKey((key,value)->
                 value.getId().toString()
                 );
 
+        ValueJoiner<FlexActivity,Client,ClientFlexActivityOutput> joiner=
+                (flexActivity, client)->
+                        new ClientFlexActivityOutput.Builder()
+                                .setId(flexActivity.getId())
+                                .setCustomerLineNumber(flexActivity.getCustomerLineNumber())
+                                .setPostDt(flexActivity.getPostDt())
+                                .setPsgl_department(client.getPsgl_department())
+                                .setBranchNbr(client.getBranchNbr())
+                                .setCba_aoteamcd(client.getCba_aoteamcd())
+                                .setNameAddRln2(client.getNameAddRln2())
+                                .setNameAddRln3(client.getNameAddRln3())
+                                .setNameAddRln4(client.getNameAddRln4())
+                                .setNameAddRln5(client.getNameAddRln5())
+                                .setNameAddRln6(client.getNameAddRln6())
+                                .setZipPostalCd(client.getZipPostalCd())
+                                .setFullName(client.getFullName())
+                                .build();
 
+        KStream<String,ClientFlexActivityOutput> clientFlexActivityOutputKStream= flexActivityInfoKeyStream.
+                join(clientKStreamInfoKeyStream,joiner,JoinWindows.of(Duration.ofSeconds(3000)),
+                        StreamJoined.with(Serdes.String(),flexActivitySerde,clientSerde));
 
+        clientFlexActivityOutputKStream.print(Printed.toSysOut());
+        clientFlexActivityOutputKStream.foreach(((key, value) ->
+                log.info("***** Flex Activity and client join data is ****** :{} :{}",key,value.toString())
+                ));
+
+        clientFlexActivityOutputKStream.to(CURRENCY_LOAN_TOPIC,Produced.with(Serdes.String(), new JsonSerde<>(ClientFlexActivityOutput.class)));
         final Topology topology= builder.build();
         KafkaStreams kafkaStreams= new KafkaStreams(topology,properties());
         kafkaStreams.cleanUp();

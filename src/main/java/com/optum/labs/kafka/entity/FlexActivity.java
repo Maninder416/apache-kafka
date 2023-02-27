@@ -12,7 +12,7 @@ public class FlexActivity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
+    @JsonProperty("ID")
     private Long id;
 
     @Column(name = "CUST_LN_NBR")
@@ -21,5 +21,6 @@ public class FlexActivity {
 
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
+    @Temporal(TemporalType.DATE)
     private Date postDt;
 }

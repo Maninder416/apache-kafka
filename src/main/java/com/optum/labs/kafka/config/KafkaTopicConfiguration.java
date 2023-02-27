@@ -88,14 +88,14 @@ public class KafkaTopicConfiguration {
 //                .build();
 //    }
 //
-//    @Bean
-//    public NewTopic currencyCodeLoanTxnActivityTopic() {
-//        return TopicBuilder.name("credit.creditlines.currency-code-loantxn.activity.out")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
+    @Bean
+    public NewTopic currencyCodeLoanTxnActivityTopic() {
+        return TopicBuilder.name("credit.creditlines.currency-code-loantxn.activity.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
     @Bean
     public NewTopic productCategoryProductCodeTopic() {
         return TopicBuilder.name("credit.creditlines.product-category-product-code.out")

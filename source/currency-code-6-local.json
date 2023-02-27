@@ -21,7 +21,7 @@
     "incrementing.column.name": "ID",
     "numeric.precision.mapping": true,
     "numeric.mapping": "best_fit",
-    "query": "select ID, CUST_LN_NBR FROM flex_activity;",
+    "query": "select ID,CUST_LN_NBR,postdt FROM flex_activity",
     "table.type": "TABLE",
     "poll.interval.ms": "5000",
     "batch.max.rows": "5",

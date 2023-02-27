@@ -54,6 +54,7 @@ public class Client {
     private String statusCd;
     @Column(name = "EXPIRYDT")
     @JsonProperty("EXPIRYDT")
+    @Temporal(TemporalType.DATE)
     private Date expiryDate;
     @Column(name = "CIF",length = 18)
     @JsonProperty("CIF")

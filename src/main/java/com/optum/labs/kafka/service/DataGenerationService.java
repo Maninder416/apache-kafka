@@ -175,7 +175,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForClient() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 5; i++) {
             Client client = new Client();
             String regex = "\\d{2}[A-H]";
             String nameAddLn1 = "CUSTOMER \\d{10}";
@@ -236,7 +236,7 @@ public class DataGenerationService {
     }
 
     public String generateDataForFlexActivity(){
-        for(int i=0;i<100;i++){
+        for(int i=0;i<5;i++){
             FlexActivity activity= new FlexActivity();
             activity.setCustomerLineNumber((faker.number().digits(2)));
             activity.setPostDt(faker.date().birthday());
