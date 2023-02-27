@@ -13,6 +13,7 @@ public class TestHolidayCalendar {
     private Long id;
 
     @Column(name = "BRANCH_HOLIDAY_DT")
+    @Temporal(TemporalType.DATE)
     private Date branchHolidayDt;
 
 }

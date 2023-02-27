@@ -19,6 +19,7 @@ public class FlexFeeActivity {
     @Column(name = "CUST_LN_NBR",length = 22)
     private String custLnNbr;
     @Column(name = "EFFDT")
+    @Temporal(TemporalType.DATE)
     private Date effdt;
     @Column(name = "FLEX_CMTMNT_AMT_LCY",precision = 22,scale = 7)
     private double flex_cmtmnt_amt_lcy;
@@ -41,8 +42,10 @@ public class FlexFeeActivity {
     @Column(name = "SRC_UPDT_DT")
     private Date src_updt_dt;
     @Column(name = "POSTDT")
+    @Temporal(TemporalType.DATE)
     private Date postDt;
     @Column(name = "DW_CREATE_TS")
+    @Temporal(TemporalType.DATE)
     private Date dw_create_ts;
     @Column(name = "CREATED_BY",length = 30)
     private String created_by;

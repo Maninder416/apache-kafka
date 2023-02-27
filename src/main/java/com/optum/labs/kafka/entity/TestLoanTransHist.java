@@ -18,8 +18,10 @@ public class TestLoanTransHist {
     @Column(name = "TRANID", length = 30)
     private String tranId;
     @Column(name = "POSTDT")
+    @Temporal(TemporalType.DATE)
     private Date postDt;
     @Column(name = "EFFECTIVEDT")
+    @Temporal(TemporalType.DATE)
     private Date effectiveDt;
     @Column(name = "NOTEPRNCPLBALGROSS", precision = 19, scale = 3)
     private double notePrncplBalgross;

@@ -18,6 +18,7 @@ public class PsRtRate {
     @Column(name = "TO_CUR", length = 9)
     private String to_cur;
     @Column(name = "EFFDT")
+    @Temporal(TemporalType.DATE)
     private Date effdt;
     @Column(name = "SVB_RATE")
     private double svb_rate;

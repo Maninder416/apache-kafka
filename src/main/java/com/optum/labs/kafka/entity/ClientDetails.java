@@ -1,6 +1,7 @@
 package com.optum.labs.kafka.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "CLIENT_DETAILS")
 @Data
+@Builder
 public class ClientDetails {
 
     @Id
