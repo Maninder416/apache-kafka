@@ -203,7 +203,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
                 log.info("***** product category topic input data key value ******: :{} :{}  ", key, value)
         );
         KStream<String, ProductCategory> productCategoryInfoKeyStream = productCategoryKStream.selectKey((key, value) ->
-                value.getId().toString()
+                value.getAccountNumber().toString()
         );
 
 
@@ -220,7 +220,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
 
         KStream<String, CurrencyCodeLoanTxnActivityOutput> currencyCodeLoanTxnActivityOutputInfoStream =
                 currencyCodeLoanTxnActivityOutputKStream.selectKey((key, value) ->
-                        value.getId().toString()
+                        value.getAcctNbr().toString()
                 );
 
         currencyCodeLoanTxnActivityOutputInfoStream.foreach((key,value)->
