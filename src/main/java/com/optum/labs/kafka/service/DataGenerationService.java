@@ -69,15 +69,16 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForCreditLine() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 5; i++) {
             CreditLines creditLines = new CreditLines();
             String pattern = "[L-O]{2}";
             String pattern2 = "[L-O]{1}";
             String currencyCode = "[A-D]{3}";
             creditLines.setApplId_loan(faker.regexify(pattern));
-            creditLines.setLine_stat(faker.regexify(pattern2));
+            creditLines.setCreditLineStatus(faker.regexify(pattern2));
             creditLines.setCustLineNbr((faker.number().digits(2)));
             creditLines.setApplId(faker.regexify(currencyCode));
+            creditLines.setPostDt(faker.date().birthday());
             creditLineRepository.save(creditLines);
         }
         return "Data generated for credit line table";

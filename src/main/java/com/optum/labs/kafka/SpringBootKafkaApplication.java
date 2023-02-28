@@ -1,6 +1,10 @@
 package com.optum.labs.kafka;
 
 import com.optum.labs.kafka.entity.*;
+import com.optum.labs.kafka.entity.output.CreditLineUserDetailsOutput;
+import com.optum.labs.kafka.entity.output.CurrencyCodeLoanTxnActivityOutput;
+import com.optum.labs.kafka.entity.output.CurrencyLoanProductCategoryCodeOutput;
+import com.optum.labs.kafka.entity.output.ProductCategory;
 import com.optum.labs.kafka.service.DataGenerationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -12,7 +16,7 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.*;
-import org.checkerframework.checker.units.qual.K;
+import org.checkerframework.checker.index.qual.PolyUpperBound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,9 +30,11 @@ import java.util.Properties;
 
 @SpringBootApplication
 @Slf4j
-public class SpringbootKafkaApplication implements CommandLineRunner {
+public class SpringBootKafkaApplication implements CommandLineRunner {
 
 
+    public static final String CREDIT_LINE_DETAILS_TOPIC = "credit.creditlines.creditline-detials";
+    public static final String CLIENT_DETAILS_TOPIC = "credit.creditlines.ulf-client-detials.in";
     public static final String PRODUCT_DETAILS_TOPIC = "credit.creditlines-product-code.in";
     public static final String CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category.in";
     public static final String PRODUCT_CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category-product-code.out";
@@ -44,7 +50,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
     DataGenerationService dataCreationService;
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootKafkaApplication.class, args);
+        SpringApplication.run(SpringBootKafkaApplication.class, args);
     }
 
     @Override
@@ -63,7 +69,8 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         log.info("******* Trying to send streaming data *******");
 //        productCategoryCodeStream();
         //  currencyCodeLoanTxnActivityStream();
-        creditLinesCurrencyLoanTxn12();
+        // creditLinesCurrencyLoanTxn12();
+        creditLineDetails();
     }
 
     public Properties properties() {
@@ -223,9 +230,9 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
                         value.getAcctNbr().toString()
                 );
 
-        currencyCodeLoanTxnActivityOutputInfoStream.foreach((key,value)->
-                        log.info("***** currencyCodeLoanTxnActivityOutputInfoStream *****: :{} :{}",key,value)
-                );
+        currencyCodeLoanTxnActivityOutputInfoStream.foreach((key, value) ->
+                log.info("***** currencyCodeLoanTxnActivityOutputInfoStream *****: :{} :{}", key, value)
+        );
 
         ValueJoiner<ProductCategory, CurrencyCodeLoanTxnActivityOutput, CurrencyLoanProductCategoryCodeOutput> joiner =
                 (productCategory, currencyCodeTxnActivityOutput) ->
@@ -262,6 +269,74 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         kafkaStreams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
 
+    }
 
+    public void creditLineDetails() {
+        StreamsBuilder builder = new StreamsBuilder();
+        final Serde<CreditLines> creditLinesSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(CreditLines.class));
+        KStream<String, CreditLines> creditLinesKStream = builder.stream(CREDIT_LINE_DETAILS_TOPIC, Consumed.with(Serdes.String(), creditLinesSerde));
+        log.info("***** credit line stream data ******");
+        creditLinesKStream.print(Printed.toSysOut());
+        creditLinesKStream.foreach((key, value) ->
+                log.info("***** key value for credit details: :{} :{}", key, value)
+        );
+
+        KStream<String, CreditLines> creditLinesInfoKeyStream = creditLinesKStream.selectKey((key, value) ->
+                value.getId().toString()
+        );
+
+        final Serde<Client> clientDetailsSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(Client.class));
+        KStream<String, Client> clientDetailsKStream = builder.stream(CLIENT_DETAILS_TOPIC, Consumed.with(Serdes.String(), clientDetailsSerde));
+        clientDetailsKStream.print(Printed.toSysOut());
+        clientDetailsKStream.foreach(((key, value) ->
+                log.info("***** key value for client details: :{} :{}", key, value)));
+        KStream<String, Client> clientDetailsInfoKeyStream = clientDetailsKStream.selectKey((key, value) ->
+                value.getId().toString()
+        );
+
+        ValueJoiner<CreditLines, Client, CreditLineUserDetailsOutput> joiner =
+                (creditLine, client) ->
+                        CreditLineUserDetailsOutput.builder()
+                                .id(creditLine.getId())
+                                .custLineNbr(creditLine.getCustLineNbr())
+                                .applId_loan(creditLine.getApplId_loan())
+                                .creditLineStatus(creditLine.getCreditLineStatus())
+                                .applId(creditLine.getApplId())
+                                .postDt(creditLine.getPostDt())
+                                .psgl_department(client.getPsgl_department())
+                                .branchNbr(client.getBranchNbr())
+                                .cba_aoteamcd(client.getCba_aoteamcd())
+                                .nameAddRln1(client.getNameAddRln1())
+                                .nameAddRln2(client.getNameAddRln2())
+                                .nameAddRln3(client.getNameAddRln3())
+                                .nameAddRln4(client.getNameAddRln4())
+                                .nameAddRln5(client.getNameAddRln5())
+                                .nameAddRln6(client.getNameAddRln6())
+                                .zipPostalCd(client.getZipPostalCd())
+                                .fullName(client.getFullName())
+                                .statusCd(client.getStatusCd())
+                                .expiryDate(client.getExpiryDate())
+                                .cif(client.getCif())
+                                .build();
+
+        KStream<String, CreditLineUserDetailsOutput> creditLineUserDetailsOutputKStream = creditLinesInfoKeyStream
+                .join(clientDetailsInfoKeyStream, joiner, JoinWindows.of(Duration.ofSeconds(3000)),
+                        StreamJoined.with(Serdes.String(), creditLinesSerde, clientDetailsSerde)
+                );
+
+        creditLineUserDetailsOutputKStream.print(Printed.toSysOut());
+        creditLineUserDetailsOutputKStream.foreach(((key, value) ->
+                log.info("***** key and value for creditLineUserDetailsOutput Stream:  *****: :{} :{}", key, value)
+        ));
+
+        creditLineUserDetailsOutputKStream.to("demo", Produced.with(Serdes.String(), new JsonSerde<>(CreditLineUserDetailsOutput.class)));
+
+
+        final Topology topology = builder.build();
+        KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());
+        kafkaStreams.cleanUp();
+        log.info("***** Starting kafka stream *****");
+        kafkaStreams.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
     }
 }

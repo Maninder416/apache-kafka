@@ -1,0 +1,22 @@
+{
+  "name": "mysql-testing",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "jdbc:mysql://localhost:3306/silicon",
+    "connection.user": "root",
+    "connection.password": "root",
+    "mode": "incrementing",
+    "incrementing.column.name": "id",
+    "topic.prefix": "credit.creditlines.creditline-detials.in",
+    "poll.interval.ms": "5000",
+    "table.whitelist": "credit_lines",
+    "tasks.max": "5",
+    "batch.max.rows": "5",
+    "batch.poll.records": "10",
+    "validate.non.null": "false",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false"
+  }
+}

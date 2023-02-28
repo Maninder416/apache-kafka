@@ -8,21 +8,21 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfiguration {
 
-//    @Bean
-//    public NewTopic creditLineDetailsTopic() {
-//        return TopicBuilder.name("credit.creditlines.creditline-detials.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic ulfClientDetailsTopic() {
-//        return TopicBuilder.name("credit.creditlines.ulf-client-detials.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
+    @Bean
+    public NewTopic creditLineDetailsTopic() {
+        return TopicBuilder.name("credit.creditlines.creditline-detials.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic ulfClientDetailsTopic() {
+        return TopicBuilder.name("credit.creditlines.ulf-client-detials.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 //
 //    @Bean
 //    public NewTopic flexCreditLineActivityTopic() {

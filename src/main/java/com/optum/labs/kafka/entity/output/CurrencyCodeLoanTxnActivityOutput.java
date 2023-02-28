@@ -1,4 +1,4 @@
-package com.optum.labs.kafka.entity;
+package com.optum.labs.kafka.entity.output;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "CLIENT_DETAILS")
 @Data
-@Builder
 public class ClientDetails {
 
     @Id
