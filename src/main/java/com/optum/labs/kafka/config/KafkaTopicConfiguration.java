@@ -103,15 +103,15 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-//
-//    @Bean
-//    public NewTopic productCategoryCodeTopic() {
-//        return TopicBuilder.name("credit.creditlines.currency-loantxn-product-category-code.out")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
+
+    @Bean
+    public NewTopic productCategoryCodeTopic() {
+        return TopicBuilder.name("credit.creditlines.currency-loantxn-product-category-code.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
 //    @Bean
 //    public NewTopic flexCreditLineAndActivityTopic() {
 //        return TopicBuilder.name("credit.creditlines.flex-creditline-and-activity.out")

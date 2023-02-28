@@ -35,6 +35,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
     public static final String CURRENCY_CODE_TOPIC = "credit.creditlines.currency-code.in";
     public static final String LOAN_TXN_TOPIC = "credit.creditlines.loantxn.activity.in";
     public static final String CURRENCY_LOAN_TOPIC = "credit.creditlines.currency-code-loantxn.activity.out";
+    public static final String CURRENCY_LOAN_PRODUCT_CATEGORY_TOPIC = "credit.creditlines.currency-loantxn-product-category-code.out";
     public static final String SCHEMA_REGISTRY_URL = "http://localhost:8081";
     public static final String KAFKA_BOOTSTRAP_SERVER = "localhost:9092";
     public static final String PRODUCT_CATEGORY_APP_ID = "customer-transaction-enrichment-app";
@@ -217,6 +218,42 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
                 log.info("***** key value for currency code loan output topic: ***** :{} :{}", key, value)
         );
 
+        KStream<String, CurrencyCodeLoanTxnActivityOutput> currencyCodeLoanTxnActivityOutputInfoStream =
+                currencyCodeLoanTxnActivityOutputKStream.selectKey((key, value) ->
+                        value.getId().toString()
+                );
+
+        currencyCodeLoanTxnActivityOutputInfoStream.foreach((key,value)->
+                        log.info("***** currencyCodeLoanTxnActivityOutputInfoStream *****: :{} :{}",key,value)
+                );
+
+        ValueJoiner<ProductCategory, CurrencyCodeLoanTxnActivityOutput, CurrencyLoanProductCategoryCodeOutput> joiner =
+                (productCategory, currencyCodeTxnActivityOutput) ->
+                        CurrencyLoanProductCategoryCodeOutput.builder()
+                                .currencyCode(currencyCodeTxnActivityOutput.getCurrencyCode())
+                                .acctNbr(currencyCodeTxnActivityOutput.getAcctNbr())
+                                .effectiveDt(currencyCodeTxnActivityOutput.getEffectiveDt())
+                                .tranId(currencyCodeTxnActivityOutput.getTranId())
+                                .notePrncplBalgross(currencyCodeTxnActivityOutput.getNotePrncplBalgross())
+                                .id(currencyCodeTxnActivityOutput.getId())
+                                .postDt(currencyCodeTxnActivityOutput.getPostDt())
+                                .product_cd(productCategory.getProduct_cd())
+                                .product_category_cd(productCategory.getProduct_category_cd())
+                                .build();
+
+        KStream<String, CurrencyLoanProductCategoryCodeOutput> currencyLoanProductCategoryCodeOutputKStream =
+                productCategoryInfoKeyStream.join(currencyCodeLoanTxnActivityOutputInfoStream, joiner,
+                        JoinWindows.of(Duration.ofSeconds(3000)),
+                        StreamJoined.with(Serdes.String(), productCategorySerde, currencyCodeLoanTxnActivityOutputSerde)
+                );
+
+        currencyLoanProductCategoryCodeOutputKStream.print(Printed.toSysOut());
+        currencyLoanProductCategoryCodeOutputKStream.foreach(((key, value) ->
+                log.info("****** currency code loan txn activity output ******:  :{} :{} ", key, value)
+        ));
+
+        currencyLoanProductCategoryCodeOutputKStream.to(CURRENCY_LOAN_PRODUCT_CATEGORY_TOPIC, Produced.with(Serdes.String(),
+                new JsonSerde<>(CurrencyLoanProductCategoryCodeOutput.class)));
 
         final Topology topology = builder.build();
         KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());
