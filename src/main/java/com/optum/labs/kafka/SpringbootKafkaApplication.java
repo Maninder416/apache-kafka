@@ -12,6 +12,7 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.*;
+import org.checkerframework.checker.units.qual.K;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,9 +32,9 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
     public static final String PRODUCT_DETAILS_TOPIC = "credit.creditlines-product-code.in";
     public static final String CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category.in";
     public static final String PRODUCT_CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category-product-code.out";
-    public static final String CURRENCY_CODE_TOPIC= "credit.creditlines.currency-code.in";
-    public static final String LOAN_TXN_TOPIC= "credit.creditlines.loantxn.activity.in";
-    public static final String CURRENCY_LOAN_TOPIC= "credit.creditlines.currency-code-loantxn.activity.out";
+    public static final String CURRENCY_CODE_TOPIC = "credit.creditlines.currency-code.in";
+    public static final String LOAN_TXN_TOPIC = "credit.creditlines.loantxn.activity.in";
+    public static final String CURRENCY_LOAN_TOPIC = "credit.creditlines.currency-code-loantxn.activity.out";
     public static final String SCHEMA_REGISTRY_URL = "http://localhost:8081";
     public static final String KAFKA_BOOTSTRAP_SERVER = "localhost:9092";
     public static final String PRODUCT_CATEGORY_APP_ID = "customer-transaction-enrichment-app";
@@ -59,8 +60,9 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         dataCreationService.generateDataForFlexActivity();
         log.info("******** Data is inserted into tables ********");
         log.info("******* Trying to send streaming data *******");
-        productCategoryCodeStream();
-      //  currencyCodeLoanTxnActivityStream();
+//        productCategoryCodeStream();
+        //  currencyCodeLoanTxnActivityStream();
+        creditLinesCurrencyLoanTxn12();
     }
 
     public Properties properties() {
@@ -69,7 +71,7 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
         props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
         return props;
@@ -136,31 +138,31 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
     }
 
-    public void currencyCodeLoanTxnActivityStream(){
-        StreamsBuilder builder= new StreamsBuilder();
-        final Serde<Instrument> instrumentSerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(Instrument.class));
-        KStream<String,Instrument> instrumentKStream= builder.stream(CURRENCY_CODE_TOPIC,Consumed.with(Serdes.String(),instrumentSerde));
+    public void currencyCodeLoanTxnActivityStream() {
+        StreamsBuilder builder = new StreamsBuilder();
+        final Serde<Instrument> instrumentSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(Instrument.class));
+        KStream<String, Instrument> instrumentKStream = builder.stream(CURRENCY_CODE_TOPIC, Consumed.with(Serdes.String(), instrumentSerde));
         instrumentKStream.print(Printed.toSysOut());
-        instrumentKStream.foreach((key,value)->
-                log.info("***** key value for instrument stream is :{} :{} : ",key,value)
-                );
+        instrumentKStream.foreach((key, value) ->
+                log.info("***** key value for instrument stream is :{} :{} : ", key, value)
+        );
 
-        KStream<String,Instrument> instrumentInfoKeyStream= instrumentKStream.selectKey((key,value)->
+        KStream<String, Instrument> instrumentInfoKeyStream = instrumentKStream.selectKey((key, value) ->
                 value.getId().toString()
-                );
+        );
 
-        final Serde<TestLoanTransHist> testLoanTransHistSerde= Serdes.serdeFrom(new JsonSerializer<>(),new JsonDeserializer<>(TestLoanTransHist.class));
-        KStream<String,TestLoanTransHist> testLoanTransHistKStream= builder.stream(LOAN_TXN_TOPIC,Consumed.with(Serdes.String(),testLoanTransHistSerde));
-        testLoanTransHistKStream.foreach((key,value)->
-                log.info("Key value for TestLoanTransHist stream: :{} :{} ",key,value)
-                );
+        final Serde<TestLoanTransHist> testLoanTransHistSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(TestLoanTransHist.class));
+        KStream<String, TestLoanTransHist> testLoanTransHistKStream = builder.stream(LOAN_TXN_TOPIC, Consumed.with(Serdes.String(), testLoanTransHistSerde));
+        testLoanTransHistKStream.foreach((key, value) ->
+                log.info("Key value for TestLoanTransHist stream: :{} :{} ", key, value)
+        );
 
-        KStream<String,TestLoanTransHist> testLoanTransHistInfoKeyStream = testLoanTransHistKStream.selectKey((key,value)->
+        KStream<String, TestLoanTransHist> testLoanTransHistInfoKeyStream = testLoanTransHistKStream.selectKey((key, value) ->
                 value.getId().toString()
-                );
+        );
 
-        ValueJoiner<Instrument,TestLoanTransHist,CurrencyCodeLoanTxnActivityOutput> joiner=
-                (instrument, testLoanTransHist)->
+        ValueJoiner<Instrument, TestLoanTransHist, CurrencyCodeLoanTxnActivityOutput> joiner =
+                (instrument, testLoanTransHist) ->
                         new CurrencyCodeLoanTxnActivityOutput.Builder()
                                 .setCurrencyCode(instrument.getCurrencyCode())
                                 .setAcctNbr(testLoanTransHist.getAcctNbr())
@@ -171,18 +173,53 @@ public class SpringbootKafkaApplication implements CommandLineRunner {
                                 .setNotePrncplBalgross(testLoanTransHist.getNotePrncplBalgross())
                                 .build();
 
-        KStream<String,CurrencyCodeLoanTxnActivityOutput> insturmentTestLoanTransOutputKStream= instrumentInfoKeyStream.
-                join(testLoanTransHistInfoKeyStream,joiner,JoinWindows.of(Duration.ofSeconds(3000)),
-                        StreamJoined.with(Serdes.String(),instrumentSerde,testLoanTransHistSerde));
+        KStream<String, CurrencyCodeLoanTxnActivityOutput> insturmentTestLoanTransOutputKStream = instrumentInfoKeyStream.
+                join(testLoanTransHistInfoKeyStream, joiner, JoinWindows.of(Duration.ofSeconds(3000)),
+                        StreamJoined.with(Serdes.String(), instrumentSerde, testLoanTransHistSerde));
 
         insturmentTestLoanTransOutputKStream.print(Printed.toSysOut());
         insturmentTestLoanTransOutputKStream.foreach(((key, value) ->
-                log.info("***** Instrument and test loan transHist join data is ****** :{} :{}",key,value.toString())
-                ));
+                log.info("***** Instrument and test loan transHist join data is ****** :{} :{}", key, value.toString())
+        ));
 
-        insturmentTestLoanTransOutputKStream.to(CURRENCY_LOAN_TOPIC,Produced.with(Serdes.String(), new JsonSerde<>(CurrencyCodeLoanTxnActivityOutput.class)));
-        final Topology topology= builder.build();
-        KafkaStreams kafkaStreams= new KafkaStreams(topology,properties());
+        insturmentTestLoanTransOutputKStream.to(CURRENCY_LOAN_TOPIC, Produced.with(Serdes.String(), new JsonSerde<>(CurrencyCodeLoanTxnActivityOutput.class)));
+        final Topology topology = builder.build();
+        KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());
+        kafkaStreams.cleanUp();
+        log.info("***** Starting kafka stream *****");
+        kafkaStreams.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
+
+    }
+
+    public void creditLinesCurrencyLoanTxn12() {
+        StreamsBuilder builder = new StreamsBuilder();
+        final Serde<ProductCategory> productCategorySerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(ProductCategory.class));
+
+        KStream<String, ProductCategory> productCategoryKStream = builder.stream(PRODUCT_CATEGORY_DETAILS_TOPIC, Consumed.with(Serdes.String(), productCategorySerde));
+        productCategoryKStream.print(Printed.toSysOut());
+        productCategoryKStream.foreach((key, value) ->
+                log.info("***** product category topic input data key value ******: :{} :{}  ", key, value)
+        );
+        KStream<String, ProductCategory> productCategoryInfoKeyStream = productCategoryKStream.selectKey((key, value) ->
+                value.getId().toString()
+        );
+
+
+        final Serde<CurrencyCodeLoanTxnActivityOutput> currencyCodeLoanTxnActivityOutputSerde =
+                Serdes.serdeFrom(new JsonSerializer<>(),
+                        new JsonDeserializer<>(CurrencyCodeLoanTxnActivityOutput.class));
+        KStream<String, CurrencyCodeLoanTxnActivityOutput> currencyCodeLoanTxnActivityOutputKStream =
+                builder.stream(CURRENCY_LOAN_TOPIC, Consumed.with(Serdes.String(),
+                        currencyCodeLoanTxnActivityOutputSerde));
+        currencyCodeLoanTxnActivityOutputKStream.print(Printed.toSysOut());
+        currencyCodeLoanTxnActivityOutputKStream.foreach((key, value) ->
+                log.info("***** key value for currency code loan output topic: ***** :{} :{}", key, value)
+        );
+
+
+        final Topology topology = builder.build();
+        KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());
         kafkaStreams.cleanUp();
         log.info("***** Starting kafka stream *****");
         kafkaStreams.start();
