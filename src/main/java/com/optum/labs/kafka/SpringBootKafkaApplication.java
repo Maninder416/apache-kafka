@@ -8,7 +8,6 @@ import com.optum.labs.kafka.entity.output.ProductCategory;
 import com.optum.labs.kafka.service.DataGenerationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.protocol.types.Field;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -16,7 +15,6 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.*;
-import org.checkerframework.checker.index.qual.PolyUpperBound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -35,6 +33,8 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
 
     public static final String CREDIT_LINE_DETAILS_TOPIC = "credit.creditlines.creditline-detials";
     public static final String CLIENT_DETAILS_TOPIC = "credit.creditlines.ulf-client-detials.in";
+
+    public static final String CREDIT_LINE_DETAILS_TOPIC_OUTPUT = "credit.creditlines.creditline-details.out";
     public static final String PRODUCT_DETAILS_TOPIC = "credit.creditlines-product-code.in";
     public static final String CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category.in";
     public static final String PRODUCT_CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category-product-code.out";
@@ -70,7 +70,7 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
 //        productCategoryCodeStream();
         //  currencyCodeLoanTxnActivityStream();
         // creditLinesCurrencyLoanTxn12();
-        creditLineDetails();
+        //  creditLineDetails();
     }
 
     public Properties properties() {
@@ -329,8 +329,7 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
                 log.info("***** key and value for creditLineUserDetailsOutput Stream:  *****: :{} :{}", key, value)
         ));
 
-        creditLineUserDetailsOutputKStream.to("demo", Produced.with(Serdes.String(), new JsonSerde<>(CreditLineUserDetailsOutput.class)));
-
+        creditLineUserDetailsOutputKStream.to(CREDIT_LINE_DETAILS_TOPIC_OUTPUT, Produced.with(Serdes.String(), new JsonSerde<>(CreditLineUserDetailsOutput.class)));
 
         final Topology topology = builder.build();
         KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());

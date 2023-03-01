@@ -23,15 +23,15 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-//
-//    @Bean
-//    public NewTopic flexCreditLineActivityTopic() {
-//        return TopicBuilder.name("credit.creditlines.flex-creditline-activity.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
+
+    @Bean
+    public NewTopic flexCreditLineActivityTopic() {
+        return TopicBuilder.name("credit.creditlines.flex-creditline-activity.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
     @Bean
     public NewTopic currencyCodeTopic() {
         return TopicBuilder.name("credit.creditlines.currency-code.in")
@@ -72,13 +72,13 @@ public class KafkaTopicConfiguration {
 //                .build();
 //    }
 //
-//    @Bean
-//    public NewTopic creditLineDetailsOutTopic() {
-//        return TopicBuilder.name("credit.creditlines.creditline-detials.out")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
+    @Bean
+    public NewTopic creditLineDetailsOutTopic() {
+        return TopicBuilder.name("credit.creditlines.creditline-details.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 //
 //    @Bean
 //    public NewTopic flexCreditLineActivityOutputTopic() {

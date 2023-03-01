@@ -1,0 +1,15 @@
+{
+  "name": "mysql-jdbc",
+  "config": {
+    "connector.class" : "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url"  : "jdbc:mysql://mysqldb:3306/silicon",
+    "connection.user" : "root",
+    "connection.password" : "root",
+    "mode"            : "incrementing",
+    "incrementing.column.name": "id",
+    "query": "select * from (select * from credit_lines where id=2) test;",
+    "topic.prefix"    : "JDBC.test_db_test",
+    "validate.non.null"       : "false",
+    "poll.interval.ms"        : "1000"
+  }
+}
