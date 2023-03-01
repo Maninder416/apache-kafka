@@ -1,10 +1,7 @@
 package com.optum.labs.kafka;
 
 import com.optum.labs.kafka.entity.*;
-import com.optum.labs.kafka.entity.output.CreditLineUserDetailsOutput;
-import com.optum.labs.kafka.entity.output.CurrencyCodeLoanTxnActivityOutput;
-import com.optum.labs.kafka.entity.output.CurrencyLoanProductCategoryCodeOutput;
-import com.optum.labs.kafka.entity.output.ProductCategory;
+import com.optum.labs.kafka.entity.output.*;
 import com.optum.labs.kafka.service.DataGenerationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -35,6 +32,8 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
     public static final String CLIENT_DETAILS_TOPIC = "credit.creditlines.ulf-client-detials.in";
 
     public static final String CREDIT_LINE_DETAILS_TOPIC_OUTPUT = "credit.creditlines.creditline-details.out";
+
+    public static final String FLEX_CREDIT_LINE_ACTIVITY_INPUT = "credit.creditlines.flex-creditline-activity.in";
     public static final String PRODUCT_DETAILS_TOPIC = "credit.creditlines-product-code.in";
     public static final String CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category.in";
     public static final String PRODUCT_CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category-product-code.out";
@@ -71,6 +70,7 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         //  currencyCodeLoanTxnActivityStream();
         // creditLinesCurrencyLoanTxn12();
         //  creditLineDetails();
+        flexCreditLineActivityStream();
     }
 
     public Properties properties() {
@@ -330,6 +330,23 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         ));
 
         creditLineUserDetailsOutputKStream.to(CREDIT_LINE_DETAILS_TOPIC_OUTPUT, Produced.with(Serdes.String(), new JsonSerde<>(CreditLineUserDetailsOutput.class)));
+
+        final Topology topology = builder.build();
+        KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());
+        kafkaStreams.cleanUp();
+        log.info("***** Starting kafka stream *****");
+        kafkaStreams.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
+    }
+
+    public void flexCreditLineActivityStream() {
+        StreamsBuilder builder = new StreamsBuilder();
+        final Serde<FlexCreditLineActivityOutput> flexCreditLineActivityOutputSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(FlexCreditLineActivityOutput.class));
+        KStream<String, FlexCreditLineActivityOutput> flexCreditLineActivityOutputKStream = builder.stream(FLEX_CREDIT_LINE_ACTIVITY_INPUT
+                , Consumed.with(Serdes.String(), flexCreditLineActivityOutputSerde));
+        flexCreditLineActivityOutputKStream.print(Printed.toSysOut());
+        flexCreditLineActivityOutputKStream.foreach((key, value) ->
+                log.info("***** key and value for flex activity :{} :{}", key, value));
 
         final Topology topology = builder.build();
         KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());

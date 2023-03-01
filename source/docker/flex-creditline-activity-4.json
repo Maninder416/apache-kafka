@@ -8,15 +8,15 @@
     "connection.attempts": "3",
     "numeric.mapping" : "best_fit",
     "tasks.max"       : "1",
-    "mode"            : "bulk",
-    "incrementing.column.name": "id",
-    "query": "select * from (select effdt,cust_ln_nbr,flex_cmtmnt_amt_tcy ,flex_uncmtmnt_amt_tcy,flex_fee_pct ,flex_fee_accr_bas ,trans_crrncy_cd from flex_fee_activity  ffa join credit_lines cl where ffa.cust_ln_nbr=cl.cust_line_nbr) test;",
+    "mode"            : "incrementing",
+    "incrementing.column.name": "ID",
+    "query": "select ID,EFFDT,CUST_LN_NBR,FLEX_CMTMNT_AMT_TCY ,FLEX_UNCMTMNT_AMT_TCY,FLEX_FEE_PCT ,FLEX_FEE_ACCR_BAS ,TRANS_CRRNCY_CD from flex_fee_activity",
     "table.types"     : "TABLE",
     "topic.prefix"    : "credit.creditlines.flex-creditline-activity.in",
     "db.timezone"     : "UTC",
     "validate.non.null" : "false",
     "poll.interval.ms"  : "1000",
-    "batch.max.rows"    : "3000",
+    "batch.max.rows"    : "5",
     "table.poll.interval.ms"  : "6000"
   }
 }
