@@ -1,0 +1,22 @@
+{
+  "name": "flex-creditLine-connector-13",
+  "config": {
+    "connector.class" : "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url"  : "jdbc:mysql://mysqldb:3306/silicon",
+    "connection.user" : "root",
+    "connection.password" : "root",
+    "connection.attempts": "3",
+    "numeric.mapping" : "best_fit",
+    "tasks.max"       : "1",
+    "mode"            : "incrementing",
+    "incrementing.column.name": "ID",
+    "query": "select ID,CUST_LN_NBR from flex_activity",
+    "table.types"     : "TABLE",
+    "topic.prefix"    : "credit.creditlines.flex-creditline.in",
+    "db.timezone"     : "UTC",
+    "validate.non.null" : "false",
+    "poll.interval.ms"  : "1000",
+    "batch.max.rows"    : "5",
+    "table.poll.interval.ms"  : "6000"
+  }
+}
