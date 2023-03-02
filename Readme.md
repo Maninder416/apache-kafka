@@ -21,3 +21,6 @@ because by default it will use "where ID>1" and this is incremental column that 
 "poll.interval.ms"        : "1000"
 }
 }
+
+you can take the reference of this branch too:
+https://github.com/Maninder416/apache-kafka/blob/feature/silicon-valley-project/source/docker/flex-creditline-table-13.json
