@@ -69,7 +69,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForCreditLine() {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 500; i++) {
             CreditLines creditLines = new CreditLines();
             String pattern = "[L-O]{2}";
             String pattern2 = "[L-O]{1}";

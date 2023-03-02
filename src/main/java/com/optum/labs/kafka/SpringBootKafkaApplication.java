@@ -31,9 +31,8 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
 
     public static final String CREDIT_LINE_DETAILS_TOPIC = "credit.creditlines.creditline-detials.in";
     public static final String CLIENT_DETAILS_TOPIC = "credit.creditlines.ulf-client-detials.in";
-
     public static final String CREDIT_LINE_DETAILS_TOPIC_OUTPUT = "credit.creditlines.creditline-details.out";
-
+    public static final String FLEX_CREDIT_LINE_ACTIVITY_OUT_5_TOPIC = "credit.creditlines.flex-creditline-and-activity.out";
     public static final String FLEX_CREDIT_LINE_ACTIVITY_INPUT = "credit.creditlines.flex-creditline-activity.in";
     public static final String PRODUCT_DETAILS_TOPIC = "credit.creditlines-product-code.in";
     public static final String CATEGORY_DETAILS_TOPIC = "credit.creditlines.product-category.in";
@@ -42,6 +41,8 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
     public static final String LOAN_TXN_TOPIC = "credit.creditlines.loantxn.activity.in";
     public static final String CURRENCY_LOAN_TOPIC = "credit.creditlines.currency-code-loantxn.activity.out";
     public static final String CURRENCY_LOAN_PRODUCT_CATEGORY_TOPIC = "credit.creditlines.currency-loantxn-product-category-code.out";
+
+    public static final String FLEX_CREDITLINE_TOPIC_INPUT = "credit.creditlines.flex-creditline.in";
     public static final String SCHEMA_REGISTRY_URL = "http://localhost:8081";
     public static final String KAFKA_BOOTSTRAP_SERVER = "localhost:9092";
     public static final String PRODUCT_CATEGORY_APP_ID = "customer-transaction-enrichment-app";
@@ -71,7 +72,8 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         //  currencyCodeLoanTxnActivityStream();
         // creditLinesCurrencyLoanTxn12();
         //  creditLineDetails();
-        flexCreditLineActivityStream();
+//        flexCreditLineActivityStream();
+        flexCreditLineStream13();
     }
 
     public Properties properties() {
@@ -414,7 +416,7 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
                 log.info("***** key and value for combined creditLineFlexFeeOutput5KStream ******: :{} :{}", key, value)
         ));
 
-        creditLineFlexFeeOutput5KStream.to("testing2",Produced.with(Serdes.String(),new JsonSerde<>(CreditLineFlexFeeOutput5.class)));
+        creditLineFlexFeeOutput5KStream.to(FLEX_CREDIT_LINE_ACTIVITY_OUT_5_TOPIC, Produced.with(Serdes.String(), new JsonSerde<>(CreditLineFlexFeeOutput5.class)));
 
 
         final Topology topology = builder.build();
@@ -424,4 +426,87 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         kafkaStreams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
     }
+
+    public void flexCreditLineStream13() {
+        StreamsBuilder builder = new StreamsBuilder();
+        final Serde<FlexActivity> flexActivitySerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(FlexActivity.class));
+        KStream<String, FlexActivity> flexActivityKStream = builder.stream(FLEX_CREDITLINE_TOPIC_INPUT, Consumed.with(Serdes.String(), flexActivitySerde));
+        flexActivityKStream.print(Printed.toSysOut());
+        flexActivityKStream.foreach((key, value) ->
+                log.info("***** key and value for flex activity stream is ***** : :{} :{}", key, value));
+
+        KStream<String, FlexActivity> flexActivityStreamInfo = flexActivityKStream.selectKey((key, value) ->
+                value.getId().toString());
+
+
+        final Serde<CreditLineFlexFeeOutput5> flexFeeOutput5Serde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(CreditLineFlexFeeOutput5.class));
+        KStream<String, CreditLineFlexFeeOutput5> flexFeeOutput5KStream = builder.stream(FLEX_CREDIT_LINE_ACTIVITY_OUT_5_TOPIC, Consumed.with(Serdes.String(), flexFeeOutput5Serde));
+        flexFeeOutput5KStream.print(Printed.toSysOut());
+        flexFeeOutput5KStream.foreach((key, value) ->
+                log.info("**** key and value for flex fee output stream *****: :{} :{}", key, value));
+
+        KStream<String, CreditLineFlexFeeOutput5> flexFeeOutput5KStreamInfo =
+                flexFeeOutput5KStream.selectKey((key, value) ->
+                        value.getId().toString());
+
+        ValueJoiner<FlexActivity, CreditLineFlexFeeOutput5, CreditLineActivityOutput14> joiner =
+                (flexActivity, creditLineDetails) ->
+                        CreditLineActivityOutput14.builder()
+                                .id(flexActivity.getId())
+                                .customerLineNumber(flexActivity.getCustomerLineNumber())
+                                .postDt(creditLineDetails.getPostDt())
+                                .cif(creditLineDetails.getCif())
+                                .effdt(creditLineDetails.getEffdt())
+                                .flex_cmtmnt_amt_lcy(creditLineDetails.getFlex_cmtmnt_amt_lcy())
+                                .flex_cmtmnt_amt_tcy(creditLineDetails.getFlex_cmtmnt_amt_tcy())
+                                .flex_unCmtMnt_amt_lcy(creditLineDetails.getFlex_unCmtMnt_amt_lcy())
+                                .flex_unCmtMnt_amt_tcy(creditLineDetails.getFlex_unCmtMnt_amt_tcy())
+                                .flex_fee_pct(creditLineDetails.getFlex_fee_pct())
+                                .flex_fee_accr_bas(creditLineDetails.getFlex_fee_accr_bas())
+                                .trans_crrncy_cd(creditLineDetails.getTrans_crrncy_cd())
+                                .entity(creditLineDetails.getEntity())
+                                .applId(creditLineDetails.getApplId())
+                                .src_updt_dt(creditLineDetails.getSrc_updt_dt())
+                                .dw_create_ts(creditLineDetails.getDw_create_ts())
+                                .created_by(creditLineDetails.getCreated_by())
+                                .applId_loan(creditLineDetails.getApplId_loan())
+                                .creditLineStatus(creditLineDetails.getCreditLineStatus())
+                                .psgl_department(creditLineDetails.getPsgl_department())
+                                .branchNbr(creditLineDetails.getBranchNbr())
+                                .cba_aoteamcd(creditLineDetails.getCba_aoteamcd())
+                                .nameAddRln1(creditLineDetails.getNameAddRln1())
+                                .nameAddRln2(creditLineDetails.getNameAddRln2())
+                                .nameAddRln3(creditLineDetails.getNameAddRln3())
+                                .nameAddRln4(creditLineDetails.getNameAddRln4())
+                                .nameAddRln5(creditLineDetails.getNameAddRln5())
+                                .nameAddRln6(creditLineDetails.getNameAddRln6())
+                                .zipPostalCd(creditLineDetails.getZipPostalCd())
+                                .fullName(creditLineDetails.getFullName())
+                                .statusCd(creditLineDetails.getStatusCd())
+                                .expiryDate(creditLineDetails.getExpiryDate())
+                                .build();
+
+        KStream<String, CreditLineActivityOutput14> creditLineActivityOutput14KStream =
+                flexActivityStreamInfo.join(flexFeeOutput5KStreamInfo, joiner,
+                        JoinWindows.of(Duration.ofSeconds(3000)),
+                        StreamJoined.with(Serdes.String(), flexActivitySerde, flexFeeOutput5Serde));
+
+        creditLineActivityOutput14KStream.print(Printed.toSysOut());
+        creditLineActivityOutput14KStream.foreach((key, value) ->
+                log.info("***** key and value output for creditLineActivityOutput14KStream *****: :{} :{}", key, value)
+        );
+
+        creditLineActivityOutput14KStream.to("demo14", Produced.with(Serdes.String(), new JsonSerde<>(CreditLineActivityOutput14.class)));
+
+        final Topology topology = builder.build();
+        KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());
+        kafkaStreams.cleanUp();
+        log.info("***** Starting kafka stream *****");
+        kafkaStreams.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
+
+
+    }
+
+
 }

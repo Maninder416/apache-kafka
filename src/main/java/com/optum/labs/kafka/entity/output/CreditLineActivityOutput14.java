@@ -1,5 +1,6 @@
 package com.optum.labs.kafka.entity.output;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,24 +11,30 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "CREDIT_LINE_FLEX_FEE_ACTIVITY_OUTPUT_TOPIC5")
+@Table(name = "CREDIT_LINE_FLEX_CREDITLINE_ACTIVITY_OUT14")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreditLineFlexFeeOutput5 {
+public class CreditLineActivityOutput14 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
     private Long id;
 
+    @Column(name = "CUST_LN_NBR")
+    @JsonProperty("CUST_LN_NBR")
+    private String customerLineNumber;
+
+    @Column(name = "POSTDT")
+    @JsonProperty("POSTDT")
+    @Temporal(TemporalType.DATE)
+    private Date postDt;
+
     @Column(name = "CIF", length = 9)
     @JsonProperty("CIF")
     private String cif;
-    @Column(name = "CUST_LN_NBR", length = 22)
-    @JsonProperty("CUST_LN_NBR")
-    private String custLnNbr;
     @Column(name = "EFFDT")
     @Temporal(TemporalType.DATE)
     @JsonProperty("EFFDT")
@@ -63,10 +70,6 @@ public class CreditLineFlexFeeOutput5 {
     @Temporal(TemporalType.DATE)
     @JsonProperty("SRC_UPDT_DT")
     private Date src_updt_dt;
-    @Column(name = "POSTDT")
-    @Temporal(TemporalType.DATE)
-    @JsonProperty("POSTDT")
-    private Date postDt;
     @Column(name = "DW_CREATE_TS")
     @Temporal(TemporalType.DATE)
     @JsonProperty("DW_CREATE_TS")
