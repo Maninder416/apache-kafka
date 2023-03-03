@@ -80,53 +80,53 @@ public class KafkaTopicConfiguration {
 //                .build();
 //    }
 ////
-////    @Bean
-////    public NewTopic flexCreditLineActivityOutputTopic() {
-////        return TopicBuilder.name("credit.creditlines.flex-creditline-activity.out")
-////                .partitions(1)
-////                .replicas(1)
-////                .build();
-////    }
-////
-//    @Bean
-//    public NewTopic currencyCodeLoanTxnActivityTopic() {
-//        return TopicBuilder.name("credit.creditlines.currency-code-loantxn.activity.out")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic productCategoryProductCodeTopic() {
-//        return TopicBuilder.name("credit.creditlines.product-category-product-code.out")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic productCategoryCodeTopic() {
-//        return TopicBuilder.name("credit.creditlines.currency-loantxn-product-category-code.out")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
     @Bean
-    public NewTopic flexCreditLineAndActivityTopic() {
+    public NewTopic flexCreditLineActivityOutputTopic5() {
+        return TopicBuilder.name("credit.creditlines.flex-creditline-activity.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic currencyCodeLoanTxnActivityTopic8() {
+        return TopicBuilder.name("credit.creditlines.currency-code-loantxn.activity.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic productCategoryProductCodeTopic11() {
+        return TopicBuilder.name("credit.creditlines.product-category-product-code.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic productCategoryCodeTopic12() {
+        return TopicBuilder.name("credit.creditlines.currency-loantxn-product-category-code.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic flexCreditLineAndActivityTopic14() {
         return TopicBuilder.name("credit.creditlines.flex-creditline-and-activity.out")
                 .partitions(1)
                 .replicas(1)
                 .build();
     }
 
-////    @Bean
-////    public NewTopic creditLineAndActivityAndLoanTxnTopic() {
-////        return TopicBuilder.name("credit.creditlines.flex-creditline-and-activity-and-loantxn-and-prodcat.out")
-////                .partitions(1)
-////                .replicas(1)
-////                .build();
-////    }
+    @Bean
+    public NewTopic creditLineAndActivityAndLoanTxnTopic() {
+        return TopicBuilder.name("credit.creditlines.flex-creditline-and-activity-and-loantxn-and-prodcat.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 ////    @Bean
 ////    public NewTopic testingTopic() {
 ////        return TopicBuilder.name("testing")
