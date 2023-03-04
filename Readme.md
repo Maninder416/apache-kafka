@@ -2,6 +2,10 @@
 <h3 align="center">A passionate backend developer from Canada</h3>
 
 <h3 align="left">Connect with me:</h3>
+<h3 align="left">Basic producer/consumer kafka configuration: feature/branch-1-producer-consumer-config</h3>
+<h3 align="left">JSON message producer/consumer convertor and save data into MySQL: feature/branch-4-json-producer-consumer</h3>
+<h3 align="left">Connect with me:</h3>
+<h3 align="left">Connect with me:</h3>
 <p align="left">
 </p>
 
