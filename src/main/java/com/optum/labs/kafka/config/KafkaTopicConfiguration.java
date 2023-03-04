@@ -8,21 +8,21 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfiguration {
 
-//    @Bean
-//    public NewTopic creditLineDetailsTopic() {
-//        return TopicBuilder.name("credit.creditlines.creditline-detials.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic ulfClientDetailsTopic() {
-//        return TopicBuilder.name("credit.creditlines.ulf-client-detials.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
+    @Bean
+    public NewTopic creditLineDetailsTopic() {
+        return TopicBuilder.name("credit.creditlines.creditline-detials.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic ulfClientDetailsTopic() {
+        return TopicBuilder.name("credit.creditlines.ulf-client-detials.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 //
 //    @Bean
 //    public NewTopic flexCreditLineActivityTopic() {
@@ -32,38 +32,37 @@ public class KafkaTopicConfiguration {
 //                .build();
 //    }
 //
-//    @Bean
-//    public NewTopic currencyCodeTopic() {
-//        return TopicBuilder.name("credit.creditlines.currency-code.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic loanTxtTopic() {
-//        return TopicBuilder.name("credit.creditlines.loantxn.activity.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic productCodeTopic() {
-//        return TopicBuilder.name("credit.creditlines-product-code.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
-//    @Bean
-//    public NewTopic productCategoryTopic() {
-//        return TopicBuilder.name("credit.creditlines.product-category.in")
-//                .partitions(1)
-//                .replicas(1)
-//                .build();
-//    }
-//
+    @Bean
+    public NewTopic currencyCodeTopic() {
+        return TopicBuilder.name("credit.creditlines.currency-code.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+    @Bean
+    public NewTopic loanTxtTopic() {
+        return TopicBuilder.name("credit.creditlines.loantxn.activity.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic productCodeTopic() {
+        return TopicBuilder.name("credit.creditlines-product-code.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic productCategoryTopic() {
+        return TopicBuilder.name("credit.creditlines.product-category.in")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
     @Bean
     public NewTopic flexCreditLineTopic13() {
         return TopicBuilder.name("credit.creditlines.flex-creditline.in")
@@ -121,17 +120,10 @@ public class KafkaTopicConfiguration {
     }
 
     @Bean
-    public NewTopic creditLineAndActivityAndLoanTxnTopic() {
+    public NewTopic creditLineAndActivityAndLoanTxnTopic15() {
         return TopicBuilder.name("credit.creditlines.flex-creditline-and-activity-and-loantxn-and-prodcat.out")
                 .partitions(1)
                 .replicas(1)
                 .build();
     }
-////    @Bean
-////    public NewTopic testingTopic() {
-////        return TopicBuilder.name("testing")
-////                .partitions(1)
-////                .replicas(1)
-////                .build();
-////    }
 }
