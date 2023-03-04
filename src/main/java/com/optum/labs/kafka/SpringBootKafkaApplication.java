@@ -20,10 +20,6 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
     public String PRODUCT_CATEGORY_APP_ID;
     @Autowired
     private DataGenerationService dataCreationService;
-
-    @Autowired
-    private CreditLineActivityLoanTxnStream15 creditLineActivityLoanTxnStream15;
-
     @Autowired
     private ProductCategoryCodeOutput11 productCategoryCodeOutput11;
     @Autowired
@@ -56,17 +52,9 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         log.info("******** Data is inserted into tables ********");
         log.info("******* Trying to send streaming data *******");
 //        creditCreditLineDetailsStream3.creditLineDetails();
-//        creditLineCurrencyProductCategoryStream12.creditLinesCurrencyLoanTxn12();
-//        productCategoryCodeStream();
-        //  currencyCodeLoanTxnActivityStream();
-        // creditLinesCurrencyLoanTxn12();
-        //  creditLineDetails();
-//        flexCreditLineActivityStream();
-        //flexCreditLineStream13();
-//        flexCreditLineActivityLoanTxnOutputStream();
-//        creditLineActivityLoanTxnStream15.flexCreditLineActivityLoanTxnOutputStream();
-//        productCategoryCodeOutput11.productCategoryCodeStream();
 //        currencyCodeLoanTxnStream8.currencyCodeLoanTxnActivityStream();
+//        productCategoryCodeOutput11.productCategoryCodeStream();
+//        creditLineCurrencyProductCategoryStream12.creditLinesCurrencyLoanTxn12();
 //        creditLineAndActivityOutStream14.flexCreditLineStream();
         flexCreditLineActivityOutputStream15.flexCreditLineActivityLoanTxnOutputStream();
     }

@@ -11,9 +11,11 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.w3c.dom.css.Counter;
 
 
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
 public class KStreamConfig {
@@ -25,10 +27,12 @@ public class KStreamConfig {
     @Value("${kafka.application-id}")
     public String PRODUCT_CATEGORY_APP_ID;
 
+    private static final AtomicInteger COUNTER= new AtomicInteger();
+
     @Bean
     public Properties properties() {
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, PRODUCT_CATEGORY_APP_ID);
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, PRODUCT_CATEGORY_APP_ID+COUNTER.getAndIncrement());
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
@@ -51,5 +55,6 @@ public class KStreamConfig {
         System.out.println("working it");
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
     }
+
 
 }
