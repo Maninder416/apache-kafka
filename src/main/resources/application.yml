@@ -10,8 +10,8 @@ spring:
       properties:
         schema:
           registry:
-            url: "localhost:8081"
+            url: http://localhost:8081
 
 avro:
   topic:
-    name:
+    name: avro-topic-demo
