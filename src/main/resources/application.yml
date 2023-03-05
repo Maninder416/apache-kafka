@@ -1,2 +1,17 @@
 server:
   port: 9000
+
+spring:
+  kafka:
+    bootstrap-server: localhost:9092
+    producer:
+      keySerializer: "org.apache.kafka.common.serialization.StringSerializer"
+      valueSerializer: "io.confluent.kafka.serializers.KafkaAvroSerializer"
+      properties:
+        schema:
+          registry:
+            url: "localhost:8081"
+
+avro:
+  topic:
+    name:
