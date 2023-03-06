@@ -27,7 +27,10 @@ payload for second topic: avro-employee-employment-details
 
 here is a diagram for more explaination:
 
-![alt text](https://github.com/Maninder416/apache-kafka/tree/feature/avro-producer-consumer-stream-example/source/img.png?raw=true) 
+<p align="center">
+  <img src="/Users/manindersingh/Documents/spring-boot-projects/springboot-kafka/source/img.png" width="350" title="hover text">
+  <img src="/Users/manindersingh/Documents/spring-boot-projects/springboot-kafka/source/img.png" width="350" alt="accessibility text">
+</p>
  
  
 ```
