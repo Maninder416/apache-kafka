@@ -2,6 +2,20 @@ server:
   port: 9000
 
 spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+      jdbc:
+        batch_size: 1000
+  datasource:
+    url: jdbc:mysql://localhost:3306/avrodata
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
   kafka:
     bootstrap-server: localhost:9092
     producer:
@@ -12,6 +26,22 @@ spring:
           registry:
             url: http://localhost:8081
 
+    consumer:
+      group-id: "spring-boot-avro-consumer-id"
+      keyDeserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+      valueDeserializer: "io.confluent.kafka.serializers.KafkaAvroDeserializer"
+      properties:
+        schema:
+          registry:
+            url: http://localhost:8081
+        specific:
+          avro:
+            reader: "true"
+
+
 avro:
   topic:
     name: avro-topic-demo
+
+
+

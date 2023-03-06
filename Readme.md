@@ -1,7 +1,8 @@
-# Important branches for Kafka
+# Kafka Avro producer and consumer
 
 ```bash
-In this project, we are sending avro message to the kafka topic:
+In this project, we are sending and consuming the avro message to the kafka topic
+and saving into the MySQL DB:
 
 1. docker-compose up
 2. run the spring boot app
