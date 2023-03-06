@@ -40,7 +40,6 @@ the output will be like this:
 here is a diagram for more explaination:
 /Users/manindersingh/Documents/spring-boot-projects/springboot-kafka/source/img.png
 
-![My Image]([https://github.com/username/my-repo/raw/main/my-image.png](https://github.com/Maninder416/apache-kafka/blob/feature/avro-producer-consumer-stream-example/source/img.png))
- 
- 
+
 ```
+![My Image]([https://github.com/username/my-repo/raw/main/my-image.png](https://github.com/Maninder416/apache-kafka/blob/feature/avro-producer-consumer-stream-example/source/img.png))
