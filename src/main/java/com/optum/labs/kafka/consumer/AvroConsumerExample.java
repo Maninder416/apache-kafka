@@ -1,8 +1,8 @@
 package com.optum.labs.kafka.consumer;
 
-import com.optum.labs.kafka.model.StockHistoryEntity;
-import com.optum.labs.kafka.repository.StockHistoryRepository;
-import com.optum.labs.kafka.schema.StockHistory;
+import com.optum.labs.kafka.model.Employee;
+import com.optum.labs.kafka.repository.EmployeeRepository;
+import com.optum.labs.kafka.schema.EmployeeAllDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,22 +13,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AvroConsumerExample {
     @Autowired
-    private StockHistoryRepository repository;
+    private EmployeeRepository employeeRepository;
 
-    @KafkaListener(topics = "${avro.topic.name}", containerFactory = "kafkaListenerContainerFactory")
-    public void read(ConsumerRecord<String, StockHistory> record) {
+    @KafkaListener(topics = "${avro.topic.employee-all-details}", containerFactory = "kafkaListenerContainerFactory")
+    public void read(ConsumerRecord<String, EmployeeAllDetails> record) {
         String key = record.key();
-        StockHistory history = record.value();
-        StockHistoryEntity entity= new StockHistoryEntity();
-        entity.setAmount(record.value().getAmount());
-        entity.setPrice(record.value().getPrice());
-        entity.setTradeId(record.value().getTradeId());
-        entity.setTradeMarket(record.value().getTradeMarket().toString());
-        entity.setStockName(record.value().getStockName().toString());
-        entity.setTradeQuantity(record.value().getTradeQuantity());
-        entity.setTradeType(record.value().getTradeType().toString());
-        repository.save(entity);
-        log.info("Key and value for avro received message is :{} :{} ", key, history.toString());
+        EmployeeAllDetails employeeAllDetails = record.value();
+        Employee employee = new Employee();
+        employee.setEmpId(employeeAllDetails.getId());
+        employee.setName(employeeAllDetails.getName().toString());
+        employee.setCompany(employeeAllDetails.getCompany().toString());
+        employee.setSin(employeeAllDetails.getSin());
+        employee.setStatus(employeeAllDetails.getStatus().toString());
+        employee.setDepartment(employeeAllDetails.getDepartment().toString());
+        employeeRepository.save(employee);
+        log.info("Key and value for avro received message is :{} :{} ", key, employeeAllDetails.toString());
 
     }
 }

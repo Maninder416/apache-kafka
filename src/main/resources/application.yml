@@ -12,7 +12,7 @@ spring:
       jdbc:
         batch_size: 1000
   datasource:
-    url: jdbc:mysql://localhost:3306/avrodata
+    url: jdbc:mysql://localhost:3306/employee
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,7 +27,7 @@ spring:
             url: http://localhost:8081
 
     consumer:
-      group-id: "spring-boot-avro-consumer-id"
+      group-id: "employee-details-app"
       keyDeserializer: "org.apache.kafka.common.serialization.StringDeserializer"
       valueDeserializer: "io.confluent.kafka.serializers.KafkaAvroDeserializer"
       properties:
@@ -41,7 +41,10 @@ spring:
 
 avro:
   topic:
-    name: avro-topic-demo
+    employee-basic-details: avro-employee-basic-details
+    employee-employment-details: avro-employee-employment-details
+    employee-all-details: avro-employee-all-details
+
 
 
 

@@ -1,0 +1,38 @@
+{
+  "type": "record",
+  "name": "EmployeeAllDetails",
+  "namespace": "com.optum.labs.kafka.schema",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int",
+      "default": -1
+    },
+    {
+      "name": "name",
+      "type": ["null","string"],
+      "default": null
+    },
+    {
+      "name": "company",
+      "type": ["null","string"],
+      "default": null
+    },
+    {
+      "name": "sin",
+      "type": "int",
+      "default": -1
+    },
+    {
+      "name": "department",
+      "type": ["null","string"],
+      "default": null
+    },
+    {
+      "name": "status",
+      "type": ["null","string"],
+      "default": null
+    }
+
+  ]
+}

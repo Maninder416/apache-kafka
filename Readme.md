@@ -1,23 +1,33 @@
 # Kafka Avro producer and consumer
 
 ```bash
-In this project, we are sending the avro message to topic and consuming the avro message from same kafka topic
-and saving into the MySQL DB:
+In this project, we are doing kafka streaming, sending data to 2 topics and joining this data and sending it to the
+third topic and consuming it and saving into MySQL DB.
 
 1. docker-compose up
 2. run the spring boot app
 3. Post the avro object on :  "localhost:9000/sendStockHistory"
 
-payload for stock history:
+payload for first topic: avro-employee-basic-details
 
 {
-    "tradeQuantity":100,
-    "tradeMarket": "NSE",
-    "stockName": "Tata power limited",
-    "tradeType": "Sell",
-    "price": "250.25",
-    "amount": 1000,
-    "tradeId": 100
-} 
+    "id":107,
+    "name": "Maninder",
+    "company": "dataguise"
+}
+
+payload for second topic: avro-employee-employment-details
+
+{
+    "id":107,
+    "sin": 12345,
+    "department": "dev-team",
+    "status": "work-permit"
+}
+
+here is a diagram for more explaination:
+
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true) 
+ 
  
 ```

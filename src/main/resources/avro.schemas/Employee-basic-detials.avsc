@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "name": "Employee",
+  "namespace": "com.optum.labs.kafka.schema",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int",
+      "default": -1
+    },
+    {
+      "name": "name",
+      "type": ["null","string"],
+      "default": null
+    },
+    {
+      "name": "company",
+      "type": ["null","string"],
+      "default": null
+    }
+
+  ]
+}

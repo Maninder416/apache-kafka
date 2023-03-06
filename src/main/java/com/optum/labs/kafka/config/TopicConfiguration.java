@@ -9,8 +9,24 @@ import org.springframework.kafka.config.TopicBuilder;
 public class TopicConfiguration {
 
     @Bean
-    public NewTopic newTopic() {
-        return TopicBuilder.name("avro-topic-demo")
+    public NewTopic employeeBasicDetails() {
+        return TopicBuilder.name("avro-employee-basic-details")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic EmploymentDetails() {
+        return TopicBuilder.name("avro-employee-employment-details")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic employeeAllDetails() {
+        return TopicBuilder.name("avro-employee-all-details")
                 .partitions(1)
                 .replicas(1)
                 .build();

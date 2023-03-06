@@ -1,6 +1,6 @@
 package com.optum.labs.kafka.config;
 
-import com.optum.labs.kafka.schema.StockHistory;
+import com.optum.labs.kafka.schema.EmployeeAllDetails;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,13 +14,13 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 public class AvroConsumer {
 
     @Bean
-    public ConsumerFactory<String, StockHistory> consumerFactory(KafkaProperties kafkaProperties){
+    public ConsumerFactory<String, EmployeeAllDetails> consumerFactory(KafkaProperties kafkaProperties){
         return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties());
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String,StockHistory>> kafkaListenerContainerFactory(KafkaProperties kafkaProperties){
-        ConcurrentKafkaListenerContainerFactory<String,StockHistory> factory= new ConcurrentKafkaListenerContainerFactory<>();
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String,EmployeeAllDetails>> kafkaListenerContainerFactory(KafkaProperties kafkaProperties){
+        ConcurrentKafkaListenerContainerFactory<String,EmployeeAllDetails> factory= new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory(kafkaProperties));
         return factory;
     }

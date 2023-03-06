@@ -1,8 +1,7 @@
 package com.optum.labs.kafka.producer;
 
-
-import com.optum.labs.kafka.schema.StockHistory;
-import lombok.Data;
+import com.optum.labs.kafka.schema.Employee;
+import com.optum.labs.kafka.schema.EmployeeJobDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,15 +16,18 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Slf4j
 public class AvroProducer {
 
-    @Value("${avro.topic.name}")
-    private String topicName;
-    @Autowired
-    private KafkaTemplate<String, StockHistory> kafkaTemplate;
+    @Value("${avro.topic.employee-basic-details}")
+    private String employeeBasicDetails;
 
-    public void send(StockHistory stockHistory) {
-        ListenableFuture<SendResult<String, StockHistory>> future =
-                kafkaTemplate.send(topicName, String.valueOf(stockHistory.getTradeId()), stockHistory);
-        future.addCallback(new ListenableFutureCallback<SendResult<String, StockHistory>>() {
+    @Value("${avro.topic.employee-employment-details}")
+    private String employmentDetails;
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    public void sendEmployeeBasicDetails(Employee employee) {
+        ListenableFuture<SendResult<String, Object>> employeeDetails =
+                kafkaTemplate.send(employeeBasicDetails, String.valueOf(employee.getId()), employee);
+        employeeDetails.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
             public void onFailure(Throwable ex) {
                 log.info("Message failed to produce");
@@ -33,7 +35,25 @@ public class AvroProducer {
             }
 
             @Override
-            public void onSuccess(SendResult<String, StockHistory> result) {
+            public void onSuccess(SendResult<String, Object> result) {
+                log.info("Avro message successfully send");
+            }
+        });
+
+    }
+
+    public void sendEmploymentDetails(EmployeeJobDetails jobDetails) {
+        ListenableFuture<SendResult<String, Object>> employeeDetails =
+                kafkaTemplate.send(employmentDetails, String.valueOf(jobDetails.getId()), jobDetails);
+        employeeDetails.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
+            @Override
+            public void onFailure(Throwable ex) {
+                log.info("Message failed to produce");
+
+            }
+
+            @Override
+            public void onSuccess(SendResult<String, Object> result) {
                 log.info("Avro message successfully send");
             }
         });
