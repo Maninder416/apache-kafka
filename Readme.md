@@ -27,7 +27,7 @@ payload for second topic: avro-employee-employment-details
 
 here is a diagram for more explaination:
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true) 
+![alt text](https://github.com/Maninder416/apache-kafka/tree/feature/avro-producer-consumer-stream-example/source/img.png?raw=true) 
  
  
 ```
