@@ -1,7 +1,7 @@
 # Kafka Avro producer and consumer
 
 ```bash
-In this project, we are sending and consuming the avro message to the kafka topic
+In this project, we are sending the avro message to topic and consuming the avro message from same kafka topic
 and saving into the MySQL DB:
 
 1. docker-compose up
