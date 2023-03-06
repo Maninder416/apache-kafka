@@ -25,12 +25,20 @@ payload for second topic: avro-employee-employment-details
     "status": "work-permit"
 }
 
-here is a diagram for more explaination:
+the output will be like this:
 
-<p align="center">
-  <img src="/Users/manindersingh/Documents/spring-boot-projects/springboot-kafka/source/img.png" width="350" title="hover text">
-  <img src="/Users/manindersingh/Documents/spring-boot-projects/springboot-kafka/source/img.png" width="350" alt="accessibility text">
-</p>
+{
+    "id":107,
+    "name": "Maninder",
+    "company": "dataguise",
+    "sin": 12345,
+    "department": "dev-team",
+    "status": "work-permit"
+}
+
+
+here is a diagram for more explaination:
+/Users/manindersingh/Documents/spring-boot-projects/springboot-kafka/source/img.png
  
  
 ```
