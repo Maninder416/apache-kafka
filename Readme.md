@@ -42,4 +42,4 @@ here is a diagram for more explaination:
 
 
 ```
-![My Image]([https://github.com/username/my-repo/raw/main/my-image.png](https://github.com/Maninder416/apache-kafka/blob/feature/avro-producer-consumer-stream-example/source/img.png))
+
