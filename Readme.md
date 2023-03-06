@@ -1,4 +1,6 @@
-commands to run:
+# Commands to run:
+
+```bash
 1. It will help us to create image from DockerFile:
     
     mvn clean install
@@ -38,4 +40,6 @@ Delete:
 producer:
 
 kafka-console-producer --topic testing --bootstrap-server localhost:9092
+
+```
 
