@@ -4,17 +4,19 @@ import com.optum.labs.kafka.config.KStreamConfig;
 import com.optum.labs.kafka.schema.Employee;
 import com.optum.labs.kafka.schema.EmployeeAllDetails;
 import com.optum.labs.kafka.schema.EmployeeJobDetails;
+import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
+import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.serialization.Serde;
+import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.JoinWindows;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.Printed;
-import org.apache.kafka.streams.kstream.ValueJoiner;
+import org.apache.kafka.streams.kstream.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Collections;
 
 @Service
 @Slf4j
@@ -29,9 +31,15 @@ public class EmployeeDetailsStream {
     @Autowired
     private KStreamConfig kStreamConfig;
 
+    @Value("${spring.kafka.producer.properties.schema.registry.url}")
+    public String SCHEMA_REGISTRY_URL;
+
     public void employeeStream() {
         StreamsBuilder builder = new StreamsBuilder();
-        KStream<String, Employee> employeeKStream = builder.stream(employeeBasicDetails);
+        final Serde<String> stringSerde = Serdes.String();
+        final Serde<Employee> employeeSerde = new SpecificAvroSerde<>();
+        employeeSerde.configure(Collections.singletonMap(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,SCHEMA_REGISTRY_URL),false);
+        KStream<String, Employee> employeeKStream = builder.stream(employeeBasicDetails, Consumed.with(stringSerde, employeeSerde));
         employeeKStream.print(Printed.toSysOut());
         employeeKStream.foreach(((key, value) ->
                 log.info("***** Key value for employee basic details ***** : :{} :{}", key, value)));
@@ -39,7 +47,9 @@ public class EmployeeDetailsStream {
         KStream<String, Employee> employeeInfoStream = employeeKStream.selectKey((key, value) ->
                 value.getId().toString());
 
-        KStream<String, EmployeeJobDetails> employeeJobDetailsKStream = builder.stream(employmentDetails);
+        final Serde<EmployeeJobDetails> employeeJobDetailsSerde = new SpecificAvroSerde<>();
+        employeeJobDetailsSerde.configure(Collections.singletonMap(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,SCHEMA_REGISTRY_URL),false);
+        KStream<String, EmployeeJobDetails> employeeJobDetailsKStream = builder.stream(employmentDetails, Consumed.with(stringSerde, employeeJobDetailsSerde));
         employeeJobDetailsKStream.foreach(((key, value) ->
                 log.info("***** Employee job details ****** : :{} :{} ", key, value)
         ));
@@ -63,7 +73,9 @@ public class EmployeeDetailsStream {
         employeeAllDetailsKStream.print(Printed.toSysOut());
         employeeAllDetailsKStream.foreach(((key, value) ->
                 log.info("***** Employee all details: *****: :{} :{} ", key, value)));
-        employeeAllDetailsKStream.to(employeeAllDetails);
+        final Serde<EmployeeAllDetails> employeeAllDetailsSerde= new SpecificAvroSerde<>();
+        employeeAllDetailsSerde.configure(Collections.singletonMap(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,SCHEMA_REGISTRY_URL),false);
+        employeeAllDetailsKStream.to(employeeAllDetails,Produced.with(stringSerde,employeeAllDetailsSerde));
         kStreamConfig.topology(builder);
     }
 }

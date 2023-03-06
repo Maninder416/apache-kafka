@@ -12,6 +12,8 @@ services:
       MYSQL_USER: maninder
       MYSQL_PASSWORD: maninder
       MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./data:/var/lib/mysql
     networks:
       - kafka-stack-network
 

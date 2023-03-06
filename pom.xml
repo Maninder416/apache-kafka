@@ -84,6 +84,12 @@
 			<artifactId>kafka-streams-avro-serde</artifactId>
 			<version>${confluent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-serde-tools-package</artifactId>
+			<version>7.3.2</version>
+			<type>pom</type>
+		</dependency>
     </dependencies>
 
 	<build>
