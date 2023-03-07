@@ -87,7 +87,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForInstrument() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 500; i++) {
             Instrument instrument = new Instrument();
             String pattern = "[L-O]{2}";
             String currencyCode = "[A-D]{3}";
@@ -155,7 +155,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForTestLoanTransHist() {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 500; i++) {
             TestLoanTransHist hist = new TestLoanTransHist();
             hist.setAcctNbr(faker.number().digits(2));
             hist.setEffectiveDt(faker.date().birthday());
@@ -173,7 +173,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForClient() {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 500; i++) {
             Client client = new Client();
             String regex = "\\d{2}[A-H]";
             String nameAddLn1 = "CUSTOMER \\d{10}";

@@ -54,11 +54,12 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         log.info("******** Data is inserted into tables ********");
         log.info("******* Trying to send streaming data *******");
         creditCreditLineDetailsStream3.creditLineDetails();
+        creditLineFlexActivityStream5.flexCreditLineActivityStream();
+        creditLineAndActivityOutStream14.flexCreditLineStream();
         currencyCodeLoanTxnStream8.currencyCodeLoanTxnActivityStream();
         productCategoryCodeOutput11.productCategoryCodeStream();
         creditLineCurrencyProductCategoryStream12.creditLinesCurrencyLoanTxn12();
-        creditLineAndActivityOutStream14.flexCreditLineStream();
         flexCreditLineActivityOutputStream15.flexCreditLineActivityLoanTxnOutputStream();
-        creditLineFlexActivityStream5.flexCreditLineActivityStream();
+
     }
 }

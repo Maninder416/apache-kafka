@@ -1,5 +1,5 @@
 {
-  "name": "flex-creditLine-connector-13",
+  "name": "flex-creditLine-connector-13-docker",
   "config": {
     "connector.class" : "io.confluent.connect.jdbc.JdbcSourceConnector",
     "connection.url"  : "jdbc:mysql://mysqldb:3306/silicon",
@@ -10,7 +10,7 @@
     "tasks.max"       : "1",
     "mode"            : "incrementing",
     "incrementing.column.name": "ID",
-    "query": "select * from (select distinct FA.CUST_LN_NBR,FA.ID FROM flex_activity FA,credit_lines CL WHERE FA.CUST_LN_NBR = CL.CUST_LINE_NBR AND CL.APPLID IN ('CAD') OR CL.APPLID_LOAN IN ('LN')OR CL.credit_line_status  = '0'OR FA.POSTDT = (SELECT MAX(POSTDT) FROM flex_fee_activity ffa)AND CUST_LN_NBR NOT LIKE '%IMX%' LIMIT 1) test",
+    "query": "select ID,CUST_LN_NBR FROM flex_activity",
     "table.types"     : "TABLE",
     "topic.prefix"    : "credit.creditlines.flex-creditline.in",
     "db.timezone"     : "UTC",

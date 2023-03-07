@@ -36,6 +36,7 @@ public class CreditLineAndActivityOutStream14 {
         KStream<String, FlexActivity> flexActivityStreamInfo = flexActivityKStream.selectKey((key, value) ->
                 value.getId().toString());
 
+        log.info("**** value of id ****",flexActivityStreamInfo.toString());
 
         final Serde<CreditLineFlexFeeOutput5> flexFeeOutput5Serde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(CreditLineFlexFeeOutput5.class));
         KStream<String, CreditLineFlexFeeOutput5> flexFeeOutput5KStream = builder.stream(TopicEnum.FLEX_CREDIT_LINE_ACTIVITY_OUT_5_TOPIC.getTopicName(), Consumed.with(Serdes.String(), flexFeeOutput5Serde));
