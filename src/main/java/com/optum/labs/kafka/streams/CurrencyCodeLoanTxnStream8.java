@@ -72,7 +72,7 @@ public class CurrencyCodeLoanTxnStream8 {
                 log.info("***** Instrument and test loan transHist join data is ****** :{} :{}", key, value.toString())
         ));
 
-        insturmentTestLoanTransOutputKStream.to(TopicEnum.CURRENCY_LOAN_TOPIC.getTopicName(), Produced.with(Serdes.String(), new JsonSerde<>(CurrencyCodeLoanTxnActivityOutput.class)));
+        insturmentTestLoanTransOutputKStream.to(TopicEnum.CURRENCY_LOAN_8_TOPIC.getTopicName(), Produced.with(Serdes.String(), new JsonSerde<>(CurrencyCodeLoanTxnActivityOutput.class)));
         kStreamConfig.topology(builder);
 
     }

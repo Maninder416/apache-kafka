@@ -41,7 +41,7 @@ public class CreditLineCurrencyProductCategoryStream12 {
                 Serdes.serdeFrom(new JsonSerializer<>(),
                         new JsonDeserializer<>(CurrencyCodeLoanTxnActivityOutput.class));
         KStream<String, CurrencyCodeLoanTxnActivityOutput> currencyCodeLoanTxnActivityOutputKStream =
-                builder.stream(TopicEnum.CURRENCY_LOAN_TOPIC.getTopicName(), Consumed.with(Serdes.String(),
+                builder.stream(TopicEnum.CURRENCY_LOAN_8_TOPIC.getTopicName(), Consumed.with(Serdes.String(),
                         currencyCodeLoanTxnActivityOutputSerde));
         currencyCodeLoanTxnActivityOutputKStream.print(Printed.toSysOut());
         currencyCodeLoanTxnActivityOutputKStream.foreach((key, value) ->

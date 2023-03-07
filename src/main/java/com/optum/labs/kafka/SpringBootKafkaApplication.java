@@ -32,6 +32,8 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
     private CreditLineAndActivityOutStream14 creditLineAndActivityOutStream14;
     @Autowired
     private FlexCreditLineActivityOutputStream15 flexCreditLineActivityOutputStream15;
+    @Autowired
+    private CreditLineFlexActivityStream5 creditLineFlexActivityStream5;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootKafkaApplication.class, args);
@@ -57,5 +59,6 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         creditLineCurrencyProductCategoryStream12.creditLinesCurrencyLoanTxn12();
         creditLineAndActivityOutStream14.flexCreditLineStream();
         flexCreditLineActivityOutputStream15.flexCreditLineActivityLoanTxnOutputStream();
+        creditLineFlexActivityStream5.flexCreditLineActivityStream();
     }
 }

@@ -155,7 +155,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForTestLoanTransHist() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 5; i++) {
             TestLoanTransHist hist = new TestLoanTransHist();
             hist.setAcctNbr(faker.number().digits(2));
             hist.setEffectiveDt(faker.date().birthday());

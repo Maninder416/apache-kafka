@@ -1,5 +1,5 @@
 {
-  "name": "flex-creditLine-connector-4",
+  "name": "loantxn-activity-7",
   "config": {
     "connector.class" : "io.confluent.connect.jdbc.JdbcSourceConnector",
     "connection.url"  : "jdbc:mysql://mysqldb:3306/silicon",
@@ -10,9 +10,9 @@
     "tasks.max"       : "1",
     "mode"            : "incrementing",
     "incrementing.column.name": "ID",
-    "query": "select ID,POSTDT,EFFDT,CUST_LN_NBR,FLEX_CMTMNT_AMT_TCY ,FLEX_UNCMTMNT_AMT_TCY,FLEX_FEE_PCT ,FLEX_FEE_ACCR_BAS ,TRANS_CRRNCY_CD from flex_fee_activity",
+    "query": "SELECT ID,ACCTNBR, POSTDT, EFFECTIVEDT, NOTEPRNCPLBALGROSS FROM test_loan_trans_hist",
     "table.types"     : "TABLE",
-    "topic.prefix"    : "credit.creditlines.flex-creditline-activity.in",
+    "topic.prefix"    : "credit.creditlines.loantxn.activity.in",
     "db.timezone"     : "UTC",
     "validate.non.null" : "false",
     "poll.interval.ms"  : "1000",

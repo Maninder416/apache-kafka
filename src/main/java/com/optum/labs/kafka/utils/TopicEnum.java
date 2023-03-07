@@ -10,7 +10,7 @@ public enum TopicEnum {
     PRODUCT_CATEGORY_DETAILS_11_TOPIC("credit.creditlines.product-category-product-code.out"),
     CURRENCY_CODE_6_TOPIC("credit.creditlines.currency-code.in"),
     LOAN_TXN_7_TOPIC("credit.creditlines.loantxn.activity.in"),
-    CURRENCY_LOAN_TOPIC("credit.creditlines.currency-code-loantxn.activity.out"),
+    CURRENCY_LOAN_8_TOPIC("credit.creditlines.currency-code-loantxn.activity.out"),
     CURRENCY_LOAN_PRODUCT_CATEGORY_12_TOPIC("credit.creditlines.currency-loantxn-product-category-code.out"),
     FLEX_CREDIT_LINE_AND_ACTIVITY_OUT_14_TOPIC("credit.creditlines.flex-creditline-and-activity.out"),
     CLIENT_DETAILS_2_TOPIC("credit.creditlines.ulf-client-detials.in"),
