@@ -1,5 +1,5 @@
 {
-  "name": "product-category.in",
+  "name": "product-category-10-docker",
   "config": {
     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
     "task.max": "1",
@@ -25,7 +25,7 @@
     "table.type": "TABLE",
     "poll.interval.ms": "5000",
     "batch.max.rows": "5",
-    "topic.prefix": "product-category2.in",
+    "topic.prefix": "credit.creditlines.product-category.in",
     "db.timezone": "America/Toronto"
   }
 }

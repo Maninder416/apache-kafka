@@ -1,5 +1,5 @@
 {
-  "name": "product-code.in",
+  "name": "product-code-9",
   "config": {
     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
     "task.max": "1",

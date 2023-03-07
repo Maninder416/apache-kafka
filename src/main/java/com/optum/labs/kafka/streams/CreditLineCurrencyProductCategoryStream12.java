@@ -34,7 +34,7 @@ public class CreditLineCurrencyProductCategoryStream12 {
                 log.info("***** product category topic input data key value ******: :{} :{}  ", key, value)
         );
         KStream<String, ProductCategory> productCategoryInfoKeyStream = productCategoryKStream.selectKey((key, value) ->
-                value.getAccountNumber().toString()
+                value.getId().toString()
         );
 
         final Serde<CurrencyCodeLoanTxnActivityOutput> currencyCodeLoanTxnActivityOutputSerde =
@@ -50,7 +50,7 @@ public class CreditLineCurrencyProductCategoryStream12 {
 
         KStream<String, CurrencyCodeLoanTxnActivityOutput> currencyCodeLoanTxnActivityOutputInfoStream =
                 currencyCodeLoanTxnActivityOutputKStream.selectKey((key, value) ->
-                        value.getAcctNbr().toString()
+                        value.getId().toString()
                 );
 
         currencyCodeLoanTxnActivityOutputInfoStream.foreach((key, value) ->

@@ -26,7 +26,7 @@ public class ProductCategoryCodeOutput11 {
     public void productCategoryCodeStream() {
         final Serde<Instrument> instrumentSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(Instrument.class));
         StreamsBuilder builder = new StreamsBuilder();
-        KStream<String, Instrument> productCodeInfo = builder.stream(TopicEnum.PRODUCT_DETAILS_TOPIC.getTopicName(), Consumed.with(Serdes.String(), instrumentSerde));
+        KStream<String, Instrument> productCodeInfo = builder.stream(TopicEnum.PRODUCT_DETAILS_9_TOPIC.getTopicName(), Consumed.with(Serdes.String(), instrumentSerde));
         productCodeInfo.print(Printed.toSysOut());
         productCodeInfo.foreach((key, value) ->
                 log.info("product topic key value: " + key + " :value: " + value)
@@ -40,7 +40,7 @@ public class ProductCategoryCodeOutput11 {
                 log.info("product code info key and value :{} :{}", key, value)
         );
         final Serde<BpaUlfProductCodes> bpaUlfProductCodesSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(BpaUlfProductCodes.class));
-        KStream<String, BpaUlfProductCodes> instrumentInfo = builder.stream(TopicEnum.CATEGORY_DETAILS_TOPIC.getTopicName(), Consumed.with(Serdes.String(), bpaUlfProductCodesSerde));
+        KStream<String, BpaUlfProductCodes> instrumentInfo = builder.stream(TopicEnum.CATEGORY_DETAILS_10_TOPIC.getTopicName(), Consumed.with(Serdes.String(), bpaUlfProductCodesSerde));
         log.info("******** here BpaUlfProductCodes data is ********");
         instrumentInfo.print(Printed.toSysOut());
         instrumentInfo.foreach((key, value) ->

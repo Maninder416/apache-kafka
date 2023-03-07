@@ -30,7 +30,7 @@ public class CreditLineFlexActivityStream5 {
     public void flexCreditLineActivityStream() {
         StreamsBuilder builder = new StreamsBuilder();
         final Serde<FlexFeeActivity> flexCreditLineActivityOutputSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(FlexFeeActivity.class));
-        KStream<String, FlexFeeActivity> flexCreditLineActivityOutputKStream = builder.stream(TopicEnum.FLEX_CREDIT_LINE_ACTIVITY_INPUT.getTopicName()
+        KStream<String, FlexFeeActivity> flexCreditLineActivityOutputKStream = builder.stream(TopicEnum.FLEX_CREDIT_LINE_ACTIVITY_4_INPUT.getTopicName()
                 , Consumed.with(Serdes.String(), flexCreditLineActivityOutputSerde));
         flexCreditLineActivityOutputKStream.print(Printed.toSysOut());
         flexCreditLineActivityOutputKStream.foreach((key, value) ->
