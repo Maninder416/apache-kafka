@@ -27,7 +27,7 @@ public class CreditCreditLineDetailsStream3 {
     public void creditLineDetails() {
         StreamsBuilder builder = new StreamsBuilder();
         final Serde<CreditLines> creditLinesSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(CreditLines.class));
-        KStream<String, CreditLines> creditLinesKStream = builder.stream(TopicEnum.CREDIT_LINE_DETAILS_TOPIC.getTopicName(), Consumed.with(Serdes.String(), creditLinesSerde));
+        KStream<String, CreditLines> creditLinesKStream = builder.stream(TopicEnum.CREDIT_LINE_DETAILS_1_TOPIC.getTopicName(), Consumed.with(Serdes.String(), creditLinesSerde));
         log.info("***** credit line stream data ******");
         creditLinesKStream.print(Printed.toSysOut());
         creditLinesKStream.foreach((key, value) ->
@@ -39,7 +39,7 @@ public class CreditCreditLineDetailsStream3 {
         );
 
         final Serde<Client> clientDetailsSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(Client.class));
-        KStream<String, Client> clientDetailsKStream = builder.stream(TopicEnum.CLIENT_DETAILS_TOPIC.getTopicName(), Consumed.with(Serdes.String(), clientDetailsSerde));
+        KStream<String, Client> clientDetailsKStream = builder.stream(TopicEnum.CLIENT_DETAILS_2_TOPIC.getTopicName(), Consumed.with(Serdes.String(), clientDetailsSerde));
         clientDetailsKStream.print(Printed.toSysOut());
         clientDetailsKStream.foreach(((key, value) ->
                 log.info("***** key value for client details: :{} :{}", key, value)));
@@ -51,15 +51,14 @@ public class CreditCreditLineDetailsStream3 {
                 (creditLine, client) ->
                         CreditLineUserDetailsOutput.builder()
                                 .id(creditLine.getId())
-                                .custLineNbr(creditLine.getCustLineNbr())
-                                .applId_loan(creditLine.getApplId_loan())
                                 .creditLineStatus(creditLine.getCreditLineStatus())
-                                .applId(creditLine.getApplId())
                                 .postDt(creditLine.getPostDt())
+                                .cif(creditLine.getCif())
+                                .trans_crrncy_cd(creditLine.getTrans_crrncy_cd())
+                                .flex_fee_debit_acc(creditLine.getFlex_fee_debit_acc())
                                 .psgl_department(client.getPsgl_department())
                                 .branchNbr(client.getBranchNbr())
                                 .cba_aoteamcd(client.getCba_aoteamcd())
-                                .nameAddRln1(client.getNameAddRln1())
                                 .nameAddRln2(client.getNameAddRln2())
                                 .nameAddRln3(client.getNameAddRln3())
                                 .nameAddRln4(client.getNameAddRln4())
@@ -67,9 +66,6 @@ public class CreditCreditLineDetailsStream3 {
                                 .nameAddRln6(client.getNameAddRln6())
                                 .zipPostalCd(client.getZipPostalCd())
                                 .fullName(client.getFullName())
-                                .statusCd(client.getStatusCd())
-                                .expiryDate(client.getExpiryDate())
-                                .cif(client.getCif())
                                 .build();
 
         KStream<String, CreditLineUserDetailsOutput> creditLineUserDetailsOutputKStream = creditLinesInfoKeyStream
@@ -82,7 +78,7 @@ public class CreditCreditLineDetailsStream3 {
                 log.info("***** key and value for creditLineUserDetailsOutput Stream:  *****: :{} :{}", key, value)
         ));
 
-        creditLineUserDetailsOutputKStream.to(TopicEnum.CREDIT_LINE_DETAILS_TOPIC_OUTPUT.getTopicName(), Produced.with(Serdes.String(), new JsonSerde<>(CreditLineUserDetailsOutput.class)));
+        creditLineUserDetailsOutputKStream.to(TopicEnum.CREDIT_LINE_DETAILS_TOPIC_OUTPUT_3_TOPIC.getTopicName(), Produced.with(Serdes.String(), new JsonSerde<>(CreditLineUserDetailsOutput.class)));
         kStreamConfig.topology(builder);
     }
 }

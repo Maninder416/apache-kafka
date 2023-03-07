@@ -36,5 +36,15 @@ public class CreditLines {
     @JsonProperty("POSTDT")
     @Temporal(TemporalType.DATE)
     private Date postDt;
+    @Column(name = "CIF",length = 18)
+    @JsonProperty("CIF")
+    private String cif;
+
+    @Column(name = "TRANS_CRRNCY_CD", length = 3)
+    @JsonProperty("TRANS_CURRENCY_CODE")
+    private String trans_crrncy_cd;
+    @Column(name="FLEX_FEE_DEBIT_ACC")
+    @JsonProperty("FLEX_FEE_DEBIT_ACC")
+    private String flex_fee_debit_acc;
 
 }

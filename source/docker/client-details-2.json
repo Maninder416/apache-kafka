@@ -13,7 +13,7 @@
     "transforms.createKey.fields": "ID",
     "transforms.setSchema.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Value",
     "transforms.setSchema.schema.name": "silicon_Data",
-    "connection.url": "jdbc:mysql://localhost:3306/silicon",
+    "connection.url": "jdbc:mysql://mysqldb:3306/silicon",
     "connection.user": "root",
     "connection.password": "root",
     "dialect.name": "MySqlDatabaseDialect",

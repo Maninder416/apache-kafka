@@ -1,5 +1,5 @@
 {
-  "name": "client-details-2",
+  "name": "creditLine-details-1",
   "config": {
     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
     "task.max": "1",
@@ -13,7 +13,7 @@
     "transforms.createKey.fields": "ID",
     "transforms.setSchema.type": "org.apache.kafka.connect.transforms.SetSchemaMetadata$Value",
     "transforms.setSchema.schema.name": "silicon_Data",
-    "connection.url": "jdbc:mysql://localhost:3306/silicon",
+    "connection.url": "jdbc:mysql://mysqldb:3306/silicon",
     "connection.user": "root",
     "connection.password": "root",
     "dialect.name": "MySqlDatabaseDialect",
@@ -21,11 +21,11 @@
     "incrementing.column.name": "ID",
     "numeric.precision.mapping": true,
     "numeric.mapping": "best_fit",
-    "query": "SELECT * from (select ID,PSGL_DEPARTMENT, BRANCHNBR, CBS_AOTEAMCD,NAMEADDRLN2, NAMEADDRLN3,NAMEADDRLN4,NAMEADDRLN5,NAMEADDRLN6, ZIPPOSTALCD, FULL_NAME FROM clients) client",
+    "query": "select * from (SELECT CL.ID,CL.CIF,POSTDT, CREDIT_LINE_STATUS,FLEX_FEE_DEBIT_ACC, i.TRANS_CURRENCY_CODE from credit_lines CL join instrument i where i.id = CL.ID) test",
     "table.type": "TABLE",
     "poll.interval.ms": "5000",
     "batch.max.rows": "5",
-    "topic.prefix": "credit.creditlines.ulf-client-detials.in",
+    "topic.prefix": "credit.creditlines.creditline-detials.in",
     "db.timezone": "America/Toronto"
   }
 }

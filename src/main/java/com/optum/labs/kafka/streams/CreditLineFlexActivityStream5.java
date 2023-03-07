@@ -43,7 +43,7 @@ public class CreditLineFlexActivityStream5 {
         final Serde<CreditLineUserDetailsOutput> creditLineUserDetailsOutputSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(CreditLineUserDetailsOutput.class));
 
         KStream<String, CreditLineUserDetailsOutput> creditLineUserDetailsOutputKStream =
-                builder.stream(TopicEnum.CREDIT_LINE_DETAILS_TOPIC_OUTPUT.getTopicName(), Consumed.with(Serdes.String(), creditLineUserDetailsOutputSerde));
+                builder.stream(TopicEnum.CREDIT_LINE_DETAILS_TOPIC_OUTPUT_3_TOPIC.getTopicName(), Consumed.with(Serdes.String(), creditLineUserDetailsOutputSerde));
         creditLineUserDetailsOutputKStream.print(Printed.toSysOut());
         creditLineUserDetailsOutputKStream.foreach((key, value) ->
                 log.info("***** credit line user details output: ****** :{} :{}", key, value)

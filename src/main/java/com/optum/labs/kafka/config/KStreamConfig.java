@@ -15,6 +15,7 @@ import org.w3c.dom.css.Counter;
 
 
 import java.util.Properties;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Configuration
@@ -29,10 +30,23 @@ public class KStreamConfig {
 
     private static final AtomicInteger COUNTER= new AtomicInteger();
 
-    @Bean
+//    @Bean
+//    public Properties properties() {
+//        Properties props = new Properties();
+//        props.put(StreamsConfig.APPLICATION_ID_CONFIG, PRODUCT_CATEGORY_APP_ID+COUNTER.getAndIncrement());
+//        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
+//        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+//        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+//        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+//        props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
+//        props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
+//        return props;
+//    }
+
+//    @Bean
     public Properties properties() {
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, PRODUCT_CATEGORY_APP_ID+COUNTER.getAndIncrement());
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, UUID.randomUUID().toString());
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
@@ -49,10 +63,11 @@ public class KStreamConfig {
      */
     public void topology(StreamsBuilder builder) {
         final Topology topology = builder.build();
+
+        System.out.println("application id: "+properties().toString());
         KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());
         kafkaStreams.cleanUp();
         kafkaStreams.start();
-        System.out.println("working it");
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
     }
 

@@ -8,16 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 @Service
 public class DataGenerationService {
     @Autowired
     private Faker faker;
-
     @Autowired
     private LoanRepository loanRepository;
     @Autowired
@@ -50,7 +44,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForLoan() {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 500; i++) {
             Loan loan = new Loan();
             loan.setAccountNumber(Integer.valueOf(faker.number().digits(2)));
             String pattern = "[L-O]{2}";
@@ -79,6 +73,9 @@ public class DataGenerationService {
             creditLines.setCustLineNbr((faker.number().digits(2)));
             creditLines.setApplId(faker.regexify(currencyCode));
             creditLines.setPostDt(faker.date().birthday());
+            creditLines.setCif(faker.number().digits(2));
+            creditLines.setTrans_crrncy_cd(faker.regexify(currencyCode));
+            creditLines.setFlex_fee_debit_acc(faker.number().digits(2));
             creditLineRepository.save(creditLines);
         }
         return "Data generated for credit line table";
@@ -110,7 +107,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForbpaUlfProductCodes() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 500; i++) {
             BpaUlfProductCodes bpaUlfProductCodes = new BpaUlfProductCodes();
             String pattern = "[A-D]{3}";
             String category_cd = "[A-D]{2}";
@@ -127,7 +124,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForpsRate() {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 500; i++) {
             PsRtRate rate = new PsRtRate();
             rate.setTo_cur(faker.number().digits(2));
             rate.setFrom_cur(faker.number().digits(2));
@@ -144,7 +141,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataFortestHolidayCalendar() {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 500; i++) {
             TestHolidayCalendar calendar = new TestHolidayCalendar();
             calendar.setBranchHolidayDt(faker.date().birthday());
             testHolidayCalendarRepository.save(calendar);
@@ -158,7 +155,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForTestLoanTransHist() {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 500; i++) {
             TestLoanTransHist hist = new TestLoanTransHist();
             hist.setAcctNbr(faker.number().digits(2));
             hist.setEffectiveDt(faker.date().birthday());
@@ -210,7 +207,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForFlexFeeActivity() {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 500; i++) {
             FlexFeeActivity flexFeeActivity = new FlexFeeActivity();
             String pattern = "[L-O]{3}";
             String currencyCode = "[A-D]{3}";
@@ -237,7 +234,7 @@ public class DataGenerationService {
     }
 
     public String generateDataForFlexActivity(){
-        for(int i=0;i<5;i++){
+        for(int i=0;i<500;i++){
             FlexActivity activity= new FlexActivity();
             activity.setCustomerLineNumber((faker.number().digits(2)));
             activity.setPostDt(faker.date().birthday());
