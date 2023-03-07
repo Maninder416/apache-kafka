@@ -6,6 +6,7 @@
     "connection.user" : "root",
     "connection.password" : "root",
     "connection.attempts": "3",
+    "retry.backoff.ms": "5000",
     "numeric.mapping" : "best_fit",
     "tasks.max"       : "1",
     "mode"            : "incrementing",

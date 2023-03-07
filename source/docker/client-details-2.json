@@ -16,6 +16,8 @@
     "connection.url": "jdbc:mysql://mysqldb:3306/silicon",
     "connection.user": "root",
     "connection.password": "root",
+    "connection.attempts": "3",
+    "retry.backoff.ms": "5000",
     "dialect.name": "MySqlDatabaseDialect",
     "mode": "incrementing",
     "incrementing.column.name": "ID",
