@@ -24,7 +24,6 @@ public class CurrencyLoanProductCategoryCodeOutput {
     @Column(name = "ACCTNBR", length = 35)
     @JsonProperty("ACCTNBR")
     private String acctNbr;
-
     @Column(name = "TRANID", length = 30)
     @JsonProperty("TRANID")
     private String tranId;

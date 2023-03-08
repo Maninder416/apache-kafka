@@ -25,8 +25,8 @@ public class CreditLineFlexFeeOutput5 {
     @Column(name = "CIF", length = 9)
     @JsonProperty("CIF")
     private String cif;
-    @Column(name = "CUST_LN_NBR", length = 22)
-    @JsonProperty("CUST_LN_NBR")
+    @Column(name = "CUST_LINE_NBR", length = 22)
+    @JsonProperty("CUST_LINE_NBR")
     private String custLnNbr;
     @Column(name = "EFFDT")
     @Temporal(TemporalType.DATE)
@@ -74,11 +74,6 @@ public class CreditLineFlexFeeOutput5 {
     @Column(name = "CREATED_BY", length = 30)
     @JsonProperty("CREATED_BY")
     private String created_by;
-
-    @Column(name = "CUST_LINE_NBR", length = 22)
-    @JsonProperty("CUST_LINE_NBR")
-    private String custLineNbr;
-
     @Column(name = "APPLID_LOAN", length = 3)
     @JsonProperty("APPLID_LOAN")
     private String applId_loan;

@@ -60,6 +60,5 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         productCategoryCodeOutput11.productCategoryCodeStream();
         creditLineCurrencyProductCategoryStream12.creditLinesCurrencyLoanTxn12();
         flexCreditLineActivityOutputStream15.flexCreditLineActivityLoanTxnOutputStream();
-
     }
 }

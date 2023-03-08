@@ -18,8 +18,8 @@ public class ClientFlexActivityOutput {
     @JsonProperty("ID")
     private Long id;
 
-    @Column(name = "CUST_LN_NBR")
-    @JsonProperty("CUST_LN_NBR")
+    @Column(name = "CUST_LINE_NBR")
+    @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
 
     @Column(name = "POSTDT")

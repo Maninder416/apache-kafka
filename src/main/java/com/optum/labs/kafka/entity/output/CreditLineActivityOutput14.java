@@ -1,6 +1,7 @@
 package com.optum.labs.kafka.entity.output;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +24,8 @@ public class CreditLineActivityOutput14 {
     @JsonProperty("ID")
     private Long id;
 
-    @Column(name = "CUST_LN_NBR")
-    @JsonProperty("CUST_LN_NBR")
+    @Column(name = "CUST_LINE_NBR")
+    @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
 
     @Column(name = "POSTDT")
@@ -77,11 +78,6 @@ public class CreditLineActivityOutput14 {
     @Column(name = "CREATED_BY", length = 30)
     @JsonProperty("CREATED_BY")
     private String created_by;
-
-    @Column(name = "CUST_LINE_NBR", length = 22)
-    @JsonProperty("CUST_LINE_NBR")
-    private String custLineNbr;
-
     @Column(name = "APPLID_LOAN", length = 3)
     @JsonProperty("APPLID_LOAN")
     private String applId_loan;

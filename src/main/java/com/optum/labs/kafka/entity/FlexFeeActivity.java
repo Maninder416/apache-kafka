@@ -19,8 +19,8 @@ public class FlexFeeActivity {
     @Column(name = "CIF", length = 9)
     @JsonProperty("CIF")
     private String cif;
-    @Column(name = "CUST_LN_NBR", length = 22)
-    @JsonProperty("CUST_LN_NBR")
+    @Column(name = "CUST_LINE_NBR", length = 22)
+    @JsonProperty("CUST_LINE_NBR")
     private String custLnNbr;
     @Column(name = "EFFDT")
     @Temporal(TemporalType.DATE)

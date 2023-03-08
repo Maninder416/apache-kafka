@@ -51,6 +51,7 @@ public class CreditCreditLineDetailsStream3 {
                 (creditLine, client) ->
                         CreditLineUserDetailsOutput.builder()
                                 .id(creditLine.getId())
+                                .custLineNbr(creditLine.getCustLineNbr())
                                 .creditLineStatus(creditLine.getCreditLineStatus())
                                 .postDt(creditLine.getPostDt())
                                 .cif(creditLine.getCif())

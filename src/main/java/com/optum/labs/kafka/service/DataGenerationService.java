@@ -44,7 +44,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForLoan() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 10; i++) {
             Loan loan = new Loan();
             loan.setAccountNumber(Integer.valueOf(faker.number().digits(2)));
             String pattern = "[L-O]{2}";
@@ -63,7 +63,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForCreditLine() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 10; i++) {
             CreditLines creditLines = new CreditLines();
             String pattern = "[L-O]{2}";
             String pattern2 = "[L-O]{1}";
@@ -87,7 +87,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForInstrument() {
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 10; i++) {
             Instrument instrument = new Instrument();
             String pattern = "[L-O]{2}";
             String currencyCode = "[A-D]{3}";
@@ -107,7 +107,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForbpaUlfProductCodes() {
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 10; i++) {
             BpaUlfProductCodes bpaUlfProductCodes = new BpaUlfProductCodes();
             String pattern = "[A-D]{3}";
             String category_cd = "[A-D]{2}";
@@ -124,7 +124,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForpsRate() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 10; i++) {
             PsRtRate rate = new PsRtRate();
             rate.setTo_cur(faker.number().digits(2));
             rate.setFrom_cur(faker.number().digits(2));
@@ -141,7 +141,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataFortestHolidayCalendar() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 10; i++) {
             TestHolidayCalendar calendar = new TestHolidayCalendar();
             calendar.setBranchHolidayDt(faker.date().birthday());
             testHolidayCalendarRepository.save(calendar);
@@ -155,7 +155,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForTestLoanTransHist() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 10; i++) {
             TestLoanTransHist hist = new TestLoanTransHist();
             hist.setAcctNbr(faker.number().digits(2));
             hist.setEffectiveDt(faker.date().birthday());
@@ -173,7 +173,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForClient() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 10; i++) {
             Client client = new Client();
             String regex = "\\d{2}[A-H]";
             String nameAddLn1 = "CUSTOMER \\d{10}";
@@ -207,7 +207,7 @@ public class DataGenerationService {
      * @return
      */
     public String generateDataForFlexFeeActivity() {
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 10; i++) {
             FlexFeeActivity flexFeeActivity = new FlexFeeActivity();
             String pattern = "[L-O]{3}";
             String currencyCode = "[A-D]{3}";
@@ -234,7 +234,7 @@ public class DataGenerationService {
     }
 
     public String generateDataForFlexActivity(){
-        for(int i=0;i<500;i++){
+        for(int i=0;i<10;i++){
             FlexActivity activity= new FlexActivity();
             activity.setCustomerLineNumber((faker.number().digits(2)));
             activity.setPostDt(faker.date().birthday());

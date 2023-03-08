@@ -31,7 +31,7 @@ public class CreditLineAndActivityOutStream14 {
         KStream<String, FlexActivity> flexActivityKStream = builder.stream(TopicEnum.FLEX_CREDITLINE_TOPIC_13_INPUT.getTopicName(), Consumed.with(Serdes.String(), flexActivitySerde));
         flexActivityKStream.print(Printed.toSysOut());
         flexActivityKStream.foreach((key, value) ->
-                log.info("***** key and value for flex activity stream is ***** : :{} :{}", key, value));
+                log.info("***** key and value for flex activity stream is topic 13:  ***** : :{} :{}", key, value));
 
         KStream<String, FlexActivity> flexActivityStreamInfo = flexActivityKStream.selectKey((key, value) ->
                 value.getId().toString());
@@ -42,7 +42,7 @@ public class CreditLineAndActivityOutStream14 {
         KStream<String, CreditLineFlexFeeOutput5> flexFeeOutput5KStream = builder.stream(TopicEnum.FLEX_CREDIT_LINE_ACTIVITY_OUT_5_TOPIC.getTopicName(), Consumed.with(Serdes.String(), flexFeeOutput5Serde));
         flexFeeOutput5KStream.print(Printed.toSysOut());
         flexFeeOutput5KStream.foreach((key, value) ->
-                log.info("**** key and value for flex fee output stream *****: :{} :{}", key, value));
+                log.info("**** key and value for flex fee output 14 stream topic 5 *****: :{} :{}", key, value));
 
         KStream<String, CreditLineFlexFeeOutput5> flexFeeOutput5KStreamInfo =
                 flexFeeOutput5KStream.selectKey((key, value) ->

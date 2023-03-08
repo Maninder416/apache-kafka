@@ -21,19 +21,6 @@ public class ProductCategory {
     @Column(name = "ACCTNBR",length = 35)
     @JsonProperty("ACCTNBR")
     private String accountNumber;
-
-//    @Column(name = "APPLID",length = 2)
-//    @JsonProperty("APPLID")
-//    private String applId;
-//
-//    @Column(name = "CIF",length = 18)
-//    @JsonProperty("CIF")
-//    private String cif;
-
-//    @Column(name = "TRANS_CURRENCY_CODE",length = 3)
-//    @JsonProperty("TRANS_CURRENCY_CODE")
-//    private String currencyCode;
-
     @Column(name = "PRODUCT_CD", length = 3)
     @JsonProperty("PRODUCT_CD")
     private String product_cd;
@@ -45,9 +32,6 @@ public class ProductCategory {
 
         private Long id;
         private String accountNumber;
-//        private String applId;
-//        private String cif;
-//        private String currencyCode;
         private String product_cd;
         private String product_category_cd;
 
@@ -55,22 +39,6 @@ public class ProductCategory {
             this.accountNumber = accountNumber;
             return this;
         }
-
-//        public Builder applId(String applId) {
-//            this.applId = applId;
-//            return this;
-//        }
-//
-//        public Builder cif(String cif) {
-//            this.cif = cif;
-//            return this;
-//        }
-//
-//        public Builder currencyCode(String currencyCode) {
-//            this.currencyCode = currencyCode;
-//            return this;
-//        }
-
         public Builder product_cd(String product_cd) {
             this.product_cd = product_cd;
             return this;
@@ -85,11 +53,6 @@ public class ProductCategory {
             this.id = id;
             return this;
         }
-
-
-//        public ProductCategory build() {
-//            return new ProductCategory(id,accountNumber, applId, cif,currencyCode,product_cd,product_category_cd);
-//        }
 
         public ProductCategory build() {
             return new ProductCategory(id,accountNumber,product_cd,product_category_cd);

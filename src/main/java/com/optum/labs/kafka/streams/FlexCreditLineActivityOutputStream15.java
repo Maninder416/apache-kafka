@@ -48,7 +48,7 @@ public class FlexCreditLineActivityOutputStream15 {
 
         creditLineFlexFeeOutput12KStream.print(Printed.toSysOut());
         creditLineFlexFeeOutput12KStream.foreach(((key, value) ->
-                log.info("**** credit line output topic-12 *****: :{} :{}", key, value)));
+                log.info("**** credit line output in stream 15 topic-12 *****: :{} :{}", key, value)));
         KStream<String, CurrencyLoanProductCategoryCodeOutput> currencyLoanProductCategoryCodeOutputKStreamInfo =
                 creditLineFlexFeeOutput12KStream.selectKey((key, value) -> value.getId().toString());
 
@@ -56,7 +56,7 @@ public class FlexCreditLineActivityOutputStream15 {
                 joiner = (creditLineDetails, currencyCode) ->
                 CreditLineLoanTxnProd15.builder()
                         .id(creditLineDetails.getId())
-                        .custLineNbr(creditLineDetails.getCustLineNbr())
+                        .customerLineNumber(creditLineDetails.getCustomerLineNumber())
                         .postDt(creditLineDetails.getPostDt())
                         .cif(creditLineDetails.getCif())
                         .effdt(creditLineDetails.getEffdt())
@@ -102,7 +102,7 @@ public class FlexCreditLineActivityOutputStream15 {
 
         creditLineLoanTxnProd15KStream.print(Printed.toSysOut());
         creditLineLoanTxnProd15KStream.foreach((key, value) ->
-                log.info("**** final output **** :{} :{}", key, value));
+                log.info("**** final output of stream 15**** :{} :{}", key, value));
 
         creditLineLoanTxnProd15KStream.to(TopicEnum.CREDIT_LINE_TOPIC_15.getTopicName(), Produced.with(Serdes.String(), new JsonSerde<>(CreditLineLoanTxnProd15.class)));
         kStreamConfig.topology(builder);

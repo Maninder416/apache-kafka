@@ -69,7 +69,7 @@ public class CreditLineFlexActivityStream5 {
                         .trans_crrncy_cd(flexFeeActivity.getTrans_crrncy_cd())
                         .entity(flexFeeActivity.getEntity())
                         .src_updt_dt(flexFeeActivity.getSrc_updt_dt())
-                        .custLineNbr(creditLineDetails.getCustLineNbr())
+                        .custLnNbr(creditLineDetails.getCustLineNbr())
                         .applId_loan(creditLineDetails.getApplId_loan())
                         .creditLineStatus(creditLineDetails.getCreditLineStatus())
                         .applId(creditLineDetails.getApplId())

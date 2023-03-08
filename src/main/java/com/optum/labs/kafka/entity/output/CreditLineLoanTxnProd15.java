@@ -22,8 +22,8 @@ public class CreditLineLoanTxnProd15 {
     @JsonProperty("ID")
     private Long id;
 
-    @Column(name = "CUST_LN_NBR")
-    @JsonProperty("CUST_LN_NBR")
+    @Column(name = "CUST_LINE_NBR")
+    @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
 
     @Column(name = "POSTDT")
@@ -76,11 +76,6 @@ public class CreditLineLoanTxnProd15 {
     @Column(name = "CREATED_BY", length = 30)
     @JsonProperty("CREATED_BY")
     private String created_by;
-
-    @Column(name = "CUST_LINE_NBR", length = 22)
-    @JsonProperty("CUST_LINE_NBR")
-    private String custLineNbr;
-
     @Column(name = "APPLID_LOAN", length = 3)
     @JsonProperty("APPLID_LOAN")
     private String applId_loan;
@@ -141,7 +136,7 @@ public class CreditLineLoanTxnProd15 {
     @JsonProperty("NOTEPRNCPLBALGROSS")
     private double notePrncplBalgross;
 
-    @Column(name = "TRANS_CURRENCY_CODE",length = 3)
+    @Column(name = "TRANS_CURRENCY_CODE", length = 3)
     @JsonProperty("TRANS_CURRENCY_CODE")
     private String currencyCode;
 
