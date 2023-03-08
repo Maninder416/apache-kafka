@@ -23,7 +23,7 @@
     "incrementing.column.name": "ID",
     "numeric.precision.mapping": true,
     "numeric.mapping": "best_fit",
-    "query": "select * from (SELECT CL.ID,CL.CIF,POSTDT, CREDIT_LINE_STATUS,FLEX_FEE_DEBIT_ACC, i.TRANS_CURRENCY_CODE from credit_lines CL join instrument i where i.id = CL.ID) test",
+    "query": "select * from (SELECT CL.ID,CL.CIF,CL.CUST_LINE_NBR,POSTDT, CREDIT_LINE_STATUS,FLEX_FEE_DEBIT_ACC, i.TRANS_CURRENCY_CODE from credit_lines CL join instrument i where i.id = CL.ID) test",
     "table.type": "TABLE",
     "poll.interval.ms": "5000",
     "batch.max.rows": "5",

@@ -11,7 +11,7 @@
     "tasks.max"       : "1",
     "mode"            : "incrementing",
     "incrementing.column.name": "ID",
-    "query": "select ID,POSTDT,EFFDT,CUST_LN_NBR,FLEX_CMTMNT_AMT_TCY ,FLEX_UNCMTMNT_AMT_TCY,FLEX_FEE_PCT ,FLEX_FEE_ACCR_BAS ,TRANS_CRRNCY_CD from flex_fee_activity",
+    "query": "select ID,POSTDT,EFFDT,CUST_LINE_NBR,FLEX_CMTMNT_AMT_TCY ,FLEX_UNCMTMNT_AMT_TCY,FLEX_FEE_PCT ,FLEX_FEE_ACCR_BAS ,TRANS_CRRNCY_CD from flex_fee_activity",
     "table.types"     : "TABLE",
     "topic.prefix"    : "credit.creditlines.flex-creditline-activity.in",
     "db.timezone"     : "UTC",

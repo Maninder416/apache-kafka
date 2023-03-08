@@ -11,7 +11,7 @@
     "tasks.max"       : "1",
     "mode"            : "incrementing",
     "incrementing.column.name": "ID",
-    "query": "select ID,CUST_LN_NBR FROM flex_activity",
+    "query": "select ID,CUST_LINE_NBR FROM flex_activity",
     "table.types"     : "TABLE",
     "topic.prefix"    : "credit.creditlines.flex-creditline.in",
     "db.timezone"     : "UTC",
