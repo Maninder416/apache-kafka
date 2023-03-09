@@ -32,10 +32,14 @@ public class CreditLines {
     @JsonProperty("APPLID")
     private String applId;
 
+//    @Column(name = "POSTDT")
+//    @JsonProperty("POSTDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date postDt;
+
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
-    @Temporal(TemporalType.DATE)
-    private Date postDt;
+    private String postDt;
     @Column(name = "CIF",length = 18)
     @JsonProperty("CIF")
     private String cif;

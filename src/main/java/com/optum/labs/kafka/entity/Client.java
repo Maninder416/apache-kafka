@@ -52,10 +52,13 @@ public class Client {
     @Column(name = "STATUSCD",length = 1)
     @JsonProperty("STATUSCD")
     private String statusCd;
+//    @Column(name = "EXPIRYDT")
+//    @JsonProperty("EXPIRYDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date expiryDate;
     @Column(name = "EXPIRYDT")
     @JsonProperty("EXPIRYDT")
-    @Temporal(TemporalType.DATE)
-    private Date expiryDate;
+    private String expiryDate;
     @Column(name = "CIF",length = 18)
     @JsonProperty("CIF")
     private String cif;

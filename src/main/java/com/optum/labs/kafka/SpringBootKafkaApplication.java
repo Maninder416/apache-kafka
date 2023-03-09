@@ -53,6 +53,7 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         dataCreationService.generateDataForFlexActivity();
         log.info("******** Data is inserted into tables ********");
         log.info("******* Trying to send streaming data *******");
+//        System.out.println(dataCreationService.generateCanDeleteData());
         creditCreditLineDetailsStream3.creditLineDetails();
         creditLineFlexActivityStream5.flexCreditLineActivityStream();
         creditLineAndActivityOutStream14.flexCreditLineStream();

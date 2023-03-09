@@ -28,14 +28,22 @@ public class CurrencyCodeLoanTxnActivityOutput {
     @Column(name = "TRANID", length = 30)
     @JsonProperty("TRANID")
     private String tranId;
+//    @Column(name = "POSTDT")
+//    @JsonProperty("POSTDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date postDt;
+
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
-    @Temporal(TemporalType.DATE)
-    private Date postDt;
+    private String postDt;
+//    @Column(name = "EFFECTIVEDT")
+//    @JsonProperty("EFFECTIVEDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date effectiveDt;
+
     @Column(name = "EFFECTIVEDT")
     @JsonProperty("EFFECTIVEDT")
-    @Temporal(TemporalType.DATE)
-    private Date effectiveDt;
+    private String effectiveDt;
     @Column(name = "NOTEPRNCPLBALGROSS", precision = 19, scale = 3)
     @JsonProperty("NOTEPRNCPLBALGROSS")
     private double notePrncplBalgross;
@@ -48,8 +56,8 @@ public class CurrencyCodeLoanTxnActivityOutput {
         private Long id;
         private String acctNbr;
         private String tranId;
-        private Date postDt;
-        private Date effectiveDt;
+        private String postDt;
+        private String effectiveDt;
         private double notePrncplBalgross;
         private String currencyCode;
 
@@ -68,12 +76,12 @@ public class CurrencyCodeLoanTxnActivityOutput {
             return this;
         }
 
-        public Builder setPostDt(Date postDt) {
+        public Builder setPostDt(String postDt) {
             this.postDt = postDt;
             return this;
         }
 
-        public Builder setEffectiveDt(Date effectiveDt) {
+        public Builder setEffectiveDt(String effectiveDt) {
             this.effectiveDt = effectiveDt;
             return this;
         }

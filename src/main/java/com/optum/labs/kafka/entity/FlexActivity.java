@@ -19,8 +19,12 @@ public class FlexActivity {
     @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
 
+//    @Column(name = "POSTDT")
+//    @JsonProperty("POSTDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date postDt;
+
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
-    @Temporal(TemporalType.DATE)
-    private Date postDt;
+    private String postDt;
 }

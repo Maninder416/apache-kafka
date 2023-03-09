@@ -26,18 +26,26 @@ public class CreditLineLoanTxnProd15 {
     @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
 
+//    @Column(name = "POSTDT")
+//    @JsonProperty("POSTDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date postDt;
+
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
-    @Temporal(TemporalType.DATE)
-    private Date postDt;
+    private String postDt;
 
     @Column(name = "CIF", length = 9)
     @JsonProperty("CIF")
     private String cif;
+//    @Column(name = "EFFDT")
+//    @Temporal(TemporalType.DATE)
+//    @JsonProperty("EFFDT")
+//    private Date effdt;
+
     @Column(name = "EFFDT")
-    @Temporal(TemporalType.DATE)
     @JsonProperty("EFFDT")
-    private Date effdt;
+    private String effdt;
     @Column(name = "FLEX_CMTMNT_AMT_LCY", precision = 22, scale = 7)
     @JsonProperty("FLEX_CMTMNT_AMT_LCY")
     private double flex_cmtmnt_amt_lcy;
@@ -65,14 +73,21 @@ public class CreditLineLoanTxnProd15 {
     @Column(name = "APPLID", length = 3)
     @JsonProperty("APPLID")
     private String applId;
+//    @Column(name = "SRC_UPDT_DT")
+//    @Temporal(TemporalType.DATE)
+//    @JsonProperty("SRC_UPDT_DT")
+//    private Date src_updt_dt;
+//    @Column(name = "DW_CREATE_TS")
+//    @Temporal(TemporalType.DATE)
+//    @JsonProperty("DW_CREATE_TS")
+//    private Date dw_create_ts;
+
     @Column(name = "SRC_UPDT_DT")
-    @Temporal(TemporalType.DATE)
     @JsonProperty("SRC_UPDT_DT")
-    private Date src_updt_dt;
+    private String src_updt_dt;
     @Column(name = "DW_CREATE_TS")
-    @Temporal(TemporalType.DATE)
     @JsonProperty("DW_CREATE_TS")
-    private Date dw_create_ts;
+    private String dw_create_ts;
     @Column(name = "CREATED_BY", length = 30)
     @JsonProperty("CREATED_BY")
     private String created_by;
@@ -120,11 +135,14 @@ public class CreditLineLoanTxnProd15 {
     @Column(name = "STATUSCD", length = 1)
     @JsonProperty("STATUSCD")
     private String statusCd;
+//    @Column(name = "EXPIRYDT")
+//    @JsonProperty("EXPIRYDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date expiryDate;
+
     @Column(name = "EXPIRYDT")
     @JsonProperty("EXPIRYDT")
-    @Temporal(TemporalType.DATE)
-    private Date expiryDate;
-
+    private String expiryDate;
     @Column(name = "ACCTNBR", length = 35)
     @JsonProperty("ACCTNBR")
     private String acctNbr;

@@ -12,8 +12,11 @@ public class TestHolidayCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    @Column(name = "BRANCH_HOLIDAY_DT")
+//    @Temporal(TemporalType.DATE)
+//    private Date branchHolidayDt;
+
     @Column(name = "BRANCH_HOLIDAY_DT")
-    @Temporal(TemporalType.DATE)
-    private Date branchHolidayDt;
+    private String branchHolidayDt;
 
 }

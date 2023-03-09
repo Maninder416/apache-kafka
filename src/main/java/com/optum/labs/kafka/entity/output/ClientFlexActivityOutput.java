@@ -22,45 +22,51 @@ public class ClientFlexActivityOutput {
     @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
 
+    //    @Column(name = "POSTDT")
+//    @JsonProperty("POSTDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date postDt;
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
-    @Temporal(TemporalType.DATE)
-    private Date postDt;
-    @Column(name = "PSGL_DEPARTMENT",length = 10)
+    private String postDt;
+
+    @Column(name = "PSGL_DEPARTMENT", length = 10)
     @JsonProperty("PSGL_DEPARTMENT")
     private String psgl_department;
-    @Column(name = "BRANCHNBR",length = 5)
+    @Column(name = "BRANCHNBR", length = 5)
     @JsonProperty("BRANCHNBR")
     private String branchNbr;
-    @Column(name = "CBS_AOTEAMCD",length = 30)
+    @Column(name = "CBS_AOTEAMCD", length = 30)
     @JsonProperty("CBS_AOTEAMCD")
     private String cba_aoteamcd;
-    @Column(name ="NAMEADDRLN2",length = 35)
+    @Column(name = "NAMEADDRLN2", length = 35)
     @JsonProperty("NAMEADDRLN2")
     private String nameAddRln2;
-    @Column(name = "NAMEADDRLN3",length = 35)
+    @Column(name = "NAMEADDRLN3", length = 35)
     @JsonProperty("NAMEADDRLN3")
     private String nameAddRln3;
-    @Column(name = "NAMEADDRLN4",length = 35)
+    @Column(name = "NAMEADDRLN4", length = 35)
     @JsonProperty("NAMEADDRLN4")
     private String nameAddRln4;
-    @Column(name = "NAMEADDRLN5",length = 35)
+    @Column(name = "NAMEADDRLN5", length = 35)
     @JsonProperty("NAMEADDRLN5")
     private String nameAddRln5;
-    @Column(name = "NAMEADDRLN6",length = 40)
+    @Column(name = "NAMEADDRLN6", length = 40)
     @JsonProperty("NAMEADDRLN6")
     private String nameAddRln6;
-    @Column(name = "ZIPPOSTALCD",length = 10)
+    @Column(name = "ZIPPOSTALCD", length = 10)
     @JsonProperty("ZIPPOSTALCD")
     private String zipPostalCd;
-    @Column(name = "FULL_NAME",length = 105)
+    @Column(name = "FULL_NAME", length = 105)
     @JsonProperty("FULL_NAME")
     private String fullName;
 
-    public static class Builder{
+    public static class Builder {
         private Long id;
         private String customerLineNumber;
-        private Date postDt;
+//        private Date postDt;
+private String postDt;
+
         private String psgl_department;
         private String branchNbr;
         private String cba_aoteamcd;
@@ -71,6 +77,7 @@ public class ClientFlexActivityOutput {
         private String nameAddRln6;
         private String zipPostalCd;
         private String fullName;
+
         public Builder setId(Long id) {
             this.id = id;
             return this;
@@ -81,7 +88,12 @@ public class ClientFlexActivityOutput {
             return this;
         }
 
-        public Builder setPostDt(Date postDt) {
+//        public Builder setPostDt(Date postDt) {
+//            this.postDt = postDt;
+//            return this;
+//        }
+
+        public Builder setPostDt(String postDt) {
             this.postDt = postDt;
             return this;
         }
@@ -136,9 +148,9 @@ public class ClientFlexActivityOutput {
             return this;
         }
 
-        public ClientFlexActivityOutput build(){
-            return new ClientFlexActivityOutput(id,customerLineNumber,postDt,psgl_department,branchNbr,
-                    cba_aoteamcd,nameAddRln2,nameAddRln3,nameAddRln4,nameAddRln5,nameAddRln6,zipPostalCd,fullName);
+        public ClientFlexActivityOutput build() {
+            return new ClientFlexActivityOutput(id, customerLineNumber, postDt, psgl_department, branchNbr,
+                    cba_aoteamcd, nameAddRln2, nameAddRln3, nameAddRln4, nameAddRln5, nameAddRln6, zipPostalCd, fullName);
         }
 
 

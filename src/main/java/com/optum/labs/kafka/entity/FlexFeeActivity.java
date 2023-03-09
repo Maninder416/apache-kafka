@@ -22,10 +22,14 @@ public class FlexFeeActivity {
     @Column(name = "CUST_LINE_NBR", length = 22)
     @JsonProperty("CUST_LINE_NBR")
     private String custLnNbr;
+//    @Column(name = "EFFDT")
+//    @Temporal(TemporalType.DATE)
+//    @JsonProperty("EFFDT")
+//    private Date effdt;
+
     @Column(name = "EFFDT")
-    @Temporal(TemporalType.DATE)
     @JsonProperty("EFFDT")
-    private Date effdt;
+    private String effdt;
     @Column(name = "FLEX_CMTMNT_AMT_LCY", precision = 22, scale = 7)
     @JsonProperty("FLEX_CMTMNT_AMT_LCY")
     private double flex_cmtmnt_amt_lcy;
@@ -53,18 +57,28 @@ public class FlexFeeActivity {
     @Column(name = "APPLID", length = 3)
     @JsonProperty("APPLID")
     private String applId;
+//    @Column(name = "SRC_UPDT_DT")
+//    @Temporal(TemporalType.DATE)
+//    @JsonProperty("SRC_UPDT_DT")
+//    private Date src_updt_dt;
+//    @Column(name = "POSTDT")
+//    @Temporal(TemporalType.DATE)
+//    @JsonProperty("POSTDT")
+//    private Date postDt;
+//    @Column(name = "DW_CREATE_TS")
+//    @Temporal(TemporalType.DATE)
+//    @JsonProperty("DW_CREATE_TS")
+//    private Date dw_create_ts;
+
     @Column(name = "SRC_UPDT_DT")
-    @Temporal(TemporalType.DATE)
     @JsonProperty("SRC_UPDT_DT")
-    private Date src_updt_dt;
+    private String src_updt_dt;
     @Column(name = "POSTDT")
-    @Temporal(TemporalType.DATE)
     @JsonProperty("POSTDT")
-    private Date postDt;
+    private String postDt;
     @Column(name = "DW_CREATE_TS")
-    @Temporal(TemporalType.DATE)
     @JsonProperty("DW_CREATE_TS")
-    private Date dw_create_ts;
+    private String dw_create_ts;
     @Column(name = "CREATED_BY", length = 30)
     @JsonProperty("CREATED_BY")
     private String created_by;

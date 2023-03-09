@@ -27,14 +27,22 @@ public class CurrencyLoanProductCategoryCodeOutput {
     @Column(name = "TRANID", length = 30)
     @JsonProperty("TRANID")
     private String tranId;
+//    @Column(name = "POSTDT")
+//    @JsonProperty("POSTDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date postDt;
+
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
-    @Temporal(TemporalType.DATE)
-    private Date postDt;
+    private String postDt;
+//    @Column(name = "EFFECTIVEDT")
+//    @JsonProperty("EFFECTIVEDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date effectiveDt;
+
     @Column(name = "EFFECTIVEDT")
     @JsonProperty("EFFECTIVEDT")
-    @Temporal(TemporalType.DATE)
-    private Date effectiveDt;
+    private String effectiveDt;
     @Column(name = "NOTEPRNCPLBALGROSS", precision = 19, scale = 3)
     @JsonProperty("NOTEPRNCPLBALGROSS")
     private double notePrncplBalgross;

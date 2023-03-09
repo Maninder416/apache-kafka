@@ -2,14 +2,20 @@ package com.optum.labs.kafka.streams;
 
 import com.optum.labs.kafka.config.KStreamConfig;
 import com.optum.labs.kafka.entity.output.CreditLineActivityOutput14;
+import com.optum.labs.kafka.entity.output.CreditLineFlexFeeOutput5;
 import com.optum.labs.kafka.entity.output.CreditLineLoanTxnProd15;
 import com.optum.labs.kafka.entity.output.CurrencyLoanProductCategoryCodeOutput;
 import com.optum.labs.kafka.utils.TopicEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.utils.Bytes;
+import org.apache.kafka.common.utils.Java;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.state.KeyValueIterator;
+import org.apache.kafka.streams.state.KeyValueStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerde;
@@ -17,6 +23,10 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Service
 @Slf4j
@@ -104,7 +114,36 @@ public class FlexCreditLineActivityOutputStream15 {
         creditLineLoanTxnProd15KStream.foreach((key, value) ->
                 log.info("**** final output of stream 15**** :{} :{}", key, value));
 
+        final Serde<CreditLineLoanTxnProd15> creditLineLoanTxnProd15Serde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(CreditLineLoanTxnProd15.class));
         creditLineLoanTxnProd15KStream.to(TopicEnum.CREDIT_LINE_TOPIC_15.getTopicName(), Produced.with(Serdes.String(), new JsonSerde<>(CreditLineLoanTxnProd15.class)));
+
+        KTable<String, CreditLineLoanTxnProd15> kTable = builder.table(TopicEnum.CREDIT_LINE_TOPIC_15.getTopicName(),
+                Materialized.<String, CreditLineLoanTxnProd15, KeyValueStore<Bytes, byte[]>>as("ktable-store")
+                        .withKeySerde(Serdes.String())
+                        .withValueSerde(creditLineLoanTxnProd15Serde));
+
+//        kTable.filter(((key, value) -> value.getId()==1))
+//                .toStream().peek(((key, value) ->
+//                log.info("Outgoing record -key: "+key+" value: "+value.getEffdt()))).to("demo-test");
+
+
+        LocalDate start= LocalDate.of(2022,1,1);
+        Date startDate= Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate end= LocalDate.of(1900,1,1);
+        Date endDate= Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+//        kTable.filter((key, value) -> {
+//        Date postDt= value.getPostDt();
+//        Date effectiveDate= value.getEffdt();
+//        return (postDt.after(endDate) || postDt.equals(endDate))
+//                && (postDt.before(startDate) || postDt.before(startDate));
+//
+//        }).toStream().to("new-topic");
+
+
+
+
+
         kStreamConfig.topology(builder);
     }
 }

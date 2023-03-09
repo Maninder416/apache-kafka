@@ -38,10 +38,13 @@ public class CreditLineUserDetailsOutput {
     @JsonProperty("APPLID")
     private String applId;
 
+    //    @Column(name = "POSTDT")
+//    @JsonProperty("POSTDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date postDt;
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
-    @Temporal(TemporalType.DATE)
-    private Date postDt;
+    private String postDt;
 
     @Column(name = "PSGL_DEPARTMENT", length = 10)
     @JsonProperty("PSGL_DEPARTMENT")
@@ -79,10 +82,14 @@ public class CreditLineUserDetailsOutput {
     @Column(name = "STATUSCD", length = 1)
     @JsonProperty("STATUSCD")
     private String statusCd;
+//    @Column(name = "EXPIRYDT")
+//    @JsonProperty("EXPIRYDT")
+//    @Temporal(TemporalType.DATE)
+//    private Date expiryDate;
+
     @Column(name = "EXPIRYDT")
     @JsonProperty("EXPIRYDT")
-    @Temporal(TemporalType.DATE)
-    private Date expiryDate;
+    private String expiryDate;
     @Column(name = "CIF", length = 18)
     @JsonProperty("CIF")
     private String cif;
@@ -90,7 +97,7 @@ public class CreditLineUserDetailsOutput {
     @Column(name = "TRANS_CRRNCY_CD", length = 3)
     @JsonProperty("TRANS_CURRENCY_CODE")
     private String trans_crrncy_cd;
-    @Column(name="FLEX_FEE_DEBIT_ACC")
+    @Column(name = "FLEX_FEE_DEBIT_ACC")
     @JsonProperty("FLEX_FEE_DEBIT_ACC")
     private String flex_fee_debit_acc;
 

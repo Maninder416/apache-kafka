@@ -1,0 +1,26 @@
+{
+  "name": "creditLine-details-1",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "task.max": "1",
+    "connection.url": "jdbc:mysql://mysqldb:3306/silicon",
+    "connection.user": "root",
+    "connection.password": "root",
+    "connection.attempts": "3",
+    "retry.backoff.ms": "5000",
+    "dialect.name": "MySqlDatabaseDialect",
+    "mode": "incrementing",
+    "incrementing.column.name": "ID",
+    "numeric.precision.mapping": true,
+    "numeric.mapping": "best_fit",
+    "query": "SELECT * from (select ID, birth_date, date from can_delete) test",
+    "table.type": "TABLE",
+    "poll.interval.ms": "5000",
+    "batch.max.rows": "5",
+    "topic.prefix": "testing-purpose",
+    "db.timezone": "America/Toronto",
+    "transforms": "ValueTo",
+    "transforms.ValueTo.type": "org.apache.kafka.connect.transforms.Cast$Value",
+    "transforms.ValueTo.spec": "date:STRING"
+  }
+}
