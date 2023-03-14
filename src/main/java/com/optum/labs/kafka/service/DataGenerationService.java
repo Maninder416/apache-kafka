@@ -46,8 +46,11 @@ public class DataGenerationService {
     @Autowired
     private CanDeleteRepository canDeleteRepository;
 
-    LocalDate startDate = LocalDate.of(2021, 1, 1);
-    LocalDate endDate = LocalDate.of(2022, 1, 1);
+//    LocalDate startDate = LocalDate.of(2022, 3, 1);
+//    LocalDate endDate = LocalDate.of(2022, 6, 1);
+
+    LocalDate startDate = LocalDate.of(2022, 1, 1);
+    LocalDate endDate = LocalDate.of(2022, 1, 5);
 
 
     /**
@@ -266,24 +269,27 @@ public class DataGenerationService {
         return "Data generated for flex activity table";
     }
 
-//    public String generateCanDeleteData() {
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-//        for (int i = 1; i <= 5; i++) {
-//            //   System.out.println("inside the method");
-//            CanDelete canDelete = new CanDelete();
-//            canDelete.setBirthDate(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())));
-//               canDelete.setDate(dateFormat(canDelete.getBirthDate().toString()));
-//               System.out.println("get date is: "+canDelete.getDate());
-//            //     System.out.println("date format is: "+canDelete.getBirthDate());
-//            //   dateFormat(canDelete.getDate());
-//          //  dateFormat2(canDelete.getBirthDate().toString());
-//            canDeleteRepository.save(canDelete);
-//        }
-//        return "can delete data generated";
-//    }
+    public String generateCanDeleteData() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        for (int i = 1; i <= 2; i++) {
+            //   System.out.println("inside the method");
+            CanDelete canDelete = new CanDelete();
+            canDelete.setPostDate(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
+            canDelete.setEffectiveDate(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
+            canDelete.setAmount(faker.number().randomDouble(2,1000,100000));
+            //     System.out.println("date format is: "+canDelete.getBirthDate());
+            //   dateFormat(canDelete.getDate());
+            //  dateFormat2(canDelete.getBirthDate().toString());
+            canDeleteRepository.save(canDelete);
+            kafkaTemplate.send("test3",canDelete);
+            System.out.println("data send here");
+        }
+        return "can delete data generated";
+    }
 
     /**
      * Formatting the data into "yyyy-MM-dd" format
+     *
      * @param input
      * @return
      */

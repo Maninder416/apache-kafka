@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-public class Testing {
+public class TestingController {
 
     @Autowired
     private TestingStream testingStream;
@@ -26,8 +26,6 @@ public class Testing {
     @GetMapping("/result")
     public ResponseEntity<List<CanDelete>> getResult(@RequestParam("startDate")@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate startDate,
                                                     @RequestParam("endDate")@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate endDate){
-        System.out.println("start date: "+startDate);
-        System.out.println("End date: "+endDate);
         List<CanDelete> data= testingStream.getDataBetweenDates(startDate,endDate);
         return ResponseEntity.ok(data);
     }

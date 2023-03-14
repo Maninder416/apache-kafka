@@ -34,6 +34,8 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
     private FlexCreditLineActivityOutputStream15 flexCreditLineActivityOutputStream15;
     @Autowired
     private CreditLineFlexActivityStream5 creditLineFlexActivityStream5;
+    @Autowired
+    private TestingStream testingStream;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootKafkaApplication.class, args);
@@ -53,13 +55,14 @@ public class SpringBootKafkaApplication implements CommandLineRunner {
         dataCreationService.generateDataForFlexActivity();
         log.info("******** Data is inserted into tables ********");
         log.info("******* Trying to send streaming data *******");
-//        System.out.println(dataCreationService.generateCanDeleteData());
-        creditCreditLineDetailsStream3.creditLineDetails();
-        creditLineFlexActivityStream5.flexCreditLineActivityStream();
-        creditLineAndActivityOutStream14.flexCreditLineStream();
-        currencyCodeLoanTxnStream8.currencyCodeLoanTxnActivityStream();
-        productCategoryCodeOutput11.productCategoryCodeStream();
-        creditLineCurrencyProductCategoryStream12.creditLinesCurrencyLoanTxn12();
-        flexCreditLineActivityOutputStream15.flexCreditLineActivityLoanTxnOutputStream();
+        System.out.println(dataCreationService.generateCanDeleteData());
+//        creditCreditLineDetailsStream3.creditLineDetails();
+//        creditLineFlexActivityStream5.flexCreditLineActivityStream();
+//        creditLineAndActivityOutStream14.flexCreditLineStream();
+//        currencyCodeLoanTxnStream8.currencyCodeLoanTxnActivityStream();
+//        productCategoryCodeOutput11.productCategoryCodeStream();
+//        creditLineCurrencyProductCategoryStream12.creditLinesCurrencyLoanTxn12();
+//        flexCreditLineActivityOutputStream15.flexCreditLineActivityLoanTxnOutputStream();
+//        testingStream.test();
     }
 }

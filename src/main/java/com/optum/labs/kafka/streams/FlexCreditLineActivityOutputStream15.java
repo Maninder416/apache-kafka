@@ -127,22 +127,24 @@ public class FlexCreditLineActivityOutputStream15 {
 //                log.info("Outgoing record -key: "+key+" value: "+value.getEffdt()))).to("demo-test");
 
 
-        LocalDate start= LocalDate.of(2022,1,1);
-        Date startDate= Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        LocalDate end= LocalDate.of(1900,1,1);
-        Date endDate= Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate start= LocalDate.of(2020,6,1);
+        LocalDate end= LocalDate.of(2022,6,1);
 
-//        kTable.filter((key, value) -> {
-//        Date postDt= value.getPostDt();
-//        Date effectiveDate= value.getEffdt();
-//        return (postDt.after(endDate) || postDt.equals(endDate))
-//                && (postDt.before(startDate) || postDt.before(startDate));
-//
-//        }).toStream().to("new-topic");
+//        kTable.filter(
+//                (key, value) ->{
+//                    LocalDate date= LocalDate.parse(value.getPostDt());
+//                    return date!=null && date.isAfter(start) && date.isBefore(end);
+//                }
+//                ).toStream().to("demo2");
 
-
-
-
+        kTable.filter(
+                (key, value) ->{
+                    log.info("before change post date: "+value.getPostDt());
+                    LocalDate date= LocalDate.parse(value.getPostDt());
+                    log.info("post date is: "+date);
+                    return date!=null && date.isAfter(LocalDate.parse(value.getEffdt())) && date.isBefore(end);
+                }
+        ).toStream().to("demo2");
 
         kStreamConfig.topology(builder);
     }
