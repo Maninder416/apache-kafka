@@ -1,5 +1,6 @@
 package com.optum.labs.kafka.config;
 
+import com.optum.labs.kafka.entity.CanDelete;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -28,7 +29,7 @@ public class KStreamConfig {
     @Value("${kafka.application-id}")
     public String PRODUCT_CATEGORY_APP_ID;
 
-    private static final AtomicInteger COUNTER= new AtomicInteger();
+    private static final AtomicInteger COUNTER = new AtomicInteger();
 
 //    @Bean
 //    public Properties properties() {
@@ -43,7 +44,7 @@ public class KStreamConfig {
 //        return props;
 //    }
 
-//    @Bean
+    //    @Bean
     public Properties properties() {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, UUID.randomUUID().toString());
@@ -53,6 +54,9 @@ public class KStreamConfig {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
         props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
+        props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("group.id", "my-group-id");
         return props;
     }
 
@@ -64,7 +68,7 @@ public class KStreamConfig {
     public void topology(StreamsBuilder builder) {
         final Topology topology = builder.build();
 
-        System.out.println("application id: "+properties().toString());
+        System.out.println("application id: " + properties().toString());
         KafkaStreams kafkaStreams = new KafkaStreams(topology, properties());
         kafkaStreams.cleanUp();
         kafkaStreams.start();

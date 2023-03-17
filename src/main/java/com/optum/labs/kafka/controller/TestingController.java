@@ -29,4 +29,14 @@ public class TestingController {
         List<CanDelete> data= testingStream.getDataBetweenDates(startDate,endDate);
         return ResponseEntity.ok(data);
     }
+
+    @GetMapping("/canDeleteResult")
+    public List<CanDelete> getResult(){
+        return testingStream.getAllListElement();
+    }
+
+    @GetMapping("/count")
+    public Integer count(){
+        return testingStream.consumerCode();
+    }
 }

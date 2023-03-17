@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @Slf4j
+@EnableScheduling
 public class SpringBootKafkaApplication implements CommandLineRunner {
     @Value("${kafka.schema-registry}")
     public String SCHEMA_REGISTRY_URL;
