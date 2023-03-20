@@ -281,7 +281,7 @@ public class DataGenerationService {
             //   dateFormat(canDelete.getDate());
             //  dateFormat2(canDelete.getBirthDate().toString());
             canDeleteRepository.save(canDelete);
-            kafkaTemplate.send("test3",canDelete);
+//            kafkaTemplate.send("test3",canDelete);
             System.out.println("data send here");
         }
         return "can delete data generated";

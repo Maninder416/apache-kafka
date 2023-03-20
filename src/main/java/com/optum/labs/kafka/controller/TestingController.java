@@ -1,6 +1,7 @@
 package com.optum.labs.kafka.controller;
 
 import com.optum.labs.kafka.entity.CanDelete;
+import com.optum.labs.kafka.service.KafkaMessageConsumer;
 import com.optum.labs.kafka.streams.TestingStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +18,9 @@ public class TestingController {
 
     @Autowired
     private TestingStream testingStream;
+
+    @Autowired
+    private KafkaMessageConsumer kafkaConsumer;
 
     @GetMapping("/test")
     public String test(){
@@ -39,4 +43,11 @@ public class TestingController {
     public Integer count(){
         return testingStream.consumerCode();
     }
+
+    @GetMapping("/kafka-results")
+    public List<String> getKafkaResults() {
+        return kafkaConsumer.getResults();
+    }
+
+
 }
