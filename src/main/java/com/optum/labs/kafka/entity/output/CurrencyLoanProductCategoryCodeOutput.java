@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "CURRENCY_LOAN_PRODUCT_CATEGORY_CODE_OUTPUT")
@@ -16,7 +15,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrencyLoanProductCategoryCodeOutput {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
@@ -27,37 +25,23 @@ public class CurrencyLoanProductCategoryCodeOutput {
     @Column(name = "TRANID", length = 30)
     @JsonProperty("TRANID")
     private String tranId;
-//    @Column(name = "POSTDT")
-//    @JsonProperty("POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date postDt;
-
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
     private String postDt;
-//    @Column(name = "EFFECTIVEDT")
-//    @JsonProperty("EFFECTIVEDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date effectiveDt;
-
     @Column(name = "EFFECTIVEDT")
     @JsonProperty("EFFECTIVEDT")
     private String effectiveDt;
     @Column(name = "NOTEPRNCPLBALGROSS", precision = 19, scale = 3)
     @JsonProperty("NOTEPRNCPLBALGROSS")
     private double notePrncplBalgross;
-
-    @Column(name = "TRANS_CURRENCY_CODE",length = 3)
+    @Column(name = "TRANS_CURRENCY_CODE", length = 3)
     @JsonProperty("TRANS_CURRENCY_CODE")
     private String currencyCode;
-
     @Column(name = "PRODUCT_CD", length = 3)
     @JsonProperty("PRODUCT_CD")
     private String product_cd;
     @Column(name = "PRODUCT_CATEGORY_CD", length = 2)
     @JsonProperty("PRODUCT_CATEGORY_CD")
     private String product_category_cd;
-
-
 
 }

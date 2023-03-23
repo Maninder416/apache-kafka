@@ -2,10 +2,7 @@ package com.optum.labs.kafka.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "FLEX_FEE_ACTIVITY")
@@ -15,18 +12,12 @@ public class FlexFeeActivity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
     private Long id;
-
     @Column(name = "CIF", length = 9)
     @JsonProperty("CIF")
     private String cif;
     @Column(name = "CUST_LINE_NBR", length = 22)
     @JsonProperty("CUST_LINE_NBR")
     private String custLnNbr;
-//    @Column(name = "EFFDT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("EFFDT")
-//    private Date effdt;
-
     @Column(name = "EFFDT")
     @JsonProperty("EFFDT")
     private String effdt;
@@ -57,19 +48,6 @@ public class FlexFeeActivity {
     @Column(name = "APPLID", length = 3)
     @JsonProperty("APPLID")
     private String applId;
-//    @Column(name = "SRC_UPDT_DT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("SRC_UPDT_DT")
-//    private Date src_updt_dt;
-//    @Column(name = "POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("POSTDT")
-//    private Date postDt;
-//    @Column(name = "DW_CREATE_TS")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("DW_CREATE_TS")
-//    private Date dw_create_ts;
-
     @Column(name = "SRC_UPDT_DT")
     @JsonProperty("SRC_UPDT_DT")
     private String src_updt_dt;

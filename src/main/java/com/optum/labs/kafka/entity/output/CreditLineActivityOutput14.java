@@ -1,7 +1,5 @@
 package com.optum.labs.kafka.entity.output;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "CREDIT_LINE_FLEX_CREDITLINE_ACTIVITY_OUT14")
@@ -23,28 +20,15 @@ public class CreditLineActivityOutput14 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
     private Long id;
-
     @Column(name = "CUST_LINE_NBR")
     @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
-
-//    @Column(name = "POSTDT")
-//    @JsonProperty("POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date postDt;
-
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
     private String postDt;
-
     @Column(name = "CIF", length = 9)
     @JsonProperty("CIF")
     private String cif;
-//    @Column(name = "EFFDT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("EFFDT")
-//    private Date effdt;
-
     @Column(name = "EFFDT")
     @JsonProperty("EFFDT")
     private String effdt;
@@ -75,15 +59,6 @@ public class CreditLineActivityOutput14 {
     @Column(name = "APPLID", length = 3)
     @JsonProperty("APPLID")
     private String applId;
-//    @Column(name = "SRC_UPDT_DT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("SRC_UPDT_DT")
-//    private Date src_updt_dt;
-//    @Column(name = "DW_CREATE_TS")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("DW_CREATE_TS")
-//    private Date dw_create_ts;
-
     @Column(name = "SRC_UPDT_DT")
     @JsonProperty("SRC_UPDT_DT")
     private String src_updt_dt;
@@ -137,11 +112,6 @@ public class CreditLineActivityOutput14 {
     @Column(name = "STATUSCD", length = 1)
     @JsonProperty("STATUSCD")
     private String statusCd;
-//    @Column(name = "EXPIRYDT")
-//    @JsonProperty("EXPIRYDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date expiryDate;
-
     @Column(name = "EXPIRYDT")
     @JsonProperty("EXPIRYDT")
     private String expiryDate;

@@ -117,34 +117,24 @@ public class FlexCreditLineActivityOutputStream15 {
         final Serde<CreditLineLoanTxnProd15> creditLineLoanTxnProd15Serde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(CreditLineLoanTxnProd15.class));
         creditLineLoanTxnProd15KStream.to(TopicEnum.CREDIT_LINE_TOPIC_15.getTopicName(), Produced.with(Serdes.String(), new JsonSerde<>(CreditLineLoanTxnProd15.class)));
 
-        KTable<String, CreditLineLoanTxnProd15> kTable = builder.table(TopicEnum.CREDIT_LINE_TOPIC_15.getTopicName(),
-                Materialized.<String, CreditLineLoanTxnProd15, KeyValueStore<Bytes, byte[]>>as("ktable-store")
-                        .withKeySerde(Serdes.String())
-                        .withValueSerde(creditLineLoanTxnProd15Serde));
-
-//        kTable.filter(((key, value) -> value.getId()==1))
-//                .toStream().peek(((key, value) ->
-//                log.info("Outgoing record -key: "+key+" value: "+value.getEffdt()))).to("demo-test");
-
-
-        LocalDate start= LocalDate.of(2020,6,1);
-        LocalDate end= LocalDate.of(2022,6,1);
-
+//        KTable<String, CreditLineLoanTxnProd15> kTable = builder.table(TopicEnum.CREDIT_LINE_TOPIC_15.getTopicName(),
+//                Materialized.<String, CreditLineLoanTxnProd15, KeyValueStore<Bytes, byte[]>>as("ktable-store")
+//                        .withKeySerde(Serdes.String())
+//                        .withValueSerde(creditLineLoanTxnProd15Serde));
+//
+//
+//        LocalDate start= LocalDate.of(2020,6,1);
+//        LocalDate end= LocalDate.of(2022,6,1);
+//
+//
 //        kTable.filter(
 //                (key, value) ->{
+//                    log.info("before change post date: "+value.getPostDt());
 //                    LocalDate date= LocalDate.parse(value.getPostDt());
-//                    return date!=null && date.isAfter(start) && date.isBefore(end);
+//                    log.info("post date is: "+date);
+//                    return date!=null && date.isAfter(LocalDate.parse(value.getEffdt())) && date.isBefore(end);
 //                }
-//                ).toStream().to("demo2");
-
-        kTable.filter(
-                (key, value) ->{
-                    log.info("before change post date: "+value.getPostDt());
-                    LocalDate date= LocalDate.parse(value.getPostDt());
-                    log.info("post date is: "+date);
-                    return date!=null && date.isAfter(LocalDate.parse(value.getEffdt())) && date.isBefore(end);
-                }
-        ).toStream().to("demo2");
+//        ).toStream().to("demo2");
 
         kStreamConfig.topology(builder);
     }

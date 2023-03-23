@@ -28,11 +28,6 @@ public class CreditLineFlexFeeOutput5 {
     @Column(name = "CUST_LINE_NBR", length = 22)
     @JsonProperty("CUST_LINE_NBR")
     private String custLnNbr;
-//    @Column(name = "EFFDT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("EFFDT")
-//    private Date effdt;
-
     @Column(name = "EFFDT")
     @JsonProperty("EFFDT")
     private String effdt;
@@ -63,18 +58,6 @@ public class CreditLineFlexFeeOutput5 {
     @Column(name = "APPLID", length = 3)
     @JsonProperty("APPLID")
     private String applId;
-    //    @Column(name = "SRC_UPDT_DT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("SRC_UPDT_DT")
-//    private Date src_updt_dt;
-//    @Column(name = "POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("POSTDT")
-//    private Date postDt;
-//    @Column(name = "DW_CREATE_TS")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("DW_CREATE_TS")
-//    private Date dw_create_ts;
     @Column(name = "SRC_UPDT_DT")
     @JsonProperty("SRC_UPDT_DT")
     private String src_updt_dt;
@@ -131,11 +114,6 @@ public class CreditLineFlexFeeOutput5 {
     @Column(name = "STATUSCD", length = 1)
     @JsonProperty("STATUSCD")
     private String statusCd;
-//    @Column(name = "EXPIRYDT")
-//    @JsonProperty("EXPIRYDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date expiryDate;
-
     @Column(name = "EXPIRYDT")
     @JsonProperty("EXPIRYDT")
     private String expiryDate;

@@ -16,9 +16,6 @@ public enum TopicEnum {
     FLEX_CREDITLINE_TOPIC_13_INPUT("credit.creditlines.flex-creditline.in"),
     FLEX_CREDIT_LINE_AND_ACTIVITY_OUT_14_TOPIC("credit.creditlines.flex-creditline-and-activity.out"),
     CREDIT_LINE_TOPIC_15("credit.creditlines.flex-creditline-and-activity-and-loantxn-and-prodcat.out");
-
-
-
     private final String topicName;
 
     TopicEnum(String topicName) {

@@ -17,10 +17,6 @@ public class PsRtRate {
     private String from_cur;
     @Column(name = "TO_CUR", length = 9)
     private String to_cur;
-//    @Column(name = "EFFDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date effdt;
-
     @Column(name = "EFFDT")
     private String effdt;
     @Column(name = "SVB_RATE")

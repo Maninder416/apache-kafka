@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "CREDIT_LINE_USER_DETAILS_OUTPUT")
@@ -16,36 +15,25 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreditLineUserDetailsOutput {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
     private Long id;
-
     @Column(name = "CUST_LINE_NBR", length = 22)
     @JsonProperty("CUST_LINE_NBR")
     private String custLineNbr;
-
     @Column(name = "APPLID_LOAN", length = 3)
     @JsonProperty("APPLID_LOAN")
     private String applId_loan;
-
     @Column(name = "CREDIT_LINE_STATUS", length = 2)
     @JsonProperty("CREDIT_LINE_STATUS")
     private String creditLineStatus;
-
     @Column(name = "APPLID", length = 3)
     @JsonProperty("APPLID")
     private String applId;
-
-    //    @Column(name = "POSTDT")
-//    @JsonProperty("POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date postDt;
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
     private String postDt;
-
     @Column(name = "PSGL_DEPARTMENT", length = 10)
     @JsonProperty("PSGL_DEPARTMENT")
     private String psgl_department;
@@ -82,18 +70,12 @@ public class CreditLineUserDetailsOutput {
     @Column(name = "STATUSCD", length = 1)
     @JsonProperty("STATUSCD")
     private String statusCd;
-//    @Column(name = "EXPIRYDT")
-//    @JsonProperty("EXPIRYDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date expiryDate;
-
     @Column(name = "EXPIRYDT")
     @JsonProperty("EXPIRYDT")
     private String expiryDate;
     @Column(name = "CIF", length = 18)
     @JsonProperty("CIF")
     private String cif;
-
     @Column(name = "TRANS_CRRNCY_CD", length = 3)
     @JsonProperty("TRANS_CURRENCY_CODE")
     private String trans_crrncy_cd;

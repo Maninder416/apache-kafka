@@ -43,17 +43,14 @@ public class ProductCategory {
             this.product_cd = product_cd;
             return this;
         }
-
         public Builder product_category_cd(String product_category_cd) {
             this.product_category_cd = product_category_cd;
             return this;
         }
-
         public Builder id(Long id) {
             this.id = id;
             return this;
         }
-
         public ProductCategory build() {
             return new ProductCategory(id,accountNumber,product_cd,product_category_cd);
         }

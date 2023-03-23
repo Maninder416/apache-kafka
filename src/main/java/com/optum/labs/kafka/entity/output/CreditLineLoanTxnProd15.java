@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "CREDIT_LINE_ACTIVITY_LOAN_TXN_15")
@@ -21,28 +20,15 @@ public class CreditLineLoanTxnProd15 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
     private Long id;
-
     @Column(name = "CUST_LINE_NBR")
     @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
-
-//    @Column(name = "POSTDT")
-//    @JsonProperty("POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date postDt;
-
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
     private String postDt;
-
     @Column(name = "CIF", length = 9)
     @JsonProperty("CIF")
     private String cif;
-//    @Column(name = "EFFDT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("EFFDT")
-//    private Date effdt;
-
     @Column(name = "EFFDT")
     @JsonProperty("EFFDT")
     private String effdt;
@@ -73,15 +59,6 @@ public class CreditLineLoanTxnProd15 {
     @Column(name = "APPLID", length = 3)
     @JsonProperty("APPLID")
     private String applId;
-//    @Column(name = "SRC_UPDT_DT")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("SRC_UPDT_DT")
-//    private Date src_updt_dt;
-//    @Column(name = "DW_CREATE_TS")
-//    @Temporal(TemporalType.DATE)
-//    @JsonProperty("DW_CREATE_TS")
-//    private Date dw_create_ts;
-
     @Column(name = "SRC_UPDT_DT")
     @JsonProperty("SRC_UPDT_DT")
     private String src_updt_dt;
@@ -94,11 +71,9 @@ public class CreditLineLoanTxnProd15 {
     @Column(name = "APPLID_LOAN", length = 3)
     @JsonProperty("APPLID_LOAN")
     private String applId_loan;
-
     @Column(name = "CREDIT_LINE_STATUS", length = 2)
     @JsonProperty("CREDIT_LINE_STATUS")
     private String creditLineStatus;
-
     @Column(name = "PSGL_DEPARTMENT", length = 10)
     @JsonProperty("PSGL_DEPARTMENT")
     private String psgl_department;
@@ -135,33 +110,28 @@ public class CreditLineLoanTxnProd15 {
     @Column(name = "STATUSCD", length = 1)
     @JsonProperty("STATUSCD")
     private String statusCd;
-//    @Column(name = "EXPIRYDT")
-//    @JsonProperty("EXPIRYDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date expiryDate;
-
     @Column(name = "EXPIRYDT")
     @JsonProperty("EXPIRYDT")
     private String expiryDate;
     @Column(name = "ACCTNBR", length = 35)
     @JsonProperty("ACCTNBR")
     private String acctNbr;
-
     @Column(name = "TRANID", length = 30)
     @JsonProperty("TRANID")
     private String tranId;
     @Column(name = "NOTEPRNCPLBALGROSS", precision = 19, scale = 3)
     @JsonProperty("NOTEPRNCPLBALGROSS")
     private double notePrncplBalgross;
-
     @Column(name = "TRANS_CURRENCY_CODE", length = 3)
     @JsonProperty("TRANS_CURRENCY_CODE")
     private String currencyCode;
-
     @Column(name = "PRODUCT_CD", length = 3)
     @JsonProperty("PRODUCT_CD")
     private String product_cd;
     @Column(name = "PRODUCT_CATEGORY_CD", length = 2)
     @JsonProperty("PRODUCT_CATEGORY_CD")
     private String product_category_cd;
+    @Column(name = "ACCOUNT_BALANCE")
+    @JsonProperty("ACCOUNT_BALANCE")
+    private double accountBalance;
 }

@@ -2,15 +2,16 @@ package com.optum.labs.kafka.entity.output;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "CLIENT_FLEX_ACTIVITY_OUTPUT")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ClientFlexActivityOutput {
 
     @Id
@@ -21,11 +22,6 @@ public class ClientFlexActivityOutput {
     @Column(name = "CUST_LINE_NBR")
     @JsonProperty("CUST_LINE_NBR")
     private String customerLineNumber;
-
-    //    @Column(name = "POSTDT")
-//    @JsonProperty("POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date postDt;
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
     private String postDt;
@@ -64,8 +60,8 @@ public class ClientFlexActivityOutput {
     public static class Builder {
         private Long id;
         private String customerLineNumber;
-//        private Date postDt;
-private String postDt;
+        //        private Date postDt;
+        private String postDt;
 
         private String psgl_department;
         private String branchNbr;
@@ -87,11 +83,6 @@ private String postDt;
             this.customerLineNumber = customerLineNumber;
             return this;
         }
-
-//        public Builder setPostDt(Date postDt) {
-//            this.postDt = postDt;
-//            return this;
-//        }
 
         public Builder setPostDt(String postDt) {
             this.postDt = postDt;
@@ -152,7 +143,6 @@ private String postDt;
             return new ClientFlexActivityOutput(id, customerLineNumber, postDt, psgl_department, branchNbr,
                     cba_aoteamcd, nameAddRln2, nameAddRln3, nameAddRln4, nameAddRln5, nameAddRln6, zipPostalCd, fullName);
         }
-
 
     }
 }

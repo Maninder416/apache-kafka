@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import com.optum.labs.kafka.config.KafkaProducerConfig;
 import com.optum.labs.kafka.entity.*;
 import com.optum.labs.kafka.repository.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.Locale;
 
 @Service
+@Slf4j
 public class DataGenerationService {
     @Autowired
     private Faker faker;
@@ -45,12 +47,8 @@ public class DataGenerationService {
     private FlexActivityRepository flexActivityRepository;
     @Autowired
     private CanDeleteRepository canDeleteRepository;
-
-//    LocalDate startDate = LocalDate.of(2022, 3, 1);
-//    LocalDate endDate = LocalDate.of(2022, 6, 1);
-
     LocalDate startDate = LocalDate.of(2022, 1, 1);
-    LocalDate endDate = LocalDate.of(2022, 1, 5);
+    LocalDate endDate = LocalDate.of(2022, 1, 15);
 
 
     /**
@@ -86,7 +84,6 @@ public class DataGenerationService {
             creditLines.setCreditLineStatus(faker.regexify(pattern2));
             creditLines.setCustLineNbr((faker.number().digits(2)));
             creditLines.setApplId(faker.regexify(currencyCode));
-//            creditLines.setPostDt(faker.date().birthday());
             creditLines.setPostDt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             creditLines.setCif(faker.number().digits(2));
             creditLines.setTrans_crrncy_cd(faker.regexify(currencyCode));
@@ -144,7 +141,6 @@ public class DataGenerationService {
             rate.setTo_cur(faker.number().digits(2));
             rate.setFrom_cur(faker.number().digits(2));
             rate.setSvb_rate(faker.number().randomDouble(0, 1000, 10000));
-//            rate.setEffdt(faker.date().birthday());
             rate.setEffdt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             psRateRepository.save(rate);
         }
@@ -159,7 +155,6 @@ public class DataGenerationService {
     public String generateDataFortestHolidayCalendar() {
         for (int i = 0; i <= 10; i++) {
             TestHolidayCalendar calendar = new TestHolidayCalendar();
-//            calendar.setBranchHolidayDt(faker.date().birthday());
             calendar.setBranchHolidayDt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             testHolidayCalendarRepository.save(calendar);
         }
@@ -175,8 +170,6 @@ public class DataGenerationService {
         for (int i = 0; i <= 10; i++) {
             TestLoanTransHist hist = new TestLoanTransHist();
             hist.setAcctNbr(faker.number().digits(2));
-//            hist.setEffectiveDt(faker.date().birthday());
-//            hist.setPostDt(faker.date().birthday());
             hist.setEffectiveDt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             hist.setPostDt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             hist.setNotePrncplBalgross(faker.number().randomDouble(0, 1000, 10000));
@@ -204,13 +197,11 @@ public class DataGenerationService {
             client.setCba_aoteamcd(faker.regexify(regex));
             client.setCif(faker.number().digits(2));
             client.setFullName(faker.name().fullName());
-//            client.setExpiryDate(faker.date().birthday());
             client.setExpiryDate(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             client.setNameAddRln1(faker.regexify(nameAddLn1));
             client.setNameAddRln2(faker.regexify(nameAddLn2));
             client.setNameAddRln3(faker.regexify(nameAddLn3));
             client.setNameAddRln4(faker.regexify(nameAddLn4));
-//            client.setExpiryDate(faker.date().birthday());
             client.setExpiryDate(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             client.setNameAddRln5(faker.address().streetName());
             client.setNameAddRln6(faker.address().cityName());
@@ -236,8 +227,6 @@ public class DataGenerationService {
             flexFeeActivity.setCif(faker.number().digits(2));
             flexFeeActivity.setCreated_by(faker.number().digits(2));
             flexFeeActivity.setCustLnNbr(faker.number().digits(2));
-//            flexFeeActivity.setDw_create_ts(faker.date().birthday());
-//            flexFeeActivity.setEffdt(faker.date().birthday());
             flexFeeActivity.setDw_create_ts(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             flexFeeActivity.setEffdt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             flexFeeActivity.setEntity(faker.regexify(pattern));
@@ -247,14 +236,11 @@ public class DataGenerationService {
             flexFeeActivity.setFlex_fee_pct(faker.number().randomDouble(0, 1000, 10000));
             flexFeeActivity.setFlex_unCmtMnt_amt_lcy(faker.number().digits(2));
             flexFeeActivity.setFlex_unCmtMnt_amt_tcy(faker.number().digits(2));
-//            flexFeeActivity.setPostDt(faker.date().birthday());
-//            flexFeeActivity.setSrc_updt_dt(faker.date().birthday());
             flexFeeActivity.setPostDt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             flexFeeActivity.setSrc_updt_dt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             flexFeeActivity.setTrans_crrncy_cd(faker.regexify(currencyCode));
             flexFeeRepository.save(flexFeeActivity);
         }
-        System.out.println("Kafka template bean: " + kafkaTemplate.toString());
         return "Data generated for FlexFeeActivity table";
     }
 
@@ -262,27 +248,27 @@ public class DataGenerationService {
         for (int i = 0; i < 10; i++) {
             FlexActivity activity = new FlexActivity();
             activity.setCustomerLineNumber((faker.number().digits(2)));
-//            activity.setPostDt(faker.date().birthday());
             activity.setPostDt(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             flexActivityRepository.save(activity);
         }
         return "Data generated for flex activity table";
     }
 
+    /**
+     * This method created it for testing purpose to check if the calculation are correct or not
+     * Because, otherwise, we need to run all the connectors to send data and after that we will
+     * check calculations. This method is the shortcut to check the working functionality
+     * @return
+     */
     public String generateCanDeleteData() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        for (int i = 1; i <= 2; i++) {
-            //   System.out.println("inside the method");
+        for (int i = 1; i <= 5; i++) {
             CanDelete canDelete = new CanDelete();
             canDelete.setPostDate(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
             canDelete.setEffectiveDate(dateFormat(String.valueOf(faker.date().between(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())))));
-            canDelete.setAmount(faker.number().randomDouble(2,1000,100000));
-            //     System.out.println("date format is: "+canDelete.getBirthDate());
-            //   dateFormat(canDelete.getDate());
-            //  dateFormat2(canDelete.getBirthDate().toString());
+            canDelete.setAmount(faker.number().randomDouble(2, 1000, 100000));
             canDeleteRepository.save(canDelete);
 //            kafkaTemplate.send("test3",canDelete);
-            System.out.println("data send here");
+            log.info("***** data send here *****");
         }
         return "can delete data generated";
     }
@@ -298,7 +284,6 @@ public class DataGenerationService {
         try {
             DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             DateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-            String inputText = "2012-11-17T00:00:00.000-05:00";
             Date date = inputFormat.parse(input);
             outputText = outputFormat.format(date);
         } catch (Exception e) {

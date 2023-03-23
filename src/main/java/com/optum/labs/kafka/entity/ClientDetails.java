@@ -1,16 +1,13 @@
 package com.optum.labs.kafka.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CLIENT_DETAILS")
 @Data
 public class ClientDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

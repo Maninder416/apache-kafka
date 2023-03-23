@@ -17,19 +17,9 @@ public class TestLoanTransHist {
     @Column(name = "ACCTNBR", length = 35)
     @JsonProperty("ACCTNBR")
     private String acctNbr;
-
     @Column(name = "TRANID", length = 30)
     @JsonProperty("TRANID")
     private String tranId;
-//    @Column(name = "POSTDT")
-//    @JsonProperty("POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date postDt;
-//    @Column(name = "EFFECTIVEDT")
-//    @JsonProperty("EFFECTIVEDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date effectiveDt;
-
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
     private String postDt;

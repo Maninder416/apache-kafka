@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
+
+/**
+ * In this class, I am not using builder annotation.
+ * Just using the default way to create builder for learning
+ */
 @Entity
 @Table(name = "CURRENCY_CODE_LOAN_TXN_OUTPUT")
 @Builder
@@ -16,7 +21,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrencyCodeLoanTxnActivityOutput {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
@@ -24,35 +28,23 @@ public class CurrencyCodeLoanTxnActivityOutput {
     @Column(name = "ACCTNBR", length = 35)
     @JsonProperty("ACCTNBR")
     private String acctNbr;
-
     @Column(name = "TRANID", length = 30)
     @JsonProperty("TRANID")
     private String tranId;
-//    @Column(name = "POSTDT")
-//    @JsonProperty("POSTDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date postDt;
-
     @Column(name = "POSTDT")
     @JsonProperty("POSTDT")
     private String postDt;
-//    @Column(name = "EFFECTIVEDT")
-//    @JsonProperty("EFFECTIVEDT")
-//    @Temporal(TemporalType.DATE)
-//    private Date effectiveDt;
-
     @Column(name = "EFFECTIVEDT")
     @JsonProperty("EFFECTIVEDT")
     private String effectiveDt;
     @Column(name = "NOTEPRNCPLBALGROSS", precision = 19, scale = 3)
     @JsonProperty("NOTEPRNCPLBALGROSS")
     private double notePrncplBalgross;
-
-    @Column(name = "TRANS_CURRENCY_CODE",length = 3)
+    @Column(name = "TRANS_CURRENCY_CODE", length = 3)
     @JsonProperty("TRANS_CURRENCY_CODE")
     private String currencyCode;
 
-    public static class Builder{
+    public static class Builder {
         private Long id;
         private String acctNbr;
         private String tranId;
@@ -96,8 +88,8 @@ public class CurrencyCodeLoanTxnActivityOutput {
             return this;
         }
 
-        public CurrencyCodeLoanTxnActivityOutput build(){
-            return new CurrencyCodeLoanTxnActivityOutput(id,acctNbr,tranId,postDt,effectiveDt,notePrncplBalgross,currencyCode);
+        public CurrencyCodeLoanTxnActivityOutput build() {
+            return new CurrencyCodeLoanTxnActivityOutput(id, acctNbr, tranId, postDt, effectiveDt, notePrncplBalgross, currencyCode);
         }
 
     }

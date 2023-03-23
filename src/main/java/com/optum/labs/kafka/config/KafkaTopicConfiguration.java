@@ -15,7 +15,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic ulfClientDetailsTopic() {
         return TopicBuilder.name("credit.creditlines.ulf-client-detials.in")
@@ -23,7 +22,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic flexCreditLineActivityTopic() {
         return TopicBuilder.name("credit.creditlines.flex-creditline-activity.in")
@@ -31,7 +29,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic currencyCodeTopic() {
         return TopicBuilder.name("credit.creditlines.currency-code.in")
@@ -46,7 +43,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic productCodeTopic() {
         return TopicBuilder.name("credit.creditlines-product-code.in")
@@ -54,7 +50,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic productCategoryTopic() {
         return TopicBuilder.name("credit.creditlines.product-category.in")
@@ -62,7 +57,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic flexCreditLineTopic13() {
         return TopicBuilder.name("credit.creditlines.flex-creditline.in")
@@ -70,7 +64,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic creditLineDetailsOutTopic() {
         return TopicBuilder.name("credit.creditlines.creditline-details.out")
@@ -78,7 +71,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic flexCreditLineActivityOutputTopic5() {
         return TopicBuilder.name("credit.creditlines.flex-creditline-activity.out")
@@ -86,7 +78,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic currencyCodeLoanTxnActivityTopic8() {
         return TopicBuilder.name("credit.creditlines.currency-code-loantxn.activity.out")
@@ -94,7 +85,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic productCategoryProductCodeTopic11() {
         return TopicBuilder.name("credit.creditlines.product-category-product-code.out")
@@ -102,7 +92,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic productCategoryCodeTopic12() {
         return TopicBuilder.name("credit.creditlines.currency-loantxn-product-category-code.out")
@@ -110,7 +99,6 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic flexCreditLineAndActivityTopic14() {
         return TopicBuilder.name("credit.creditlines.flex-creditline-and-activity.out")
@@ -118,10 +106,16 @@ public class KafkaTopicConfiguration {
                 .replicas(1)
                 .build();
     }
-
     @Bean
     public NewTopic creditLineAndActivityAndLoanTxnTopic15() {
         return TopicBuilder.name("credit.creditlines.flex-creditline-and-activity-and-loantxn-and-prodcat.out")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+    @Bean
+    public NewTopic finalTopic() {
+        return TopicBuilder.name("final-topic")
                 .partitions(1)
                 .replicas(1)
                 .build();
