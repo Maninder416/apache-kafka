@@ -45,18 +45,23 @@ How to run this project:
 
 1. Run the docker-compose file.
 2. Run the spring boot app. it will create your required topics that you need.
-3. Make sure your connectors are up and working. If it does not configure go to path "/source/docker/" and run script "script.sh".
+3. Make sure your connectors are up and working. If it does not configure go to path
+ "/source/docker/" and run script "script.sh".
 4. Make sure, go to control center and check if all the connectors are up.
-5. For testing purpose to confirm, if calculations are done properly, I have prepared one testing stream.
-To check it, first you need to run the method "dataCreationService.generateCanDeleteData()". It will generate some
-data and will send the data to topic. Make sure KafkaTemplate line in this code is not commented out. I have commented
-it, because I already sent data and I dont want to send the data again and again.
+5. For testing purpose to confirm, if calculations are done properly,
+I have prepared one testing stream.To check it, first you need to run the method
+ "dataCreationService.generateCanDeleteData()". It will generate some
+data and will send the data to topic. Make sure KafkaTemplate line in this code 
+is not commented out. I have commented it, because I already sent data and
+I dont want to send the data again and again.
 6. After that, hit the GET API the "http://localhost:9001/result?startDate=2022-01-01&endDate=2022-01-15"
-7. It will generate the fake data between the dates we define in API and replace the actual data on the specific
-dates which we are getting from topic that we defined in step5. Once the data is prepared with actual data and fake
-data, just send this data to the another topic. For example, I am sending this data to topic "test5"
-8. Create the KSQL stream in KSQL DB with the topic "test5" so that whenever the data we send it will save into this
-KStream.
+7. It will generate the fake data between the dates we define in API and replace
+the actual data on the specific dates which we are getting from topic that
+we defined in step5. Once the data is prepared with actual data and fake
+data, just send this data to the another topic. 
+For example, I am sending this data to topic "test5"
+8. Create the KSQL stream in KSQL DB with the topic "test5" so that whenever the
+data we send it will save into this KStream.
 Sample to create KStream:
 how to create json steam in ksql db in kafka:
 
