@@ -3,6 +3,7 @@ version: '2'
 services:
 
   mysqldb:
+    platform: linux/x86_64
     image: "mysql:5.7"
     restart: always
     ports:
