@@ -6,7 +6,7 @@ third topic and consuming it and saving into MySQL DB.
 
 1. docker-compose up
 2. run the spring boot app
-3. Post the avro object on :  "localhost:9000/sendStockHistory"
+3. Post the avro object on :  http://localhost:9000/employee
 
 payload for first topic: avro-employee-basic-details
 
