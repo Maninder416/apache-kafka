@@ -47,3 +47,6 @@ here is a diagram for more explaination:
 https://github.com/Java-Techie-jt/kafka-integration-test/blob/main/kafka-consumer-example/src/main/java/com/javatechie/consumer/KafkaMessageListener.java
 ```
 
+```shell
+We are using mysql container for saving the data instead of saving into the actual db.
+```
