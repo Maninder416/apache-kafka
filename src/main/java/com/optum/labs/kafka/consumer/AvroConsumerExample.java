@@ -30,4 +30,5 @@ public class AvroConsumerExample {
         log.info("Key and value for avro received message is :{} :{} ", key, employeeAllDetails.toString());
 
     }
+
 }
