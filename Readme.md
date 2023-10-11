@@ -40,6 +40,10 @@ the output will be like this:
 here is a diagram for more explaination:
 /Users/manindersingh/Documents/spring-boot-projects/springboot-kafka/source/img.png
 
+```
 
+# For integration test case, followed this branch:
+```shell
+https://github.com/Java-Techie-jt/kafka-integration-test/blob/main/kafka-consumer-example/src/main/java/com/javatechie/consumer/KafkaMessageListener.java
 ```
 
