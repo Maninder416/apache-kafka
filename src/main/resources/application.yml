@@ -13,7 +13,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3306/maninder
+    url: jdbc:mysql://localhost:3306/employee
     username: root
-    password:
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
