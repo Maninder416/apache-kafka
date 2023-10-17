@@ -10,4 +10,5 @@
 7. Kafka Avro producer-consumer stream and data save into db: feature/avro-producer-consumer-stream-example
 8. Kafka Connectors and KTable: feature/spring-kafka-stream-ksql-connector
 9. Kafka test containers for producer and consumer: feature/avro-producer-consumer-stream-example-test-cases
+10.filter on kafka messages: feature/kafka-filter-dsl
 ```
