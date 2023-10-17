@@ -211,7 +211,6 @@ services:
     networks:
       - kafka-stack-network
 
-
   rest-proxy:
     image: confluentinc/cp-kafka-rest:7.3.0
     depends_on:
