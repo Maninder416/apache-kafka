@@ -1,0 +1,30 @@
+{
+  "name": "phone4",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "task.max": "1",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": false,
+    "transforms": "createKey,replaceField",
+    "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.createKey.fields": "party_id",
+    "transforms.replaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.replaceField.renames": "party_id:PARTY_ID,first_name:FIRST_NAME,phone_num:PHONE_NUM,phone_area_cd:PHONE_AREA_CD,cif_creat_tmstmp:CIF_CREAT_TMSTMP,cif_updt_tmstmp:CIF_UPDT_TMSTMP",
+    "connection.url": "jdbc:mysql://mysqldb:3306/sunlife",
+    "connection.user": "maninder",
+    "connection.password": "maninder",
+    "connection.attempts": "3",
+    "retry.backoff.ms": "5000",
+    "dialect.name": "MySqlDatabaseDialect",
+    "mode": "incrementing",
+    "incrementing.column.name": "party_id",
+    "numeric.precision.mapping": true,
+    "numeric.mapping": "best_fit",
+    "query": "SELECT party_id, first_name, phone_num, phone_area_cd, cif_creat_tmstmp, cif_updt_tmstmp FROM phone",
+    "poll.interval.ms": "5000",
+    "batch.max.rows": "5",
+    "topic.prefix": "dev.ca.cif.party-phone.raw.0",
+    "db.timezone": "America/Toronto"
+  }
+}
