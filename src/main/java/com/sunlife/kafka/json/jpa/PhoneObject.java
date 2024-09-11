@@ -1,4 +1,4 @@
-package com.sunlife.kafka.json.model;
+package com.sunlife.kafka.json.jpa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -7,7 +7,7 @@ import lombok.Data;
 @Entity
 @Table(name = "Phone")
 @Data
-public class Phone {
+public class PhoneObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "party_id")

@@ -1,6 +1,6 @@
 package com.sunlife.kafka.json.config;
 
-import com.sunlife.kafka.json.model.Phone;
+import com.sunlife.kafka.json.jpa.PhoneObject;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,16 +28,16 @@ public class KafkaConsumerConfig {
     private String brokers;
 
     @Bean
-    public ConsumerFactory<String, Phone> consumerFactory() {
+    public ConsumerFactory<String, PhoneObject> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(Phone.class));
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(PhoneObject.class));
     }
 
     @Bean
-    KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String,Phone>> kafkaListenerContainerFactory(){
-        ConcurrentKafkaListenerContainerFactory<String, Phone> factory= new ConcurrentKafkaListenerContainerFactory<>();
+    KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, PhoneObject>> kafkaListenerContainerFactory(){
+        ConcurrentKafkaListenerContainerFactory<String, PhoneObject> factory= new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }

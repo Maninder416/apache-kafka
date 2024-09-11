@@ -1,9 +1,9 @@
 package com.sunlife.kafka.json.topology;
 
 import com.sunlife.kafka.json.config.KStreamConfig;
-import com.sunlife.kafka.json.model.Phone;
-import com.sunlife.kafka.json.model.topic.domain.PartyKey;
-import com.sunlife.kafka.json.model.topic.domain.PartyValue;
+import com.sunlife.kafka.json.jpa.PhoneObject;
+import com.sunlife.kafka.json.model.topic.domain.PhoneKey;
+import com.sunlife.kafka.json.model.topic.domain.PhoneValue;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KeyValue;
@@ -26,13 +26,13 @@ public class PhoneTopologyWrapper {
         System.out.println("inside this method");
         // Define the topics for input and output
         String phoneInputTopic = "dev.ca.cif.party-phone.raw.0";
-        String partyOutputTopic = "dev.ca.cif.party-output";
+        String phoneOutputTopic = "dev.ca.cif.phone-output";
 
         StreamsBuilder builder = new StreamsBuilder();
-        final Serde<Phone> phoneSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(Phone.class));
-        final Serde<PartyKey> partyKeySerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(PartyKey.class));
-        final Serde<PartyValue> partyValueSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(PartyValue.class));
-        KStream<String, Phone> phoneKStream = builder.stream(phoneInputTopic, Consumed.with(Serdes.String(), phoneSerde));
+        final Serde<PhoneObject> phoneSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(PhoneObject.class));
+        final Serde<PhoneKey> partyKeySerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(PhoneKey.class));
+        final Serde<PhoneValue> partyValueSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(PhoneValue.class));
+        KStream<String, PhoneObject> phoneKStream = builder.stream(phoneInputTopic, Consumed.with(Serdes.String(), phoneSerde));
         phoneKStream.print(Printed.toSysOut());
         phoneKStream.foreach((key, value) ->
                 System.out.println("***** key value for Phone: "+ key+" : "+value)
@@ -40,10 +40,10 @@ public class PhoneTopologyWrapper {
         System.out.println("***** phone data ******");
         // Perform some transformation or processing
         // Example: Mapping Phone to PartyKey and PartyValue
-        KStream<PartyKey, PartyValue> processedStream = phoneKStream.map(
+        KStream<PhoneKey, PhoneValue> processedStream = phoneKStream.map(
                 (key, phone) -> {
-                    PartyKey partyKey = new PartyKey.Builder().withPartyId(phone.getPartyId()).build(); // Example transformation
-                    PartyValue partyValue = new PartyValue.Builder()
+                    PhoneKey partyKey = new PhoneKey.Builder().withPartyId(phone.getPartyId()).build(); // Example transformation
+                    PhoneValue partyValue = new PhoneValue.Builder()
                             .withPartyId(phone.getPartyId())
                             .withCifCreateTimestamp(phone.getCifCreatTmstmp())
                             .withFirstName(phone.getFirstName())
@@ -58,8 +58,7 @@ public class PhoneTopologyWrapper {
                 System.out.println("***** processedStream key value for Phone: "+ key+" : "+value)
         );
         processedStream.print(Printed.toSysOut());
-        processedStream.to(partyOutputTopic, Produced.with(partyKeySerde, partyValueSerde));
-
+        processedStream.to(phoneOutputTopic, Produced.with(partyKeySerde, partyValueSerde));
 
 
         kStreamConfig.topology(builder);

@@ -1,12 +1,12 @@
 package com.sunlife.kafka.json.util;
 
-import com.sunlife.kafka.json.model.topic.domain.Party;
-import com.sunlife.kafka.json.model.topic.domain.PartyValue;
+import com.sunlife.kafka.json.entity.Phone;
+import com.sunlife.kafka.json.model.topic.domain.PhoneValue;
 
 public final class PartyValueMapper {
-    public static PartyValue toPartyValue(final Party party){
-        final PartyValue.Builder builder=
-                new PartyValue.Builder()
+    public static PhoneValue toPhoneValue(final Phone party){
+        final PhoneValue.Builder builder=
+                new PhoneValue.Builder()
                         .withPartyId(party.getPartyId())
                         .withCifCreateTimestamp(party.getCifCreateTimeStamp());
         return builder.build();

@@ -7,8 +7,8 @@ import jakarta.annotation.Nullable;
 
 import java.util.Objects;
 
-@JsonDeserialize(builder = PrtyRecord.Builder.class)
-public class PrtyRecord {
+@JsonDeserialize(builder = PhoneRecord.Builder.class)
+public class PhoneRecord {
 
     public static final String PARTY_ID_PROPERTY = "PARTY_ID";
     public static final String FIRST_NAME_PROPERTY = "FIRST_NAME";
@@ -64,8 +64,8 @@ public class PrtyRecord {
             return this;
         }
 
-        public PrtyRecord build() {
-            return new PrtyRecord(this);
+        public PhoneRecord build() {
+            return new PhoneRecord(this);
         }
     }
 
@@ -76,7 +76,7 @@ public class PrtyRecord {
     private final String cifCreatTmstmp;
     private final String cifUpdtTmstmp;
 
-    private PrtyRecord(final Builder builder) {
+    private PhoneRecord(final Builder builder) {
         this.partyId = builder.partyId;
         this.firstName = builder.firstName;
         this.phoneAreaCd = builder.phoneAreaCd;
@@ -130,9 +130,9 @@ public class PrtyRecord {
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (!(object instanceof PrtyRecord)) return false;
+        if (!(object instanceof PhoneRecord)) return false;
 
-        PrtyRecord other = (PrtyRecord) object;
+        PhoneRecord other = (PhoneRecord) object;
         return Objects.equals(partyId, other.partyId)
                 && Objects.equals(firstName, other.firstName)
                 && Objects.equals(phoneNum, other.phoneNum)

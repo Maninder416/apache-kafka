@@ -1,6 +1,6 @@
 package com.sunlife.kafka.json.config;
 
-import com.sunlife.kafka.json.model.Phone;
+import com.sunlife.kafka.json.jpa.PhoneObject;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +21,7 @@ public class KafkaProducerConfig {
     private String brokers;
 
     @Bean
-    public ProducerFactory<String, Phone> producerFactory() {
+    public ProducerFactory<String, PhoneObject> producerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -30,7 +30,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Phone> userKafkaTemplate() {
+    public KafkaTemplate<String, PhoneObject> userKafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

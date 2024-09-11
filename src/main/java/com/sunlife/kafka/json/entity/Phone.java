@@ -1,11 +1,11 @@
-package com.sunlife.kafka.json.model.topic.domain;
+package com.sunlife.kafka.json.entity;
 
-import com.sunlife.kafka.json.model.topic.raw.PrtyRecord;
+import com.sunlife.kafka.json.model.topic.raw.PhoneRecord;
 
-public final class Party {
-    private final PrtyRecord prtyRecord;
+public final class Phone {
+    private final PhoneRecord prtyRecord;
 
-    public Party(PrtyRecord prtyRecord) {
+    public Phone(PhoneRecord prtyRecord) {
         this.prtyRecord = prtyRecord;
     }
 

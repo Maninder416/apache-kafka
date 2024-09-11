@@ -9,8 +9,8 @@ import jakarta.annotation.Nullable;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonDeserialize(builder = PartyValue.Builder.class)
-public class PartyValue {
+@JsonDeserialize(builder = PhoneValue.Builder.class)
+public class PhoneValue {
 
     public static final String PARTY_ID_PROPERTY = "party_id";
     public static final String FIRST_NAME_PROPERTY = "first_name";
@@ -64,8 +64,8 @@ public class PartyValue {
             return this;
         }
 
-        public PartyValue build() {
-            return new PartyValue(this);
+        public PhoneValue build() {
+            return new PhoneValue(this);
         }
 
     }
@@ -77,7 +77,7 @@ public class PartyValue {
     private final @Nullable String cifCreateTimestamp;
     private final @Nullable String cifUpdateTimestamp;
 
-    private PartyValue(final Builder builder) {
+    private PhoneValue(final Builder builder) {
         this.partyId = builder.partyId;
         this.firstName = builder.firstName;
         this.phoneNumber = builder.phoneNumber;
@@ -136,9 +136,9 @@ public class PartyValue {
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (!(object instanceof PartyValue)) return false;
+        if (!(object instanceof PhoneValue)) return false;
 
-        PartyValue other = (PartyValue) object;
+        PhoneValue other = (PhoneValue) object;
         return Objects.equals(partyId, other.partyId)
                 && Objects.equals(firstName, other.firstName)
                 && Objects.equals(phoneNumber, other.phoneNumber)
