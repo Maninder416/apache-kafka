@@ -61,6 +61,7 @@ public class PhoneTopologyWrapper {
         processedStream.to(partyOutputTopic, Produced.with(partyKeySerde, partyValueSerde));
 
 
+
         kStreamConfig.topology(builder);
     }
 }
